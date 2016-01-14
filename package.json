@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-Custom-Version-Sample",
-  "version": "1.0.1",
-  "description": "OpenShift Node.js Custom Version Sample Application",
+  "name": "CS4550-sp2016",
+  "version": "1.0.0",
+  "description": "Course project for CS4550 spring 2016",
   "keywords": [
     "OpenShift",
     "Node.js",
@@ -9,27 +9,35 @@
     "openshift"
   ],
   "author": {
-    "name": "ramr",
-    "email": "ramr@example.org",
-    "url":  "http://www.openshift.com/"
+    "name": "Ian Redpath",
+    "email": "iredpath@ccs.neu.edu",
+    "url": "http://www.github.com/iredpath"
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "http://www.webdevelopment-redpathian.rhcloud.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ramr/nodejs-custom-version-openshift"
+    "url": "https://github.com/iredpath/WebDevelopment"
   },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
-    "express": "*"
+    "express": "^3.4.8"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-help": "^1.6.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-supervisor": "^0.1.2",
+    "gulp-uglify": "^1.5.1",
+    "gulp-watch": "^4.3.5"
+  },
   "bundleDependencies": [],
-
   "private": true,
   "main": "server.js"
 }

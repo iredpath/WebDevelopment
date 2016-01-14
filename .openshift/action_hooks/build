@@ -30,3 +30,18 @@ if [ -f "${OPENSHIFT_REPO_DIR}"/package.json ]; then
    (cd "${OPENSHIFT_REPO_DIR}"; export TMPDIR="/tmp"; npm install -d)
 fi
 
+#############
+
+#  Use gulp to transpile/minify code before running it
+#  TODO: check if gulp needs to touch files
+#  else remove changes to $HOME
+OLD_HOME=$HOME
+
+cd $OPENSHIFT_REPO_DIR
+export HOME=$OPENSHIFT_REPO_DIR
+
+echo "INFO: Running 'gulp build'"
+gulp build
+
+export HOME=$OLD_HOME
+echo "INFO: HOME is $HOME"

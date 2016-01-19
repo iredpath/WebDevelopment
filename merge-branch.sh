@@ -14,6 +14,13 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+# reset master to track origin
+git branch -u origin/master
+if [ $? -ne 0 ]; then
+	echo "ERROR: unable to set local master branch to track from origin/master"
+	exit 1
+fi
+
 # merge in our branch
 git merge $BRANCH_NAME
 if [ $? -ne 0 ]; then
@@ -47,4 +54,11 @@ if [ $? -ne 0 ]; then
 	exit 1
 else:
 	echo "INFO: openshift master branch successfully pushed to github"
+fi
+
+# reset master to track origin
+git branch -u origin/master
+if [ $? -ne 0 ]; then
+	echo "ERROR: unable to set local master branch to track from origin/master"
+	exit 1
 fi

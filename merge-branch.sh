@@ -24,7 +24,7 @@ else:
 fi
 
 # push changes to openshift
-git push -u openshift master
+git push -u origin master
 if [ $? -ne 0 ]; then
 	echo "ERROR: unable to push changes to openshift remote"
 	exit 1

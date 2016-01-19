@@ -38,6 +38,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 else:
 	echo "INFO: openshift master branch successfully delpoyed"
+fi
 
 # push to github
 git push -u github master

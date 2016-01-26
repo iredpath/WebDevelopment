@@ -1,0 +1,24 @@
+span.glyphicon:hover {
+	cursor: pointer;
+	color: #337ab7;
+	text-decoration: none;
+}
+
+.icon-div-2 > span {
+	width: 50%;
+	max-width: 30px;
+	float: left;
+}
+
+.icon-div-4 > span {
+	width: 25%;
+	max-width: 30px;
+	float: left;
+}
+
+.icon-div-4 > .left-spacer {
+	height: 1px; /* will not space without height >= 1 */
+}
+.nav-tabs {
+	margin-bottom: 25px;
+}

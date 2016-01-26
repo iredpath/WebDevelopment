@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Form Maker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Username</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="./home.html">Home</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="./admin.html">Admin</a></li>
+            <li class="active"><a href="./forms.html">Forms<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">Forms : Registration Form</h1>
+      <ul class="nav nav-tabs">
+        <li role="presentation"><a href="./forms.html">Forms</a></li>
+        <li role="presentation" class="active"><a href="./form-fields.html">Fields</a></li>
+      </ul>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="first-name" class="col-sm-2 control-label">First Name:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="first-name" placeholder="Username">
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="last-name" class="col-sm-2 control-label">Last Name:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="last-name" placeholder="Password">
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dob" class="col-sm-2 control-label">Date of Birth:</label>
+          <div class="col-sm-6">
+            <input type="date" class="form-control" id="dob" placeholder="Select date">
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender" class="col-sm-2 control-label">Gender:</label>
+          <div class="col-sm-6">
+            <select class="form-control" id="gender">
+              <option class="active">Male</option>
+              <option>Female</option>
+            <select>
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="roles" class="col-sm-2 control-label">Roles:</label>
+          <div class="col-sm-6" id="roles">
+            <label><input type="checkbox" class="form-control">Admin</label>
+            <label><input type="checkbox" class="form-control">Student</label>
+            <label><input type="checkbox" class="form-control">User</label>
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="license-agreement" class="col-sm-2 control-label">License Agreement:</label>
+          <div class="col-sm-6" id="license-agreement">
+            <label><input type="radio" name="license-radio" class="form-control">Yes</label>
+            <label><input type="radio" name="license-radio" class="form-control">No</label>
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-pencil" />
+            <span class="glyphicon glyphicon-plus" />
+            <span class="glyphicon glyphicon-remove" />
+            <span class="glyphicon glyphicon-menu-hamburger" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="add-new-field" class="col-sm-2 control-label">Add New Field:</label>
+          <div class="col-sm-6">
+            <select class="form-control" id="add-new-field">
+              <option class="active">Single Line Text</option>
+              <option>Date</option>
+              <option>Dropdown</option>
+              <option>Checkboxes</option>
+              <option>Radio Buttons</option>
+              <option>Paragraph Text Field</option>
+            </select>
+          </div>
+          <div class="col-sm-4 icons">
+            <span class="glyphicon glyphicon-plus" />
+          </div>
+        </div>
+      </form>
+    </div>
+        
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </body>
+</html>

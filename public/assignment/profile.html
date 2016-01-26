@@ -30,8 +30,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="./register.html">Register<span class="sr-only">(current)</span></a></li>
-            <li><a href="./login.html">Login</a></li>
             <li><a href="#">Username</a></li>
             <li><a href="#">Logout</a></li>
           </ul>
@@ -44,7 +42,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="./home.html">Home</a></li>
-            <li><a href="./profile.html">Profile</a></li>
+            <li class="active"><a href="./profile.html">Profile<span class="sr-only">(current)</span></a></li>
             <li><a href="./admin.html">Admin</a></li>
             <li><a href="./forms.html">Forms</a></li>
           </ul>
@@ -53,7 +51,7 @@
     </div>
 
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <h1 class="page-header">Register</h1>
+      <h1 class="page-header">Profile</h1>
       <form class="form-horizontal">
         <div class="form-group">
           <label for="username" class="col-sm-2 control-label">Username:</label>
@@ -68,9 +66,15 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="verify-password" class="col-sm-2 control-label">Verify Password:</label>
+          <label for="first-name" class="col-sm-2 control-label">First Name:</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="verify-password" placeholder="Verify Password">
+            <input type="text" class="form-control" id="first-name" placeholder="First Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="last-name" class="col-sm-2 control-label">Last Name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="last-name" placeholder="Last Name">
           </div>
         </div>
         <div class="form-group">
@@ -81,7 +85,7 @@
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <a class="btn btn-default" href="./profile.html">Register</a>
+            <a class="btn btn-default" href="./profile.html">Update</a>
             <!--<button type="submit" class="btn btn-default" id="register">Register</button>-->
           </div>
         </div>

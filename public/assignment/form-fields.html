@@ -112,9 +112,18 @@
         <div class="form-group">
           <label for="roles" class="col-sm-2 control-label">Roles:</label>
           <div class="col-sm-6" id="roles">
-            <label><input type="checkbox" class="form-control">Admin</label>
-            <label><input type="checkbox" class="form-control">Student</label>
-            <label><input type="checkbox" class="form-control">User</label>
+            <div>
+              <input type="checkbox" id="admin-checkbox">
+              <label for="admin-checkbox" class="control-label">Admin</label>
+            </div>
+            <div>
+              <input type="checkbox" id="user-checkbox">
+              <label for="user-checkbox" class="control-label">User</label>
+            </div>
+            <div>
+              <input type="checkbox" id="student-checkbox">
+              <label for="student-checkbox" class="control-label">Student</label>
+            </div>
           </div>
           <div class="col-sm-4 icon-div-4">
             <span class="glyphicon glyphicon-pencil"></span>
@@ -126,8 +135,14 @@
         <div class="form-group">
           <label for="license-agreement" class="col-sm-2 control-label">License Agreement:</label>
           <div class="col-sm-6" id="license-agreement">
-            <label><input type="radio" name="license-radio" class="form-control">Yes</label>
-            <label><input type="radio" name="license-radio" class="form-control">No</label>
+            <div>
+              <input type="radio" name="license-radio" id="radio-yes">
+              <label for="radio-yes">Yes</label>
+            </div>
+            <div>
+              <input type="radio" name="license-radio" id="radio-no">
+              <label for="radio-no">No</label>
+            </div>
           </div>
           <div class="col-sm-4 icon-div-4">
             <span class="glyphicon glyphicon-pencil"></span>
@@ -136,8 +151,7 @@
             <span class="glyphicon glyphicon-menu-hamburger"></span>
           </div>
         </div>
-        <br>
-        <div class="form-group">
+        <div class="form-group add-new-field-div">
           <label for="add-new-field" class="col-sm-2 control-label">Add New Field:</label>
           <div class="col-sm-6">
             <select class="form-control" id="add-new-field">

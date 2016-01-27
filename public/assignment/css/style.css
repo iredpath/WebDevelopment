@@ -22,3 +22,9 @@ span.glyphicon:hover {
 .nav-tabs {
 	margin-bottom: 25px;
 }
+
+.add-new-field-div {
+	border-top: 1px solid #eee;
+	margin-top: 20px;
+	padding-top: 20px;
+}

@@ -37,6 +37,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 else:
 	echo "INFO: local changes successfully pushed to openshift master"
+fi
 
 # deploy master
 rhc deploy master -a WebDevelopment

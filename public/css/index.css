@@ -1,0 +1,21 @@
+body {
+  padding-top: 50px;
+}
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+.form-maker {
+	margin-bottom: 30px;
+}
+.virtual-movie-library-link > a {
+	display: block;
+}

@@ -24,7 +24,7 @@ export class UserService {
 		})
 	}
 	
-	findUserByUsernameAndPassword(username, password, callback) {
+	findUserByCredentials(username, password, callback) {
 		let user:User
 		for(user of this.users) {
 			if(user.getUsername() === username && user.getPassword() === password) {

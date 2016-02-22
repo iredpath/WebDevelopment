@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li [class.active]="isRouteActive('home')">
+          <a [routerLink]='["/Home"]'>Home</a>
+        </li>
+        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('profile')">
+          <a [routerLink]='["/Profile"]'>Profile</a>
+        </li>
+        <li *ngIf="isActiveAdminUser()" [class.active]="isRouteActive('admin')">
+          <a [routerLink]='["/Admin"]'>Admin</a>
+        </li>
+        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('forms')">
+          <a [routerLink]='["/Forms"]'>Forms</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

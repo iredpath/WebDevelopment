@@ -1,0 +1,5 @@
+{
+  "ambientDependencies": {
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#c22a5e55b062c7b2af9df92ea0820c2afa153b2a"
+  }
+}

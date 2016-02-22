@@ -1,0 +1,41 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h1 class="page-header">Forms</h1>
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="./forms.html">Forms</a></li>
+    <!--<li role="presentation"><a href="./form-fields.html">Fields</a></li>-->
+  </ul>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          <div class="table-header-div">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            Form Name
+          </div>
+        </th>
+        <th>
+          <div class="table-header-div">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            Action
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th><input [(ngModel)]="form.name" type="text" placeholder="name"></th>
+        <th><div class="icon-div-2">
+          <span class="glyphicon glyphicon-plus" (click)="addForm()"></span>
+          <span class="glyphicon glyphicon-ok" (click)="updateForm()"></span>
+        </div></th>
+      </tr>
+      <tr *ngFor="#form of forms">
+        <th>{{form.title}}</th>
+        <th><div class="icon-div-2">
+          <span class="glyphicon glyphicon-remove" (click)="deleteForm(form)"></span>
+          <span class="glyphicon glyphicon-pencil" (click)="seletForm(form)"></span>
+        </div></th>
+      </tr>
+  </table>
+</div>
+

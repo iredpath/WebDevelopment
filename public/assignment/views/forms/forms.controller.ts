@@ -1,4 +1,5 @@
 import { View, Component } from 'angular2/core'
+import { Router } from 'angular2/router'
 import { Form } from '../../models/form.model'
 import { FormsService } from '../../services/forms.service.client'
 import { StateService } from '../../services/state.service.client'
@@ -14,11 +15,15 @@ export class FormsController {
 	form:Form
 	forms:Array<Form>
 
-	constructor(public formsService:FormsService, public stateService:StateService) {
-		this.form = new Form()
-		formsService.findAllFormForUser(stateService.getActiveUser().getId(), forms => {
-			this.forms = forms
-		})
+	constructor(public formsService:FormsService, public stateService:StateService, public router:Router) {
+		if (!stateService.isActiveUser()) {
+			router.navigate(['/Login', {}])
+		} else {
+			this.form = new Form()
+			formsService.findAllFormForUser(stateService.getActiveUser().getId(), forms => {
+				this.forms = forms
+			})
+		}
 	}
 
 	addForm() {

@@ -1,5 +1,17 @@
 {
   "ambientDependencies": {
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#c22a5e55b062c7b2af9df92ea0820c2afa153b2a"
+    "del": "github:DefinitelyTyped/DefinitelyTyped/del/del.d.ts#9027703c0bd831319dcdf7f3169f7a468537f448",
+    "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#a14d724826174d1669d4df04c80f4838b7e71fdf",
+    "gulp-sourcemaps": "github:DefinitelyTyped/DefinitelyTyped/gulp-sourcemaps/gulp-sourcemaps.d.ts#5d6c3bdb5d936b257f22961890141a999e19daef",
+    "gulp-typescript": "github:DefinitelyTyped/DefinitelyTyped/gulp-typescript/gulp-typescript.d.ts#960fd659b456e2fb5d23c52794ffdc56b09796cf",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#c22a5e55b062c7b2af9df92ea0820c2afa153b2a",
+    "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#a3900b896f7b3361b79f9b503224777619907d53",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#20e1eb9616922d382d918cc5a21870a9dbe255f5",
+    "promise": "github:DefinitelyTyped/DefinitelyTyped/promise/promise.d.ts#52b68b9e9c434c51c78ee27066a5c473b112ba3f",
+    "run-sequence": "github:DefinitelyTyped/DefinitelyTyped/run-sequence/run-sequence.d.ts#052725d74978d6b8d7c4ff537b5a3b21ee755a49"
+  },
+  "dependencies": {
+    "es6-promise": "github:typed-typings/npm-es6-promise#fb04188767acfec1defd054fc8024fafa5cd4de7",
+    "gulp": "github:typed-typings/npm-gulp#504da08753acdfe9dd2c415ab8fe36151e9645c1"
   }
 }

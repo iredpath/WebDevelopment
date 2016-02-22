@@ -1,2 +1,10 @@
+/// <reference path="../node_modules/angular2/typings/browser.d.ts" />
+/// <reference path="browser/ambient/del/del.d.ts" />
+/// <reference path="browser/ambient/glob/glob.d.ts" />
+/// <reference path="browser/ambient/gulp-sourcemaps/gulp-sourcemaps.d.ts" />
+/// <reference path="browser/ambient/gulp-typescript/gulp-typescript.d.ts" />
 /// <reference path="browser/ambient/lodash/lodash.d.ts" />
-/// <reference path="../node_modules/angular2/typings/browser.d.ts"/>
+/// <reference path="browser/ambient/minimatch/minimatch.d.ts" />
+/// <reference path="browser/ambient/node/node.d.ts" />
+/// <reference path="browser/ambient/run-sequence/run-sequence.d.ts" />
+/// <reference path="browser/definitions/gulp/gulp.d.ts" />

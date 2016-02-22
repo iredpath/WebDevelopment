@@ -16,14 +16,17 @@ export class ProfileController {
 
 	user: User
 
-	constructor(public userService:UserService, public stateService:StateService, public router:Router) {
-		this.user = stateService.getActiveUser()
+	constructor(public userService: UserService, public stateService: StateService, public router: Router) {
+		if (!stateService.isActiveUser()) {
+			router.navigate(['/Login', {}])
+		} else {
+			this.user = stateService.getActiveUser()
+		}
 	}
 
 	update() {
 		this.userService.updateUser(this.user.getId(), this.user, resp => {
 			console.log("successfully updated user " + resp)
-			//this.stateService.setActiveUser(resp)
 		})
 	}
 }

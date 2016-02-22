@@ -27,15 +27,6 @@ export class Gulpfile {
         return tsResult
     }
 
-    @Task("build:index")
-    buildIndex() {
-        const html = gulp.src('public/index.html')
-            .pipe(gulp.dest('dist'))
-        const css = gulp.src('public/css/*.css')
-            .pipe(gulp.dest('dist/css'))
-        return [html, css]
-    }
-
     @Task("build:public")
     buildPublic() {
         const tsProject = ts.createProject('public/tsconfig.json')
@@ -56,7 +47,7 @@ export class Gulpfile {
         return ["clean", "build:server", "build:public"]
     }
 
-    @Task("default")
+    @SequenceTask("default")
     default() {
         return ["build"]
     }

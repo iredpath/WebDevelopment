@@ -1,33 +1,41 @@
 {
-  "name": "newfamily-example",
+  "name": "CS4550-sp2016",
   "version": "1.0.0",
-  "description": "Angular2 Gulp Typescript and Express",
-  "main": "dist/server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "gulp build"
+  "description": "Course project for CS4550 spring 2016",
+  "keywords": [
+    "OpenShift",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
+  "author": {
+    "name": "Ian Redpath",
+    "email": "iredpath@ccs.neu.edu",
+    "url": "http://www.github.com/iredpath"
   },
-  "keywords": [],
-  "author": "Maximilian Alexander <mbalex99@gmail.com> (http://www.blog.edenmsg.com/)",
-  "license": "MIT",
+  "homepage": "http://www.webdevelopment-redpathian.rhcloud.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iredpath/WebDevelopment"
+  },
+  "engines": {
+    "node": ">= 5.4.0",
+    "npm": ">= 3.3.12"
+  },
   "dependencies": {
-    "angular2": "^2.0.0-beta.6",
-    "es6-promise": "3.0.2",
-    "es6-shim": "0.33.3",
-    "express": "4.13.3",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.16",
-    "typescript": "^1.8.0",
-    "zone.js": "0.5.10"
+    "express": "^4.13.4"
   },
   "devDependencies": {
-    "del": "2.2.0",
-    "gulp": "3.9.0",
-    "gulp-concat": "2.6.0",
-    "gulp-sourcemaps": "1.6.0",
-    "gulp-typescript": "2.10.0",
-    "run-sequence": "1.1.5",
+    "angular2": "^2.0.0-beta.7",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.11.0",
+    "run-sequence": "^1.1.5",
+    "rxjs": "^5.0.0-beta.2",
+    "typescript": "^1.7.5",
     "typings": "^0.6.8"
-  }
+  },
+  "main": "dist/server.js"
 }

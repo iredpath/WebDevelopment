@@ -1,4 +1,4 @@
-///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
+/// <reference path="../../typings/browser.d.ts" />
 import { bootstrap } from 'angular2/platform/browser'
 import { provide, Component, View } from 'angular2/core'
 import { RouteConfig, ROUTER_PROVIDERS, ROUTER_DIRECTIVES,
@@ -12,7 +12,6 @@ import { StateService } from './services/state.service.client'
 import { FormsService } from './services/forms.service.client'
 import { UserFactory } from './models/user.factory'
 
-
 @Component({
 	selector: 'form-maker-app'
 })
@@ -22,8 +21,7 @@ import { UserFactory } from './models/user.factory'
 })
 @RouteConfig(ROUTER_CONFIG)
 
-class App {
+class App {}
 
-}
-bootstrap(App, [ UserService, StateService, FormsService, UserFactory,
+bootstrap(App, [UserService, StateService, FormsService, UserFactory,
 	ROUTER_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })])

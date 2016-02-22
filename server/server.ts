@@ -7,7 +7,4 @@ let app = express();
 
 app.use(express.static(__dirname))
 
-app.get('/', (req: express.Request, res: express.Response) => {
-    res.sendFile(path.resolve(__dirname, 'index.html'));
-})
 app.listen(port, ipaddress)

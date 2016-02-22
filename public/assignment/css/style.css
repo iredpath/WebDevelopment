@@ -28,3 +28,7 @@ span.glyphicon:hover {
 	margin-top: 20px;
 	padding-top: 20px;
 }
+
+.nav > li > a:hover {
+	cursor: pointer;
+}

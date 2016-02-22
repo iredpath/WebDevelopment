@@ -40,8 +40,8 @@ OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
 export HOME=$OPENSHIFT_REPO_DIR
 
-echo "INFO: Running 'gulp build'"
-gulp build
+echo "INFO: Running 'gulp' (default task)"
+gulp
 
 export HOME=$OLD_HOME
 echo "INFO: HOME is $HOME"

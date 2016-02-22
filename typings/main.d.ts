@@ -5,5 +5,4 @@
 /// <reference path="main/ambient/lodash/lodash.d.ts" />
 /// <reference path="main/ambient/minimatch/minimatch.d.ts" />
 /// <reference path="main/ambient/node/node.d.ts" />
-/// <reference path="main/ambient/run-sequence/run-sequence.d.ts" />
 /// <reference path="main/definitions/gulp/gulp.d.ts" />

@@ -1,12 +1,11 @@
 /// <reference path="./node_modules/gulpclass/index.d.ts" />
 /// <reference path="./typings/main.d.ts" />
-import {Gulpclass, SequenceTask, Task} from "gulpclass/Decorators";
+import {Gulpclass, SequenceTask, Task } from "gulpclass/Decorators";
 
 import * as gulp from 'gulp'
 import * as del from 'del'
 import * as ts from 'gulp-typescript'
 import * as sourcemaps from 'gulp-sourcemaps'
-import * as runSequence from 'run-sequence'
 
 @Gulpclass()
 export class Gulpfile {

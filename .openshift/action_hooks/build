@@ -40,6 +40,12 @@ OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
 export HOME=$OPENSHIFT_REPO_DIR
 
+echo "INFO: running 'typings install'"
+typings install
+
+echo "INFO: running 'tsc' to generate gulpfile.js"
+tsc
+
 echo "INFO: Running 'gulp' (default task)"
 gulp
 

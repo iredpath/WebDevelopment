@@ -40,7 +40,5 @@
   },
   "main": "dist/server.js",
   "scripts": {
-    "preinstall": "typings install",
-    "postinstall": "tsc"
   }
 }

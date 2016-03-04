@@ -45,4 +45,8 @@ export class Library {
 		this.isEditingLibraryName = false
 	}
 
+	removeMovie(id: string) {
+		_.remove(this.library.movies, mov => { return mov.imdbId === id })
+	}
+
 }

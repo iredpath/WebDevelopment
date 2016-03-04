@@ -1,0 +1,57 @@
+<div *ngIf='!fetchingMovie' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+  <h1 style="margin-left:15px">{{movie.title}}</h1>
+  <div class="col-xs-3 col-sm-4 col-md-5">
+    <img *ngIf="movie.image !== 'N/A'" src={{movie.image}} style="min-width:100%; max-width:100%">
+    <div>
+      <button class="btn btn-small" (click)="addMovie()">+</button>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+    </div>
+  </div>
+  <div class="col-xs-9 col-sm-8 col-md-7">
+    <div>
+      <label for="actors" style="vertical-align:top">Actors:</label>
+      <ul class="actors" style="display:inline-block">
+        <li *ngFor="#actor of movie.actors">{{actor}}</li>
+      </ul>
+    </div>
+    <div>
+      <label for="director">Directed By:</label>
+      <span class="director">{{movie.directors}}</span>
+    </div>
+    <div>
+      <label for="summary">Plot Summary:</label>
+      <p class="summary">{{movie.plot}}</p>
+    </div>
+    <div>
+      <label for="rating">Rated:</label>
+      <span class="rating">{{movie.rating}}</span>
+    </div>
+    <div>
+      <label for="released">Released on:</label>
+      <span class="released">{{movie.releaseDate}}</span>
+    </div>
+    <div>
+      <label for="ratings" style="vertical-align:top">Average Rating:</label>
+      <div class="ratings" style="display:inline-block">
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span *ngIf="movie.tomatoMeter !== 'N/A'" class="rating-rt" style="display:block">
+        <a href={{movie.tomatoUrl}}>{{movie.tomatoMeter}}% on rotton tomatoes</a>
+      </span>
+    </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-12" *ngIf="!fetchingLibraries">
+    <h3>Libraries With This Title</h3>
+    <div class="movie-in-libraries">
+      <button  *ngFor="#library of libraries" class="btn btn-default" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</button>
+    </div>
+  </div>
+</div>

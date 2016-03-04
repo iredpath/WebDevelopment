@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li [class.active]="isRouteActive('libraries')">
+          <a [routerLink]='["/Libraries"]'>Libraries</a>
+        </li>
+        <li [class.active]="isRouteActive('movies')">
+          <a [routerLink]='["/Movies"]'>Movies</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

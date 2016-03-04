@@ -1,0 +1,40 @@
+<div *ngIf='!fetchingLibrary' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+  <div>
+    <div *ngIf="!isEditingLibraryName" style="display:inline-block">
+      <h1 style="display:inline-block">{{library.name}}</h1>
+      <span *ngIf="hasEditRights()" class="glyphicon glyphicon-pencil" (click)="editLibraryName()"></span> 
+    </div>
+    <div *ngIf="isEditingLibraryName">
+      <input type="text" [(ngModel)]="library.name">
+      <span class="glyphicon glyphicon-check" (click)="saveNewLibraryName()"></span>
+      <button class="btn btn-default" (click)="cancelEditingLibraryName()">Cancel</button>
+    </div>
+    <a [routerLink]='["/User", { user: library.user.id }]'>{{library.user.username}}</a>
+  </div>
+  <div class="movie-carousel">
+    <div>
+      <button *ngFor="#movie of library.movies" class="btn btn-default" [routerLink]="['/Movie', { movie: movie.imdbId }]">{{movie.title}}</button>
+    </div>
+  </div>
+
+  <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+  <div>
+    <label for="ratings" style="vertical-align:top">Average Rating:</label>
+      <div class="ratings" style="display:inline-block">
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+      <span class="glyphicon glyphicon-star"></span>
+    </div>
+  </div>
+
+  <h3>COMMENTS</h3>
+  <table>COMMENT TABLE</table>
+  <input type="text" class="comment-input">
+  <button class="btn">COMMENT!</button>
+</div>

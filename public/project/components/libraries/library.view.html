@@ -1,7 +1,7 @@
 <div *ngIf='!fetchingLibrary' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
   <div>
-    <div *ngIf="!isEditingLibraryName" style="display:inline-block">
-      <h1 style="display:inline-block">{{library.name}}</h1>
+    <div *ngIf="!isEditingLibraryName" class="library-name-container">
+      <h1>{{library.name}}</h1>
       <span *ngIf="hasEditRights()" class="glyphicon glyphicon-pencil" (click)="editLibraryName()"></span> 
     </div>
     <div *ngIf="isEditingLibraryName">
@@ -12,8 +12,8 @@
     <a [routerLink]='["/User", { user: library.user.id }]'>{{library.user.username}}</a>
   </div>
   <div class="movie-carousel">
-    <div *ngFor="#movie of library.movies" style="width:75px">
-        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove" style="float:right" (click)="removeMovie(movie.imdbId)"></span>
+    <div *ngFor="#movie of library.movies" class="library-movie">
+        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie.imdbId)"></span>
         <a class="thumbnail" [routerLink]="['/Movie', { movie: movie.imdbId }]">{{movie.title}}</a>
     </div>
   </div>
@@ -23,14 +23,14 @@
       <span class="glyphicon glyphicon-star"></span>
       <span class="glyphicon glyphicon-star"></span>
       <span class="glyphicon glyphicon-star"></span>
-  <div>
-    <label for="ratings" style="vertical-align:top">Average Rating:</label>
-      <div class="ratings" style="display:inline-block">
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
+  <div class="ratings-container">
+    <label for="ratings">Average Rating:</label>
+      <div class="ratings">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
     </div>
   </div>
 

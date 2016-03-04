@@ -1,30 +1,27 @@
 <div *ngIf='!fetchingUser' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-  <div style="display:inline-block">
-  <div class="col-sm-4 col-md-3">
-    <span class="glyphicon glyphicon-user"></span>
-    <button class="btn btn-default">Follow!</button>
-  </div>
-  <div class="col-sm-6 col-md-5">
-    <h1>{{user.username}}</h1>
-    <div class="follow-links">
-      <a href="">Following</a>
-      <a href="">Followers</a>
+  <div class="profile-header">
+    <div class="col-sm-4 col-md-3">
+      <span class="glyphicon glyphicon-user"></span>
+      <button class="btn btn-default">Follow!</button>
     </div>
-  </div>
-  <div class="col-sm-2 col-md-4"></div>
+    <div class="col-sm-6 col-md-5">
+      <h1>{{user.username}}</h1>
+      <div class="follow-links">
+        <a href="">Following</a>
+        <a href="">Followers</a>
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-4"></div>
   </div>
   <div>
     <h3>Libraries</h3>
     <button *ngIf='hasEditRights()' class="btn btn-default" (click)='newLibrary()'>+</button>
     <div class="library-carousel">
-      <div *ngFor="#library of user.libraries" style="width:130px">
-        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove" style="float:right" (click)="removeLibrary(library.id)"></span>
+      <div *ngFor="#library of user.libraries" class="user-library">
+        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library.id)"></span>
         <a class="thumbnail" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</a>
       </div>
-    </div><!--
-    <div class="libraries">
-      <button class="btn btn-default" *ngFor="#library of user.libraries" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</button>
-    </div>-->
+    </div>
   </div>
   <div>
     <h3>Highest Rated Movies</h3>

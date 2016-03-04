@@ -1,6 +1,6 @@
-<div style="display:inline-block; width:45%">
+<div class="searchbar">
 	<div class="input-group">
-		<input class="searchbar form-control input-md" type="text" [(ngModel)]="query" (keyup)="onKeyup()" (keyup.enter)="search()">
+		<input class="form-control input-md" type="text" [(ngModel)]="query" (keyup)="onKeyup()" (keyup.enter)="search()">
 		<span class="input-group-btn">
 			<button class='btn btn-md' (click)="search()">
 				<span class="glyphicon glyphicon-search"></span>

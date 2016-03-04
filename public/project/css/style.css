@@ -1,4 +1,57 @@
-span.glyphicon:hover {
+.searchbar {
+	display: inline-block;
+	width: 45%
+}
+.movie-title {
+	margin-left: 15px;
+}
+.movie-image {
+	min-width: 100%
+	max-width: 100%;
+}
+.actors-container > label {
+	vertical-align: top;
+}
+.actors {
+	display:inline-block;
+}
+.ratings-container > label {
+	vertical-align: top;
+}
+.ratings {
+	display: inline-block;
+}
+.rating-rt {
+	display: block;
+}
+#navbar > ul {
+	padding-right: 15px;
+}
+.navbar > .container-fluid {
+	padding: 0px;
+}
+.movie-li > label {
+	cursor: pointer;
+}
+.library-movie {
+	width: 75px;
+	display: inline-block;
+}
+.user-library {
+	width: 120px;
+	display: inline-block;
+}
+.thumbnail-remove {
+	float: right;
+}
+.library-name-container {
+	display: inline-block;
+}
+.profile-header {
+	display: inline-block;
+}
+
+/*span.glyphicon:hover {
 	cursor: pointer;
 	color: #337ab7;
 	text-decoration: none;
@@ -17,7 +70,7 @@ span.glyphicon:hover {
 }
 
 .icon-div-4 > .left-spacer {
-	height: 1px; /* will not space without height >= 1 */
+	height: 1px; /* will not space without height >= 1 /
 }
 .nav-tabs {
 	margin-bottom: 25px;
@@ -31,4 +84,4 @@ span.glyphicon:hover {
 
 .nav > li > a:hover {
 	cursor: pointer;
-}
+}*/

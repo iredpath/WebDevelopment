@@ -1,7 +1,7 @@
 <div *ngIf='!fetchingMovie' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-  <h1 style="margin-left:15px">{{movie.title}}</h1>
+  <h1 class="movie-title">{{movie.title}}</h1>
   <div class="col-sm-4 col-md-5">
-    <img *ngIf="movie.image !== 'N/A'" src={{movie.image}} style="min-width:100%; max-width:100%">
+    <img *ngIf="movie.image !== 'N/A'" class="movie-image" src={{movie.image}}>
     <div>
       <button class="btn btn-small" (click)="addMovie()">+</button>
       <span class="glyphicon glyphicon-star"></span>
@@ -12,9 +12,9 @@
     </div>
   </div>
   <div class="col-sm-8 col-md-7">
-    <div>
-      <label for="actors" style="vertical-align:top">Actors:</label>
-      <ul class="actors" style="display:inline-block">
+    <div class="actors-container">
+      <label for="actors">Actors:</label>
+      <ul class="actors">
         <li *ngFor="#actor of movie.actors">{{actor}}</li>
       </ul>
     </div>
@@ -34,18 +34,18 @@
       <label for="released">Released on:</label>
       <span class="released">{{movie.releaseDate}}</span>
     </div>
-    <div>
-      <label for="ratings" style="vertical-align:top">Average Rating:</label>
-      <div class="ratings" style="display:inline-block">
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span *ngIf="movie.tomatoMeter !== 'N/A'" class="rating-rt" style="display:block">
-        <a href={{movie.tomatoUrl}}>{{movie.tomatoMeter}}% on rotton tomatoes</a>
-      </span>
-    </div>
+    <div class="ratings-container">
+      <label for="ratings">Average Rating:</label>
+      <div class="ratings">
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon glyphicon-star"></span>
+        <span *ngIf="movie.tomatoMeter !== 'N/A'" class="rating-rt">
+          <a href={{movie.tomatoUrl}}>{{movie.tomatoMeter}}% on rotton tomatoes</a>
+        </span>
+      </div>
     </div>
   </div>
   <div class="col-sm-12 col-md-12" *ngIf="!fetchingLibraries">

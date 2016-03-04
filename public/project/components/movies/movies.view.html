@@ -1,6 +1,11 @@
 <div *ngIf='!fetchingMoviews' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 	<h1>Movies</h1>
-	<div *ngFor="#movie of movies">
-		<button [routerLink]='["/Movie", { movie: movie.imdbId }]'>{{movie.title}}</button>
-	</div>
+	<ul>
+		<li *ngFor="#movie of movies">
+			<img *ngIf="movie.image !== 'N/A'" class={{movie.imdbId}} src={{movie.image}}>
+			<label style="cursor:pointer" attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
+				{{movie.title}}
+			</label>
+		</li>
+	</ul>
 </div>

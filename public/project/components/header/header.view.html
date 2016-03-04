@@ -1,19 +1,17 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
+  <div class="container-fluid" style="padding:0px">
+    <div class="navbar-header col-sm-3 col-md-2">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" [routerLink]='["/Home"]'>Virtual Movie Library Logo</a>
+      <a class="navbar-brand" [routerLink]='["/Home"]'>Logo</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <vml-searchbar></vml-searchbar>
-        </li>
+      <vml-searchbar></vml-searchbar>
+      <ul class="nav navbar-nav navbar-right" style="padding-right:15px">
         <li *ngIf="!isActiveUser()" [class.active]="isRouteActive('register')">
           <a [routerLink]='["/Register"]'>Sign Up</a>
         </li>

@@ -52,5 +52,9 @@ export class LibraryService {
 		})
 	}
 
+	removeLibrary(id: number) {
+		delete this.libraries[id]
+	}
+
 
 }

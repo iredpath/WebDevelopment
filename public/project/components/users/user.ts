@@ -55,6 +55,10 @@ export class User {
 		}
 	}
 
+	removeLibrary(id: number) {
+		_.remove(this.user.libraries, lib => { return lib.id === id })
+		this.libraryService.removeLibrary(id)
+	}
 	getMovies() {
 		return _.uniq(_.flatten(this.user.libraries))
 	}

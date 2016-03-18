@@ -86,12 +86,11 @@ export class FieldsController {
 		return type === 'TEXT' || type === 'TEXTAREA'
 	}
 	isOptionField(field) {
-		if (field.type === 'OPTIONS' || field.type === 'RADIOS' || field.type === 'CHECKBOXES') {
-			field.options.forEach(opt => {
-				this.newOptions += `${opt.label}:${opt.value}\n`
-			})
-			return true
-		}
-		return false
+		return field.type === 'DROPDOWN' || field.type === 'RADIOS' || field.type === 'CHECKBOXES'
+	}
+	formatOptions(options) {
+		options.forEach(opt => {
+			this.newOptions += `${opt.label}:${opt.value}\n`
+		})
 	}
 }

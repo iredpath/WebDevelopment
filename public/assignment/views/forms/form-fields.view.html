@@ -6,8 +6,8 @@
   </ul>
   <form class="form-horizontal">
     <div class="form-group" *ngFor="#field of fields">
-      <label attr.for={{field._id}} class="col-sm-2 control-label">{{field.label}}</label>
-      <div class="col-sm-6" id={{field._id}} *ngSwitch="field.type">
+      <label attr.for={{field.id}} class="col-sm-2 control-label">{{field.label}}</label>
+      <div class="col-sm-6" id={{field.id}} [ngSwitch]="field.type">
         <input *ngSwitchWhen="'TEXT'" type="text" class="form-control" placeholder={{field.placeholder}}>
         
         <input *ngSwitchWhen="'TEXTAREA'" type="textarea" class="form-control" placeholder={{field.placeholder}}>

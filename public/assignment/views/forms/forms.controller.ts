@@ -33,6 +33,7 @@ export class FormsController {
 			this.form = {}
 		}
 		const activeUser = this.stateService.getActiveUser()
+		this.form.userId = activeUser._id
 		this.formsService.createFormForUser(activeUser._id, this.form)
 			.subscribe(callback)
 	}

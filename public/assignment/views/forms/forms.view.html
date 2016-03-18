@@ -23,14 +23,14 @@
     </thead>
     <tbody>
       <tr>
-        <th><input [(ngModel)]="form.name" type="text" placeholder="name"></th>
+        <th><input [(ngModel)]="form.title" type="text" placeholder="title"></th>
         <th><div class="icon-div-2">
           <span class="glyphicon glyphicon-plus" (click)="addForm()"></span>
           <span class="glyphicon glyphicon-ok" (click)="updateForm()"></span>
         </div></th>
       </tr>
       <tr *ngFor="#form of forms">
-        <th><a [routerLink]="['/Fields', { formId: form._id }]">{{form.name}}</a></th>
+        <th><a [routerLink]="['/Fields', { formId: form._id }]">{{form.title}}</a></th>
         <th><div class="icon-div-2">
           <span class="glyphicon glyphicon-remove" (click)="deleteForm(form)"></span>
           <span class="glyphicon glyphicon-pencil" (click)="selectForm(form)"></span>

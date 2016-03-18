@@ -45,7 +45,11 @@ export default class FormModel {
 	}
 
 	findFormsByUser(userId: number) {
-		return _.filter(this.forms, form => { return form.userId === userId })
+		console.log(this.forms)
+		console.log(userId)
+		return _.filter(this.forms, form => { 
+			return form.userId.toString() === userId.toString()
+		})
 	}
 
 	getFieldsForForm(formId: string): Array<any> {

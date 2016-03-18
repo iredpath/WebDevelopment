@@ -27,7 +27,7 @@ export default function FieldEndpoints(app, formModel: FormModel) {
 		res.status(200).send({ fields: updatedFields })
 	})
 
-	app.put('/api/assignment/form/:formId/field/:fieldid', (req, res) => {
+	app.put('/api/assignment/form/:formId/field/:fieldId', (req, res) => {
 		const { formId, fieldId } = req.params
 		const field = req.body.field
 		const updatedFields = formModel.updateFieldForForm(formId, fieldId, field)

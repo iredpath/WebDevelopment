@@ -69,8 +69,6 @@ export class FieldsController {
 		return this.newFieldMap[this.newFieldType]
 	}
 	addNewField() {
-		console.log(this.newFieldType)
-		console.log(this.getNewField())
 		this.fieldsService.createFieldForForm(this.formId, this.getNewField())
 			.subscribe(resp => {
 				this.fields = resp.json().fields
@@ -90,6 +88,7 @@ export class FieldsController {
 		if (field.options) {
 			field.options = this.getOptionsFor(field._id)
 		}
+		console.log(field.options)
 		this.fieldsService.updateField(this.formId, field._id, field)
 			.subscribe(resp => {
 				this.fields = resp.json().fields
@@ -100,10 +99,14 @@ export class FieldsController {
 	getOptionsFor(id) {
 		const optionString = this.optionsMap[id]
 		const optionsArray = optionString.split('\n')
-		return optionsArray.map(opt => {
-			const labelValuePair = opt.split(":")
-			return { label: labelValuePair[0], value: labelValuePair[1] }
+		let retVal = []
+		optionsArray.forEach(opt => {
+			if (opt) {
+				const labelValuePair = opt.split(":")
+				retVal.push({ label: labelValuePair[0], value: labelValuePair[1] })
+			} 
 		})
+		return retVal
 	}
 	isTextField(type) {
 		return type === 'TEXT' || type === 'TEXTAREA'

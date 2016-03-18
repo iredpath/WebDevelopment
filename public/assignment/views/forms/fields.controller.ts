@@ -82,6 +82,13 @@ export class FieldsController {
 		})
 	}
 
+	update(field) {
+		this.fieldsService.updateField(this.formId, field._id, field)
+			.subscribe(resp => {
+				this.fields = resp.json().fields
+			})
+	}
+
 	isTextField(type) {
 		return type === 'TEXT' || type === 'TEXTAREA'
 	}

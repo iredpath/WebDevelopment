@@ -19,6 +19,7 @@ export class FieldsController {
 	formId: string
 	fields: Array<any>
 	fetching: boolean
+	newOptions: string
 
 	constructor(public stateService: StateService, public router: Router,
 		public fieldsService: FieldsService, public http: Http, public params: RouteParams) {
@@ -79,5 +80,18 @@ export class FieldsController {
 			.subscribe(resp => {
 				this.fields = resp.json().fields
 		})
+	}
+
+	isTextField(type) {
+		return type === 'TEXT' || type === 'TEXTAREA'
+	}
+	isOptionField(field) {
+		if (field.type === 'OPTIONS' || field.type === 'RADIOS' || field.type === 'CHECKBOXES') {
+			field.options.forEach(opt => {
+				this.newOptions += `${opt.label}:${opt.value}\n`
+			})
+			return true
+		}
+		return false
 	}
 }

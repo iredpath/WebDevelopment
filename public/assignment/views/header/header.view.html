@@ -24,7 +24,7 @@
           <a [routerLink]='["/Profile"]'>Profile</a>
         </li>
         <li *ngIf="isActiveUser()">
-          <a>{{stateService.getActiveUser().getUsername()}}</a>
+          <a>{{stateService.getActiveUser().username}}</a>
         </li>
         <li *ngIf="isActiveUser()"><a (click)="logout()">Logout</a></li>
       </ul>

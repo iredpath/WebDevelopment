@@ -14,7 +14,7 @@ import { User } from '../../models/user.model'
 
 export class ProfileController {
 
-	user: User
+	user: any
 
 	constructor(public userService: UserService, public stateService: StateService, public router: Router) {
 		if (!stateService.isActiveUser()) {
@@ -25,8 +25,9 @@ export class ProfileController {
 	}
 
 	update() {
-		this.userService.updateUser(this.user.getId(), this.user, resp => {
-			console.log("successfully updated user " + resp)
-		})
+		this.userService.updateUser(this.user._id, this.user)
+			.subscribe(resp => {
+				console.log("successfully updated user " + resp.json().user)
+			})
 	}
 }

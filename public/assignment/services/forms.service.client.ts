@@ -1,47 +1,32 @@
 import { Injectable } from 'angular2/core'
+import { Http, Headers } from 'angular2/http'
 import { Form } from '../models/form.model'
 
 @Injectable()
 export class FormsService {
 
-	forms:Array<Form>
+	headers
 
-	constructor() {
-
-		const formData = [
-  			{"_id": "000", "title": "Contacts", "userId": 123},
-  			{"_id": "010", "title": "ToDo",     "userId": 123},
-  			{"_id": "020", "title": "CDs",      "userId": 234},
-		]
-		// Create forms based on formData
-		this.forms = _.map(formData, (formObj) => {
-			let form = new Form()
-			form.configure(formObj)
-			return form
-		})
+	constructor(public http: Http) { 
+		this.headers = new Headers()
+		this.headers.append("Content-Type", "application/json")
 	}
 
-	createFormForUser(userId, form, callback) {
-		form.setId((new Date).getTime())
-		form.setUserId(userId)
-		this.forms.push(form)
-		callback(form)
+	createFormForUser(userId, form) {
+		return this.http.post(`/api/assignment/user/${userId}/form`, JSON.stringify({ form: form }),
+			{ headers: this.headers })
 	}	
 
-	findAllFormForUser(userId, callback) {
-		callback(_.filter(this.forms, form => form.getUserId() === userId))
+	findAllFormsForUser(userId) {
+		return this.http.get(`/api/assignment/user/${userId}/form`)
 	}
 
-	deleteFormById(formId, callback) {
-		callback(_.remove(this.forms, form => form.getId() === formId))
+	deleteFormById(formId) {
+		return this.http.delete(`/api/assignment/form/${formId}`)
 	}
 
-	updateFormById(formId, newForm, callback) {
-		callback(_.forEach(this.forms, form => {
-			if(form.getId() === formId) {
-				form = newForm
-				return
-			}
-		}))
+	updateFormById(formId, newForm) {
+		return this.http.put(`/api/assignment/form/${formId}`, JSON.stringify({ form: newForm }),
+			{ headers: this.headers })
 	}
 }

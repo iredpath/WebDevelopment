@@ -1,118 +1,61 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h1 class="page-header">Forms : Registration Form</h1>
   <ul class="nav nav-tabs">
-    <li role="presentation"><a href="./forms.html">Forms</a></li>
-    <li role="presentation" class="active"><a href="./form-fields.html">Fields</a></li>
+    <li role="presentation"><a [routerLink]="['/Forms']">Forms</a></li>
+    <li role="presentation" class="active"><a [routerLink]="['/Fields', { formId: null }]">Fields</a></li>
   </ul>
   <form class="form-horizontal">
-    <div class="form-group">
-      <label for="first-name" class="col-sm-2 control-label">First Name:</label>
-      <div class="col-sm-6">
-        <input type="text" class="form-control" id="first-name" placeholder="Username">
-      </div>
-      <div class="col-sm-4 icon-div-4">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="last-name" class="col-sm-2 control-label">Last Name:</label>
-      <div class="col-sm-6">
-        <input type="text" class="form-control" id="last-name" placeholder="Password">
-      </div>
-      <div class="col-sm-4 icon-div-4">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="dob" class="col-sm-2 control-label">Date of Birth:</label>
-      <div class="col-sm-6">
-        <input type="date" class="form-control" id="dob" placeholder="Select date">
-      </div>
-      <div class="col-sm-4 icon-div-4">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="gender" class="col-sm-2 control-label">Gender:</label>
-      <div class="col-sm-6">
-        <select class="form-control" id="gender">
-          <option class="active">Male</option>
-          <option>Female</option>
-        <select>
-      </div>
-      <div class="col-sm-4 icon-div-4">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="roles" class="col-sm-2 control-label">Roles:</label>
-      <div class="col-sm-6" id="roles">
-        <div>
-          <input type="checkbox" id="admin-checkbox">
-          <label for="admin-checkbox" class="control-label">Admin</label>
+    <div class="form-group" *ngFor="#field of fields">
+      <label attr.for={{field._id}} class="col-sm-2 control-label">{{field.label}}</label>
+      <div class="col-sm-6" id={{field._id}} *ngSwitch="field.type">
+        <input *ngSwitchWhen="'TEXT'" type="text" class="form-control" placeholder={{field.placeholder}}>
+        
+        <input *ngSwitchWhen="'TEXTAREA'" type="textarea" class="form-control" placeholder={{field.placeholder}}>
+        
+        <input *ngSwitchWhen="'DATE'" type="date" class="form-control">
+        
+        <select *ngSwitchWhen="'DROPDOWN'" class="form-control">
+          <option *ngFor="#opt of field.options" value={{opt.value}}>{{opt.label}}</option>
+        </select>
+        
+        <div *ngSwitchWhen="'CHECKBOXES'">
+          <div *ngFor="#opt of field.options">
+            <input type="checkbox" id={{opt.value}} value={{opt.value}}>
+            <label attr.for={{opt.value}} class="control-label">{{opt.label}}</label>
+          </div>
         </div>
-        <div>
-          <input type="checkbox" id="user-checkbox">
-          <label for="user-checkbox" class="control-label">User</label>
-        </div>
-        <div>
-          <input type="checkbox" id="student-checkbox">
-          <label for="student-checkbox" class="control-label">Student</label>
+        
+        <div *ngSwitchWhen="'RADIOS'">
+          <div *ngFor="#opt of field.options">
+            <input type="checkbox" id={{opt.value}} value={{opt.value}} name={{field.id}}-radio>
+            <label attr.for={{opt.value}}>{{opt.label}}</label>
+          </div>
         </div>
       </div>
       <div class="col-sm-4 icon-div-4">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
+        <span class="glyphicon glyphicon-remove" (click)="removeField(field._id)"></span>
         <span class="glyphicon glyphicon-menu-hamburger"></span>
       </div>
     </div>
-    <div class="form-group">
-      <label for="license-agreement" class="col-sm-2 control-label">License Agreement:</label>
-      <div class="col-sm-6" id="license-agreement">
-        <div>
-          <input type="radio" name="license-radio" id="radio-yes">
-          <label for="radio-yes">Yes</label>
-        </div>
-        <div>
-          <input type="radio" name="license-radio" id="radio-no">
-          <label for="radio-no">No</label>
-        </div>
-      </div>
-      <div class="col-sm-4 icon-div-4">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove"></span>
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    </div>
+
     <div class="form-group add-new-field-div">
       <label for="add-new-field" class="col-sm-2 control-label">Add New Field:</label>
       <div class="col-sm-6">
-        <select class="form-control" id="add-new-field">
-          <option class="active">Single Line Text</option>
-          <option>Date</option>
-          <option>Dropdown</option>
-          <option>Checkboxes</option>
-          <option>Radio Buttons</option>
-          <option>Paragraph Text Field</option>
+        <select class="form-control" id="add-new-field" [(ngModel)]="newFieldType">
+          <option class="active">Choose Field Type</option>
+          <option value="TEXT">Single Line Text</option>
+          <option value="DATE">Date</option>
+          <option value="DROPDOWN">Dropdown</option>
+          <option value="CHECKBOXES">Checkboxes</option>
+          <option value="RADIOS">Radio Buttons</option>
+          <option value="TEXTAREA">Paragraph Text Field</option>
         </select>
       </div>
       <div class="col-sm-4 icon-div-4">
         <span class="glyphicon left-spacer"></span>
-        <span class="glyphicon glyphicon-plus"></span>
+        <span class="glyphicon glyphicon-plus" (click)="addNewField()"></span>
       </div>
     </div>
   </form>

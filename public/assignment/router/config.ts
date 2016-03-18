@@ -6,6 +6,7 @@ import { AdminController } from '../views/admin/admin.controller'
 import { ProfileController } from '../views/users/profile.controller'
 import { RegisterController } from '../views/users/register.controller'
 import { LoginController } from '../views/users/login.controller'
+import { FieldsController } from '../views/forms/fields.controller'
 
 export const ROUTER_CONFIG = [
 	{ path: '/home', component: HomeController, as: "Home", useAsDefault: true },
@@ -13,5 +14,6 @@ export const ROUTER_CONFIG = [
 	{ path: '/admin', component: AdminController, as: "Admin" },
 	{ path: '/profile', component: ProfileController, as: "Profile" },
 	{ path: '/register', component: RegisterController, as: "Register" },
-	{ path: '/login', component: LoginController, as: "Login" }
+	{ path: '/login', component: LoginController, as: "Login" },
+	{ path: '/form/:formId/field', component: FieldsController, as: 'Fields'}
 ]

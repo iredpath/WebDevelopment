@@ -3,7 +3,6 @@ import { Router } from 'angular2/router'
 import { UserService } from '../../services/user.service.client'
 import { StateService } from '../../services/state.service.client'
 import { User } from '../../models/user.model'
-import { UserFactory } from '../../models/user.factory'
 
 @Component({
 	selector: "form-builder-register"
@@ -15,20 +14,22 @@ import { UserFactory } from '../../models/user.factory'
 
 export class RegisterController {
 
-	user:User
+	user: any
 
 	constructor(
 		public userService:UserService, public stateService:StateService,
-		public router:Router, public userFactory:UserFactory
+		public router:Router
 	) {
 		this.user = stateService.getActiveUser()
 	}
 
 	register() {
-		this.userService.createUser(this.user, resp => {
-			console.log('successfully created user ' + resp)
-			this.stateService.setActiveUser(resp)
-			this.router.navigate(['/Profile', {}])
-		})
+		this.userService.createUser(this.user)
+			.subscribe(resp => {
+				const { user } = resp.json()
+				console.log('successfully created user ' + user)
+				this.stateService.setActiveUser(user)
+				this.router.navigate(['/Profile', {}])
+			})
 	}
 }

@@ -1,60 +1,35 @@
 import { Injectable } from 'angular2/core'
-import { User } from '../models/user.model'
-import { UserFactory } from '../models/user.factory'
+import { Http, Headers } from 'angular2/http'
 
 @Injectable()
 export class UserService {
 
-	users:Array<User>
+	headers
 
-	constructor(public userFactory:UserFactory) {
-
-		const userData = [
-  			{ "_id":123, "firstName":"Alice", "lastName":"Wonderland", "username":"alice",  "password":"alice",   "roles": ["student"] },
-  			{ "_id":234, "firstName":"Bob", "lastName":"Hope", "username":"bob", "password":"bob", "roles": ["admin"] },
-  			{ "_id":345, "firstName":"Charlie", "lastName":"Brown", "username":"charlie", "password":"charlie", "roles": ["faculty"] },
-  			{ "_id":456, "firstName":"Dan", "lastName":"Craig", "username":"dan", "password":"dan", "roles": ["faculty", "admin"] },
-  			{ "_id":567, "firstName":"Edward", "lastName":"Norton", "username":"ed", "password":"ed", "roles": ["student"] }
-]
-		// Create users based on userData
-		this.users = _.map(userData, (userData) => {
-			let user = this.userFactory.newUser()
-			user.configure(userData)
-			return user
-		})
-	}
-	
-	findUserByCredentials(username, password, callback) {
-		let user:User
-		for(user of this.users) {
-			if(user.getUsername() === username && user.getPassword() === password) {
-				callback(user)
-				return
-			}
-		}
-		callback(null)
+	constructor(public http: Http) {
+		this.headers = new Headers()
+		this.headers.append("Content-Type", "application/json")
 	}
 
-	findAllUsers(callback) {
-		callback(this.users)
+	findUserByCredentials(username: string, password: string) {
+		return this.http.get(`/api/assignment/user?username=${username}&password=${password}`)
 	}
 
-	createUser(user, callback) {
-		user.setId((new Date).getTime())
-		this.users.push(user)
-		callback(user)
+	findAllUsers() {
+		return this.http.get("/api/assignment/user")
 	}
 
-	deleteUserById(userId, callback) {
-		callback(_.remove(this.users, user => { user.getId() === userId }))
+	createUser(user) {
+		return this.http.post("/api/assignment/user", JSON.stringify({ user }),
+			{ headers: this.headers })
 	}
 
-	updateUser(userId, user, callback) {
-		callback(_.forEach(this.users, oldUser => { 
-			if(user._id === userId) {
-				oldUser = user
-				return
-			}
-		}))
+	deleteUserById(userId) {
+		return this.http.delete(`/api/assignment/user/${userId}`)
+	}
+
+	updateUser(userId, user) {
+		return this.http.put(`/api/assignment/user/${userId}`, JSON.stringify({ user }),
+			{ headers: this.headers })
 	}
 }

@@ -31,7 +31,7 @@ export class HeaderController {
 	}
 
 	logout() {
-		this.stateService.setActiveUser(this.userFactory.newUser())
+		this.stateService.setActiveUser({})
 		this.router.navigate(['/Home', {}])
 	}
 }

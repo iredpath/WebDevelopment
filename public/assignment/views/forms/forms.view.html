@@ -1,8 +1,8 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h1 class="page-header">Forms</h1>
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="./forms.html">Forms</a></li>
-    <!--<li role="presentation"><a href="./form-fields.html">Fields</a></li>-->
+    <li role="presentation" class="active"><a [routerLink]="['/Forms']">Forms</a></li>
+    <li role="presentation"><!--<a [routerLink]="['/Fields']">Fields</a>--></li>
   </ul>
   <table class="table table-striped">
     <thead>
@@ -30,10 +30,10 @@
         </div></th>
       </tr>
       <tr *ngFor="#form of forms">
-        <th>{{form.title}}</th>
+        <th><a [routerLink]="['/Fields', { formId: form._id }]">{{form.name}}</a></th>
         <th><div class="icon-div-2">
           <span class="glyphicon glyphicon-remove" (click)="deleteForm(form)"></span>
-          <span class="glyphicon glyphicon-pencil" (click)="seletForm(form)"></span>
+          <span class="glyphicon glyphicon-pencil" (click)="selectForm(form)"></span>
         </div></th>
       </tr>
   </table>

@@ -16,7 +16,7 @@ import { UserFactory } from '../../models/user.factory'
 
 export class LoginController {
 
-	user:User
+	user: any
 
 	constructor(
 		public userService:UserService, public stateService:StateService,
@@ -26,14 +26,16 @@ export class LoginController {
 	}
 
 	login() {
-		this.userService.findUserByCredentials(this.user.getUsername(), this.user.getPassword(), resp => {
-			if (resp) {
-				this.stateService.setActiveUser(resp)
-				this.router.navigate(['/Profile', {}])
-			} else {
-				alert('Invalid name/password')
-				this.user = this.userFactory.newUser()
-			}
-		})
+		this.userService.findUserByCredentials(this.user.username, this.user.password)
+			.subscribe(resp => {
+				const { user } = resp.json()
+				if (user) {
+					this.stateService.setActiveUser(user)
+					this.router.navigate(['/Profile', {}])
+				} else {
+					alert('Invalid name/password')
+					this.user = {}
+				}
+			})
 	}
 }

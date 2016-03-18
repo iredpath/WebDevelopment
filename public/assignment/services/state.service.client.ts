@@ -4,10 +4,10 @@ import { UserFactory } from '../models/user.factory'
 
 @Injectable()
 export class StateService {
-	activeUser: User
+	activeUser: any
 
 	constructor(public userFactory:UserFactory) {
-		this.activeUser = userFactory.newUser() 
+		this.activeUser = {}
 	}
 	setActiveUser(user) {
 		this.activeUser = user
@@ -16,10 +16,10 @@ export class StateService {
 		return this.activeUser
 	}
 	isActiveUser() {
-		return !!this.activeUser.getId()
+		return !!this.activeUser._id
 	}
 	isActiveAdminUser() {
 		return this.isActiveUser()
-			&& _.includes(this.activeUser.getRoles(), "admin")
+			&& _.includes(this.activeUser.roles, "admin")
 	}
 }

@@ -27,6 +27,11 @@ export class Gulpfile {
         return tsResult
     }
 
+    @Task("build:data")
+    buildData() {
+        return gulp.src('server/models/**/*.json')
+            .pipe(gulp.dest('dist/models'))
+    }
     @Task("build:public")
     buildPublic() {
         const tsProject = ts.createProject('public/tsconfig.json')
@@ -44,7 +49,7 @@ export class Gulpfile {
 
     @SequenceTask("build")
     build() {
-        return ["clean", "build:server", "build:public"]
+        return ["clean", "build:server", "build:data", "build:public"]
     }
 
     @SequenceTask("default")

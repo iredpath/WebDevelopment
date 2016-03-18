@@ -19,7 +19,7 @@ export class FieldsController {
 	formId: string
 	fields: Array<any>
 	fetching: boolean
-	newOptions: string
+	optionsMap: any
 
 	constructor(public stateService: StateService, public router: Router,
 		public fieldsService: FieldsService, public http: Http, public params: RouteParams) {
@@ -54,9 +54,11 @@ export class FieldsController {
 				}
 			}
 			this.formId = params.get('formId')
+			this.optionsMap = {}
 			fieldsService.getFieldsForForm(this.formId)
 				.subscribe(resp => {
 					this.fields = resp.json().fields
+					this.updateOptions()
 					this.fetching = false
 				})
 		}
@@ -72,6 +74,7 @@ export class FieldsController {
 		this.fieldsService.createFieldForForm(this.formId, this.getNewField())
 			.subscribe(resp => {
 				this.fields = resp.json().fields
+				this.updateOptions()
 			})
 	}
 
@@ -79,25 +82,45 @@ export class FieldsController {
 		this.fieldsService.deleteFieldFromForm(this.formId, fieldId)
 			.subscribe(resp => {
 				this.fields = resp.json().fields
+				this.updateOptions()
 		})
 	}
 
 	update(field) {
+		if (field.options) {
+			field.options = this.getOptionsFor(field._id)
+		}
 		this.fieldsService.updateField(this.formId, field._id, field)
 			.subscribe(resp => {
 				this.fields = resp.json().fields
+				this.updateOptions()
 			})
 	}
 
+	getOptionsFor(id) {
+		const optionString = this.optionsMap[id]
+		const optionsArray = optionString.split('\n')
+		return optionsArray.map(opt => {
+			const labelValuePair = opt.split(":")
+			return { label: labelValuePair[0], value: labelValuePair[1] }
+		})
+	}
 	isTextField(type) {
 		return type === 'TEXT' || type === 'TEXTAREA'
 	}
 	isOptionField(field) {
 		return field.type === 'DROPDOWN' || field.type === 'RADIOS' || field.type === 'CHECKBOXES'
 	}
-	formatOptions(options) {
-		options.forEach(opt => {
-			this.newOptions += `${opt.label}:${opt.value}\n`
+
+	updateOptions() {
+		this.fields.forEach(field => {
+			if (field.options) {
+				let base = ""
+				field.options.forEach(opt => {
+					base += `${opt.label}:${opt.value}\n`
+				})
+				this.optionsMap[field._id] = base
+			}
 		})
 	}
 }

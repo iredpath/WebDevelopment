@@ -30,7 +30,7 @@ export class FieldsService {
 	}
 
 	updateField(formId: string, fieldId: string, field) {
-		return this.http.put(`/api/assignment/form/${formId}/field`, JSON.stringify({ field }),
+		return this.http.put(`/api/assignment/form/${formId}/field/${fieldId}`, JSON.stringify({ field }),
 			{ headers: this.headers })
 	}
 

@@ -58,19 +58,19 @@ export default class FormModel {
 
 	getFieldForForm(formId: string, fieldId: string) {
 		const fields = this.getFieldsForForm(formId)
-		return _.find(fields, field => { return field.id === fieldId })
+		return _.find(fields, field => { return field._id === fieldId })
 	}
 
 	deleteFieldForForm(formId: string, fieldId: string) {
 		const form = this.findById(formId)
 		const fields: Array<any> = form.fields
-		_.remove(fields, field => { return field.id === fieldId })
+		_.remove(fields, field => { return field._id === fieldId })
 		return fields
 	}
 
 	addFieldToForm(formId: string, field) {
 		const form = this.findById(formId)
-		field.id = (this.idNumber * 2).toString()
+		field._id = (this.idNumber * 2).toString()
 		form.fields.push(field)
 		return form.fields
 	}
@@ -79,7 +79,7 @@ export default class FormModel {
 		const form = this.findById(formId)
 		const fields: Array<any> = form.fields
 		fields.forEach(f => {
-			if (field.id === fieldId) {
+			if (field._id === fieldId) {
 				f = field
 			}
 		})

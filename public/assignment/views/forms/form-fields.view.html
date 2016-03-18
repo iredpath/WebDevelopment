@@ -6,7 +6,7 @@
   </ul>
   <form class="form-horizontal">
     <div class="form-group" *ngFor="#field of fields">
-      <label attr.for={{field.id}} class="col-sm-2 control-label">{{field.label}}</label>
+      <label attr.for={{field._id}} class="col-sm-2 control-label">{{field.label}}</label>
       <div class="col-sm-6" id={{field.id}} [ngSwitch]="field.type">
         <input *ngSwitchWhen="'TEXT'" type="text" class="form-control" placeholder={{field.placeholder}}>
         
@@ -27,7 +27,7 @@
         
         <div *ngSwitchWhen="'RADIOS'">
           <div *ngFor="#opt of field.options">
-            <input type="checkbox" id={{opt.value}} value={{opt.value}} name={{field.id}}-radio>
+            <input type="checkbox" id={{opt.value}} value={{opt.value}} name={{field._id}}-radio>
             <label attr.for={{opt.value}}>{{opt.label}}</label>
           </div>
         </div>
@@ -35,7 +35,7 @@
       <div class="col-sm-4 icon-div-4">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="glyphicon glyphicon-plus"></span>
-        <span class="glyphicon glyphicon-remove" (click)="removeField(field._id)"></span>
+        <span class="glyphicon glyphicon-remove" (click)="deleteField(field._id)"></span>
         <span class="glyphicon glyphicon-menu-hamburger"></span>
       </div>
     </div>

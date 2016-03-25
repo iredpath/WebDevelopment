@@ -1,7 +1,6 @@
 import { View, Component, Inject } from 'angular2/core'
 import { Router } from 'angular2/router'
 import { UserService } from '../../services/userService'
-import { UserModel } from '../../models/userModel'
 
 @Component({
 	selector: "vml-login"
@@ -22,15 +21,17 @@ export class Login {
 	}
 
 	login() {
-		this.userService.findUserByCredentials(this.username, this.password, resp => {
-			if (resp) {
-				this.userService.login(resp)
-				this.router.navigate(['/Home', {}])
-			} else {
-				alert('Invalid name/password')
-				this.username = ""
-				this.password = ""
-			}
-		})
+		this.userService.findUserByCredentials(this.username, this.password)
+			.subscribe(
+				resp => {
+					if (resp.json().user) {
+						this.userService.login(resp.json().user)
+						this.router.navigate(['/Home', {}])
+					} else {
+						alert('Invalid name/password')
+						this.username = ""
+						this.password = ""
+					}
+				})
 	}
 }

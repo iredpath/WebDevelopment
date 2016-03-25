@@ -18,7 +18,14 @@ export class Movies {
 
 	constructor(public movieService: MovieService) {
 		this.fetchingMovies = true
-		this.movies = movieService.getAll()
-		this.fetchingMovies = false
+		this.movieService.getAll()
+			.subscribe(resp => {
+				if (resp.json().movies) {
+					this.movies = resp.json().movies
+				} else {
+					alert('error fetching all movies')
+				}
+				this.fetchingMovies = false
+			})
 	}
 }

@@ -1,3 +1,5 @@
+import { Http, Headers } from 'angular2/http'
+
 import { Injectable } from 'angular2/core'
 import { UserModel } from '../models/userModel'
 import { MovieModel } from '../models/movieModel'
@@ -10,9 +12,12 @@ export class UserService {
 
 	users: Object
 	activeUser: UserModel
+	headers
 
-	constructor(public libraryService: LibraryService, public movieService: MovieService) {
-		this.users = {}
+	constructor(public libraryService: LibraryService, public movieService: MovieService, public http: Http) {
+		this.headers = new Headers()
+		this.headers.append("Content-Type", "application/json")
+		/*this.users = {}
 		this.activeUser = null
 		const userData = [
 			{ "_id": 123, "firstname": "Alice", "lastname": "Wonderland", "username": "alice", "password": "alice",
@@ -42,33 +47,39 @@ export class UserService {
 		_.forEach(userData, (data) => {
 			let user: UserModel = UserModel.newUser(data)
 			this.users[user.id] = user
-		})
+		})*/
 	}
 
-	findUserByCredentials(username: string, password: string, callback: Function) {
-		let user: UserModel
+	findUserByCredentials(username: string, password: string) {//, callback: Function) {
+		return this.http.get(`/api/project/user?username=${username}&password=${password}`,
+			{ headers: this.headers })
+		/*let user: UserModel
 		for (user of <Array<UserModel>> _.values(this.users)) {
 			if (user.username === username && user.password === password) {
 				callback(user)
 				return
 			}
 		}
-		callback(null)
+		callback(null)*/
 	}
 
 	findAllUsers(callback) {
-		callback(_.values(this.users))
+		return this.http.get('/api/project/user',
+			{ headers: this.headers })
+		//callback(_.values(this.users))
 	}
 
-	createUser(user, callback) {
-		user.id = (new Date).getTime()
+	createUser(user) {
+		return this.http.post('/api/project/user', JSON.stringify({ user }),
+			{ headers: this.headers })
+		/*user.id = (new Date).getTime()
 		// ensure unique username
 		if (user.username && !this.duplicateUsername(user.username)) {
 			this.users[user.id] = user
 			callback(user)
 		} else {
 			callback(null)
-		}
+		}*/
 	}
 
 	duplicateUsername(name) {
@@ -86,8 +97,14 @@ export class UserService {
 	getActiveUser() {
 		return this.activeUser
 	}
-	get(id: number) {
-		return this.users[id]
+	getUserById(id: number) {
+		return this.http.get(`/api/project/user/${id}`,
+			{ headers: this.headers })
+			//this.users[id]
+	}
+
+	removeLibrary(libId, userId) {
+		return this.http.delete(`/api/project/user/${userId}/library/${libId}`, { headers: this.headers })
 	}
 
 	addMovie(movie: MovieModel) {
@@ -99,7 +116,7 @@ export class UserService {
 
 	addLibrary(library: LibraryModel) {
 		if (this.activeUser) {
-			this.users[this.activeUser.id].libraries.push(library)
+			this.users[this.activeUser._id].libraries.push(library)
 			this.libraryService.addLibrary(library)
 		}
 	}

@@ -1,9 +1,14 @@
 <div *ngIf='!fetchingMovie' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-  <h1 class="movie-title">{{movie.title}}</h1>
+  <h1 class="movie-title">{{omdbMovie.title}}</h1>
   <div class="col-sm-4 col-md-5">
-    <img *ngIf="movie.image !== 'N/A'" class="movie-image" src="">
-    <div>
-      <button class="btn btn-small" (click)="addMovie()">+</button>
+    <img *ngIf="omdbMovie.image !== 'N/A'" class="movie-image" src="">
+    <div *ngIf="userService.getActiveUser()">
+      <div>
+        <select [(ngModel)]="libraryId">
+          <option *ngFor="#library of userService.getActiveUser().libraries" value={{library.id}}>{{library.name}}</option>
+        </select>
+        <button class="btn btn-small" (click)="addMovie()">+</button>
+      </div>
       <span class="glyphicon glyphicon-star"></span>
       <span class="glyphicon glyphicon-star"></span>
       <span class="glyphicon glyphicon-star"></span>
@@ -15,24 +20,24 @@
     <div class="actors-container">
       <label for="actors">Actors:</label>
       <ul class="actors">
-        <li *ngFor="#actor of movie.actors">{{actor}}</li>
+        <li *ngFor="#actor of omdbMovie.actors">{{actor}}</li>
       </ul>
     </div>
     <div>
       <label for="director">Directed By:</label>
-      <span class="director">{{movie.directors}}</span>
+      <span class="director">{{omdbMovie.directors}}</span>
     </div>
     <div>
       <label for="summary">Plot Summary:</label>
-      <p class="summary">{{movie.plot}}</p>
+      <p class="summary">{{omdbMovie.plot}}</p>
     </div>
     <div>
       <label for="rating">Rated:</label>
-      <span class="rating">{{movie.rating}}</span>
+      <span class="rating">{{omdbMovie.rating}}</span>
     </div>
     <div>
       <label for="released">Released on:</label>
-      <span class="released">{{movie.releaseDate}}</span>
+      <span class="released">{{omdbMovie.releaseDate}}</span>
     </div>
     <div class="ratings-container">
       <label for="ratings">Average Rating:</label>
@@ -42,8 +47,8 @@
         <span class="glyphicon glyphicon-star"></span>
         <span class="glyphicon glyphicon-star"></span>
         <span class="glyphicon glyphicon-star"></span>
-        <span *ngIf="movie.tomatoMeter !== 'N/A'" class="rating-rt">
-          <a href={{movie.tomatoUrl}}>{{movie.tomatoMeter}}% on rotton tomatoes</a>
+        <span *ngIf="omdbMovie.tomatoMeter !== 'N/A'" class="rating-rt">
+          <a href={{omdbMovie.tomatoUrl}}>{{omdbMovie.tomatoMeter}}% on rotton tomatoes</a>
         </span>
       </div>
     </div>
@@ -51,7 +56,7 @@
   <div class="col-sm-12 col-md-12" *ngIf="!fetchingLibraries">
     <h3>Libraries With This Title</h3>
     <div class="movie-in-libraries">
-      <div *ngFor="#library of libraries" class="movie-in-library">
+      <div *ngFor="#library of movie.libraries" class="movie-in-library">
         <a class="thumbnail" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</a>
       </div>
     </div>

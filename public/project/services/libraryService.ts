@@ -1,13 +1,17 @@
 import { Injectable } from 'angular2/core'
+import { Http, Headers } from 'angular2/http'
 import { LibraryModel } from '../models/libraryModel'
 
 @Injectable()
 export class LibraryService {
 
 	libraries: Object
+	headers
 
-	constructor() {
-		this.libraries = {}
+	constructor(public http: Http) {
+		this.headers = new Headers()
+		this.headers.append("Content-Type", "application/json")
+		/*this.libraries = {}
 		const sampleLibraryData = [
 			{
 				id: 1, name: "sample1", movies: [{ id: 1, imdbId: "tt0120338", title: "Titanic" }],
@@ -29,19 +33,25 @@ export class LibraryService {
 		_.forEach(sampleLibraryData, lib => {
 			let model: LibraryModel = LibraryModel.newLibrary(lib)
 			this.libraries[model.id] = model
-		})
+		})*/
 	}
 
 	get(id: number) {
-		return this.libraries[id]
+		return this.http.get(`/api/project/library/${id}`,
+			{ headers: this.headers })
+		//return this.libraries[id]
 	}
 
 	addLibrary(library: LibraryModel) {
-		this.libraries[library.id] = library
+		return this.http.post('/api/project/library', JSON.stringify({ library }),
+			{ headers: this.headers })
+		//this.libraries[library.id] = library
 	}
 
 	getAll() {
-		return <Array<LibraryModel>> _.values(this.libraries)
+		return this.http.get('/api/project/library',
+			{ headers: this.headers })
+		//return <Array<LibraryModel>> _.values(this.libraries)
 	}
 
 	getLibrariesWith(id: string): Array<LibraryModel> {
@@ -52,9 +62,19 @@ export class LibraryService {
 		})
 	}
 
-	removeLibrary(id: number) {
-		delete this.libraries[id]
+	updateLibrary(library) {
+		return this.http.put('/api/project/library', JSON.stringify({ library}), { headers: this.headers })
 	}
 
+	removeLibrary(id: number) {
+		return this.http.delete(`/api/project/library/${id}`,
+			{ headers: this.headers })
+		//delete this.libraries[id]
+	}
+
+	removeMovie(libraryId: number, movieId: string) {
+		return this.http.delete(`/api/project/library/${libraryId}/movie/${movieId}`,
+			{ headers: this.headers })
+	}
 
 }

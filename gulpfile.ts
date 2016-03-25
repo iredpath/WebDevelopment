@@ -1,6 +1,6 @@
 /// <reference path="./node_modules/gulpclass/index.d.ts" />
 /// <reference path="./typings/main.d.ts" />
-import {Gulpclass, SequenceTask, Task } from "gulpclass/Decorators";
+import { Gulpclass, SequenceTask, Task } from "gulpclass/Decorators";
 
 import * as gulp from 'gulp'
 import * as del from 'del'
@@ -32,6 +32,12 @@ export class Gulpfile {
         return gulp.src('server/models/**/*.json')
             .pipe(gulp.dest('dist/models'))
     }
+
+    @Task("build:projectData")
+    buildProjectData() {
+        return gulp.src('server/project/data/*.json')
+            .pipe(gulp.dest('dist/project/data'))
+    }
     @Task("build:public")
     buildPublic() {
         const tsProject = ts.createProject('public/tsconfig.json')
@@ -49,7 +55,7 @@ export class Gulpfile {
 
     @SequenceTask("build")
     build() {
-        return ["clean", "build:server", "build:data", "build:public"]
+        return ["clean", "build:server", "build:data", "build:projectData", "build:public"]
     }
 
     @SequenceTask("default")

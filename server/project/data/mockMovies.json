@@ -1,0 +1,7 @@
+[
+	{ "id": 1, "imdbId": "tt0120338", "title": "Titanic",
+		"libraries": [{ "id": 1, "name": "sample1" }, { "id": 3, "name": "sample3" }] },
+	{ "id": 2, "imdbId": "tt0096895", "title": "Batman", "libraries": [{ "id": 2, "name": "sample2" }] },
+	{ "id": 3, "imdbId": "tt1431045", "title": "Deadpool",
+		"libraries": [{ "id": 2, "name": "sample2" }, { "id": 3, "name": "sample3" }] }
+]

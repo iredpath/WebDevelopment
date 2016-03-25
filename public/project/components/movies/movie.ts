@@ -18,35 +18,51 @@ import { UserService } from '../../services/userService'
 
 export class Movie {
 
-	movie:OmdbMovieModel
-	libraries: Array<LibraryModel>
+	movie: any
+	omdbMovie:OmdbMovieModel
 	fetchingMovie:boolean
 	fetchingLibraries: boolean
+	libraryId: string
 
 	constructor(public params:RouteParams, public omdbService:OmdbService,
 		public movieService: MovieService, public libraryService: LibraryService,
 		public userService: UserService) {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
-		//const id: number = +params.get('movie')
-		//const localMovie: MovieModel = movieService.get(id)
-		const imdbId: string = params.get('movie')//localMovie.imdbId
+		const imdbId: string = params.get('movie')
+		movieService.get(imdbId)
+			.subscribe(
+				resp => { 
+					if (resp.json().movie) {
+						this.movie = resp.json().movie
+					}
+					this.fetchingLibraries = false
+				})
 		omdbService.findMovieById(imdbId)
 			.subscribe(
-				data => this.movie = OmdbMovieModel.newMovie(data.json()),
-				err => { alert(err); this.movie = OmdbMovieModel.emptyMovie() },
+				data => { this.omdbMovie = OmdbMovieModel.newMovie(data.json()) },
+				err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() },
 				() => { this.fetchingMovie = false}
 			)
-		this.libraries = libraryService.getLibrariesWith(imdbId)
-		this.fetchingLibraries = false
 	}
 	// eventually, this will be part of a new component and logic will be moved out of here
 	addMovie() {
+		if (this.libraryId) {
+			this.movieService.addMovieToLibrary(this.movie, this.libraryId)
+				.subscribe(resp => {
+					if (resp.json().movie) {
+						this.movie = resp.json().movie
+					}
+				})
+		} else {
+			alert("please select a library first")
+		}
+		/*
 		if(this.userService.getActiveUser()) {
 			const movieToAdd: MovieModel = this.movieService.transformFromOmdb(this.movie)
 			this.userService.addMovie(movieToAdd)
 		} else {
 			alert('sign in to add a movie!')
-		}
+		}*/
 	}
 }

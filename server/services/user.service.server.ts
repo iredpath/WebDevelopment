@@ -1,6 +1,6 @@
 import UserModel from '../models/user.model'
 
-export default function UserEndpoints(app, userModel: UserModel) {
+export default function Userendpoints(app, userModel: UserModel) {
 
 	app.post('/api/assignment/user', (req, res) => {
 		const newUser = req.body.user

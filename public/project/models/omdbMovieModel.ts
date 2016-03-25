@@ -41,6 +41,7 @@ export class OmdbMovieModel {
 
 	constructor() { }
 	static newMovie(movieData: any): OmdbMovieModel {
+		console.log(movieData)
 		let movie: OmdbMovieModel = new OmdbMovieModel()
 		movie.configure(movieData)
 		return movie

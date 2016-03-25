@@ -1,0 +1,102 @@
+
+[
+	{ 
+		"_id": 123,
+		"firstname": "Alice",
+		"lastname": "Wonderland",
+		"username": "alice",
+		"password": "alice",
+		"libraries": [
+			{
+				"id": 1,
+				"name": "sample1",
+				"movies": [
+					{
+						"id": 1,
+						"imdbId": "tt0120338",
+						"title": "Titanic"
+					}
+				],
+				"comments": [],
+				"ratings": [],
+				"user": { 
+					"username": "alice",
+					"id": 123
+				}
+			},
+			{
+				"id": 2,
+				"name": "sample2",
+				"movies": [
+					{
+						"id": 2,
+						"imdbId": "tt0096895",
+						"title": "Batman"
+					},
+					{
+						"id": 3,
+						"imdbId": "tt1431045",
+						"title": "Deadpool"
+					}
+				],
+				"comments": [],
+				"ratings": [],
+				"user": { 
+					"username": "alice",
+					"id": 123
+				}
+			}
+		]
+	},
+	{
+		"_id": 234, 
+		"firstname": "Bob", 
+		"lastname": "Hope", 
+		"username": "bob", 
+		"password": "bob",
+		"libraries": [
+			{
+				"id": 3,
+				"name": "sample3",
+				"movies": [
+					{ 
+						"id": 1,
+						"imdbId": "tt0120338",
+						"title": "Titanic"
+					},
+					{ 
+						"id": 3,
+						"imdbId": "tt1431045",
+						"title": "Deadpool" 
+					}
+				],
+				"comments": [],
+				"ratings": [],
+				"user": { 
+					"username": "bob",
+					"id": 234 
+				}
+			}
+		]
+	},
+	{ 
+		"_id": 345, 
+		"firstname": "Charlie", 
+		"lastname": "Brown",
+		"username": "charlie", 
+		"password": "charlie"
+	},
+	{ 
+		"_id": 456, 
+		"firstname": "Dan", 
+		"lastname": "Craig", 
+		"username": "dan", 
+		"password": "dan" },
+	{ 
+		"_id": 567, 
+		"firstname": "Edward", 
+		"lastname": "Norton", 
+		"username": "ed", 
+		"password": "ed"
+	}
+]

@@ -2,7 +2,7 @@ import { LibraryModel } from './libraryModel'
 
 export class UserModel {
 
-	id: number
+	_id: number
 	firstname: string
 	lastname: string
 	username: string
@@ -20,7 +20,7 @@ export class UserModel {
 	}
 
 	configure(data: any) {
-		this.id = data._id
+		this._id = data._id
 		this.firstname = data.firstname
 		this.lastname = data.lastname
 		this.username = data.username

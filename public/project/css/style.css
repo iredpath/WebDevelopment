@@ -1,3 +1,6 @@
+.clickable {
+	cursor: pointer;
+}
 .searchbar {
 	display: inline-block;
 	width: 45%

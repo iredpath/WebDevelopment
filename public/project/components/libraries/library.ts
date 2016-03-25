@@ -23,12 +23,17 @@ export class Library {
 		public userService: UserService) {
 		this.fetchingLibrary = true
 		const libraryId: number = +params.get('library')
-		this.library = libraryService.get(libraryId)
-		this.fetchingLibrary = false
+		libraryService.get(libraryId)
+			.subscribe(resp => {
+				if (resp.json().library) {
+					this.library = resp.json().library
+				}
+				this.fetchingLibrary = false
+			})
 	}
 
 	hasEditRights() {
-		return this.userService.getActiveUser() && this.library.user.id === this.userService.getActiveUser().id
+		return this.userService.getActiveUser() && this.library.user._id === this.userService.getActiveUser()._id
 	}
 
 	editLibraryName() {
@@ -43,10 +48,23 @@ export class Library {
 
 	saveNewLibraryName() {
 		this.isEditingLibraryName = false
+		this.libraryService.updateLibrary(this.library)
+			.subscribe(resp => {
+				if(resp.json().library) {
+					this.library = resp.json().library
+					this.libraryBackup = resp.json().library
+				}
+			})
 	}
 
 	removeMovie(id: string) {
-		_.remove(this.library.movies, mov => { return mov.imdbId === id })
+		this.libraryService.removeMovie(this.library.id, id)
+			.subscribe(resp => {
+				if (resp.json().library) {
+					this.library = resp.json().library
+				}
+			})
+		//_.remove(this.library.movies, mov => { return mov.imdbId === id })
 	}
 
 }

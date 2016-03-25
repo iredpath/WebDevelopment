@@ -17,8 +17,13 @@ export class Libraries {
 
 	constructor(public libraryService: LibraryService) {
 		this.fetchingLibraries = true
-		this.libraries = libraryService.getAll()
-		this.fetchingLibraries = false
+		libraryService.getAll()
+			.subscribe(resp => {
+				if (resp.json().libraries) {
+					this.libraries = resp.json().libraries
+				}
+				this.fetchingLibraries = false
+			})
 
 	}
 }

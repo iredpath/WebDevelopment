@@ -1,7 +1,6 @@
 import { View, Component, Inject } from 'angular2/core'
 import { Router } from 'angular2/router'
 import { UserService } from '../../services/userService'
-import { UserModel } from '../../models/userModel'
 
 @Component({
 	selector: "vml-register"
@@ -13,21 +12,22 @@ import { UserModel } from '../../models/userModel'
 
 export class Register {
 
-	user: UserModel
+	user: any
 
 	constructor(public userService: UserService, public router: Router) {
-		this.user = UserModel.newUser({})
+		this.user = {}
 	}
 
 	register() {
-		this.userService.createUser(this.user, newUser => {
-			if(newUser) {
-				this.userService.login(newUser)
-				this.router.navigate(['/Home', {}])
-			} else {
-				// assume invalid username
-				alert('invalid username')
-			}
-		})
+		this.userService.createUser(this.user)
+			.subscribe(resp => {
+				const response = resp.json()
+				if(response.user) {
+					this.userService.login(response.user)
+					this.router.navigate(['/Home', {}])
+				} else if (response.error) {
+					alert(response.error)
+				}
+			})
 	}
 }

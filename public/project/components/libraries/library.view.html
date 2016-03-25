@@ -1,15 +1,15 @@
 <div *ngIf='!fetchingLibrary' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
   <div>
     <div *ngIf="!isEditingLibraryName" class="library-name-container">
-      <h1>{{library.name}}</h1>
-      <span *ngIf="hasEditRights()" class="glyphicon glyphicon-pencil" (click)="editLibraryName()"></span> 
+      <h1 *ngIf="hasEditRights()" (click)="editLibraryName()" class="clickable">{{library.name}}</h1>
+      <h1 *ngIf="!hasEditRights()">{{library.name}}</h1>
     </div>
     <div *ngIf="isEditingLibraryName">
       <input type="text" [(ngModel)]="library.name">
       <span class="glyphicon glyphicon-check" (click)="saveNewLibraryName()"></span>
       <button class="btn btn-default" (click)="cancelEditingLibraryName()">Cancel</button>
     </div>
-    <a [routerLink]='["/User", { user: library.user.id }]'>{{library.user.username}}</a>
+    <a [routerLink]='["/User", { user: library.user._id }]'>{{library.user.username}}</a>
   </div>
   <div class="movie-carousel">
     <div *ngFor="#movie of library.movies" class="library-movie">

@@ -15,7 +15,10 @@
   </div>
   <div>
     <h3>Libraries</h3>
-    <button *ngIf='hasEditRights()' class="btn btn-default" (click)='newLibrary()'>+</button>
+    <div class="new-library" *ngIf='hasEditRights()'>
+      <input type="text" [(ngClass)]="newLibraryName" placeholder="Library name">
+      <button class="btn btn-default" (click)='newLibrary()'>+</button>
+    </div>
     <div class="library-carousel">
       <div *ngFor="#library of user.libraries" class="user-library">
         <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library.id)"></span>

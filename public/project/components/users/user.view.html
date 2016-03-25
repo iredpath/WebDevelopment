@@ -16,7 +16,7 @@
   <div>
     <h3>Libraries</h3>
     <div class="new-library" *ngIf='hasEditRights()'>
-      <input type="text" [(ngClass)]="newLibraryName" placeholder="Library name">
+      <input type="text" [(ngModel)]="newLibraryName" placeholder="Library name">
       <button class="btn btn-default" (click)='newLibrary()'>+</button>
     </div>
     <div class="library-carousel">

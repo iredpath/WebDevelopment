@@ -33,7 +33,7 @@ export default class Database {
 	}
 
 	createUser(user) {
-		user._id = (this.randomId++).toString()
+		user._id = this.randomId++
 		if(_.find(this.users, u => { return u.username === user.username })) {
 			return { error: "duplicate username!" }
 		}
@@ -78,10 +78,13 @@ export default class Database {
 	}
 
 	createLibrary(library) {
-		library.id = (this.randomId++).toString()
+		library.id = this.randomId++
 		this.libraries.push(library)
 		const user = library.user
-		_.find(this.users, u => { return u._id === user.id }).libraries.push(library)
+		console.log(user)
+		const dbUser = _.find(this.users, u => { return u._id === user._id })
+		console.log(dbUser)
+		dbUser.libraries.push(library)
 		return library
 	}
 

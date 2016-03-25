@@ -45,6 +45,7 @@ export class User {
 		if (this.newLibraryName) {
 			let newLib: any = {}
 			newLib.name = this.newLibraryName
+			newLib.user = this.user
 			this.libraryService.addLibrary(newLib)
 				.subscribe(resp => {
 					if (resp.json().library) {

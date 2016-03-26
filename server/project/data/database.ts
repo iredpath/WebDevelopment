@@ -180,4 +180,17 @@ export default class Database {
 		_.remove(movie.libraries, lib => { return (<any>lib).id.toString() === libraryId })
 		return library
 	}
+
+	getMovie(id: string, title: string) {
+		let movie = _.find(this.movies, mov => { return mov.imdbId === id })
+		if (movie) {
+			return movie
+		} else {
+			movie = {}
+			movie.libraries = []
+			movie.imdbId = id
+			movie.title = title
+			return this.createMovie(movie)
+		}
+	}
 }

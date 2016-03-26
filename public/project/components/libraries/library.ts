@@ -64,7 +64,6 @@ export class Library {
 					this.library = resp.json().library
 				}
 			})
-		//_.remove(this.library.movies, mov => { return mov.imdbId === id })
 	}
 
 }

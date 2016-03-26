@@ -30,19 +30,30 @@ export class Movie {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
 		const imdbId: string = params.get('movie')
-		movieService.get(imdbId)
+		/*movieService.get(imdbId)
 			.subscribe(
 				resp => { 
 					if (resp.json().movie) {
 						this.movie = resp.json().movie
-					}
+					} 
 					this.fetchingLibraries = false
-				})
+				})*/
 		omdbService.findMovieById(imdbId)
 			.subscribe(
-				data => { this.omdbMovie = OmdbMovieModel.newMovie(data.json()) },
+				data => { 
+					this.omdbMovie = OmdbMovieModel.newMovie(data.json())
+					movieService.getOrCreate(imdbId, this.omdbMovie.title)
+						.subscribe(resp => {
+							if (resp.json().movie) {
+								this.movie = resp.json().movie
+							} else {
+								console.log('error fetching movie')
+							}
+							this.fetchingLibraries = false
+						})
+				},
 				err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() },
-				() => { this.fetchingMovie = false}
+				() => { this.fetchingMovie = false }
 			)
 	}
 	// eventually, this will be part of a new component and logic will be moved out of here
@@ -57,12 +68,6 @@ export class Movie {
 		} else {
 			alert("please select a library first")
 		}
-		/*
-		if(this.userService.getActiveUser()) {
-			const movieToAdd: MovieModel = this.movieService.transformFromOmdb(this.movie)
-			this.userService.addMovie(movieToAdd)
-		} else {
-			alert('sign in to add a movie!')
-		}*/
+
 	}
 }

@@ -1,8 +1,14 @@
 export default function(app, db) {
 
 	app.get('/api/project/movie', (req, res) => {
-		const movies = db.getAllMovies()
-		res.status(200).send({ movies })
+		const query = req.query
+		if (query.id && query.title) {
+			const movie = db.getMovie(query.id, query.title)
+			res.status(200).send({ movie })
+		} else {
+			const movies = db.getAllMovies()
+			res.status(200).send({ movies })
+		}
 	})
 
 	app.get('/api/project/movie/:id', (req, res) => {

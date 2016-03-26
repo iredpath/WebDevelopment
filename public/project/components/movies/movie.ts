@@ -30,14 +30,6 @@ export class Movie {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
 		const imdbId: string = params.get('movie')
-		/*movieService.get(imdbId)
-			.subscribe(
-				resp => { 
-					if (resp.json().movie) {
-						this.movie = resp.json().movie
-					} 
-					this.fetchingLibraries = false
-				})*/
 		omdbService.findMovieById(imdbId)
 			.subscribe(
 				data => { 

@@ -79,6 +79,7 @@ export default class Database {
 
 	createLibrary(library) {
 		library.id = this.randomId++
+		library.movies = []
 		this.libraries.push(library)
 		const user = library.user
 		console.log(user)
@@ -154,10 +155,12 @@ export default class Database {
 		if (_.find(movie.libraries, lib => { return (<any>lib).id === libraryId })) {
 			return movie
 		}
+		const library = _.find(this.libraries, lib => { return lib.id.toString() === libraryId })
+		library.movies.push(movie)
 		let retVal
 		_.forEach(this.movies, mov => {
 			if (mov.id === movie.id) {
-				mov.libraries.push(libraryId)
+				mov.libraries.push(library)
 				retVal = mov
 			}
 		})
@@ -165,14 +168,16 @@ export default class Database {
 	}
 
 	deleteMovie(id: string) {
-		const removed = _.find(this.movies, movie => { return movie.id === id })
-		_.remove(this.movies, movie => { return movie.id === id })
+		const removed = _.find(this.movies, movie => { return movie.imdbId === id })
+		_.remove(this.movies, movie => { return movie.imdbId === id })
 		return removed
 	}
 
 	deleteMovieFromLibrary(movieId: string, libraryId: string) {
-		let library = _.find(this.libraries, lib => { return lib.id === libraryId })
-		_.remove(library.movies, mov => { return (<any>mov).id === movieId })
+		let library = _.find(this.libraries, lib => { return lib.id.toString() === libraryId })
+		_.remove(library.movies, mov => { return (<any>mov).imdbId === movieId })
+		let movie = _.find(this.movies, mov => { return mov.imdbId === movieId })
+		_.remove(movie.libraries, lib => { return (<any>lib).id.toString() === libraryId })
 		return library
 	}
 }

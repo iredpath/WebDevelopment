@@ -50,6 +50,8 @@ export class User {
 				.subscribe(resp => {
 					if (resp.json().library) {
 						const id = resp.json().library.id
+						this.user.libraries.push(resp.json().library)
+						this.userService.login(this.user)
 						this.router.navigate(["/Library", { library: id }])
 					} else {
 						alert(`error creating library ${this.newLibraryName}`)
@@ -58,13 +60,7 @@ export class User {
 		} else {
 			alert("Make sure to name your library first!")
 		}
-/*
-		let newLib: LibraryModel = LibraryModel.defaultLibrary(this.user)
-		newLib.id = new Date().getTime()
-		newLib.name = this.getNextLibraryName()
-		this.userService.addLibrary(newLib)
-		this.router.navigate(["/Library", { library: newLib.id }])
-	*/
+
 	}
 
 	removeLibrary(id: number) {
@@ -74,16 +70,6 @@ export class User {
 					_.remove(this.user.libraries, lib => { return (<any>lib).id === id })
 				}
 			})
-			/*
-		_.remove(this.user.libraries, lib => { return lib.id === id })
-		this.libraryService.removeLibrary(id)
-	*/
-	}
-	getMovies() {
-		/*this.movieService.getMoviesForUser(this.user.id)
-			.subscribe(resp => {
 
-			})
-		*///return _.uniq(_.flatten(this.user.libraries))
 	}
 }

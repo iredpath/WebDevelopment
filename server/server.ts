@@ -11,7 +11,7 @@ import FormModel from './models/form.model'
 import Database from './project/data/database'
 import LibraryEndpoints from './project/endpoints/libraryEndpoints'
 import MovieEndpoints from './project/endpoints/movieEndpoints'
-import UserEndpoints from './project/endpoints/UserEndpoints'
+import UserEndpoints from './project/endpoints/userEndpoints'
 
 const ipaddress:string = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const port:number = process.env.OPENSHIFT_NODEJS_PORT || 3000;

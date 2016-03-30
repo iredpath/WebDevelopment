@@ -4,33 +4,39 @@ export default function FieldEndpoints(app, formModel: FormModel) {
 
 	app.get('/api/assignment/form/:formId/field', (req, res) => {
 		const formId = req.params.formId
-		const fields = formModel.getFieldsForForm(formId)
-		res.status(200).send({ fields })
+		formModel.getFieldsForForm(formId)
+			.then(fields => { res.status(200).send({ fields }) },
+				error => { res.status(400).send({ error })})
 	})
 
 	app.get('/api/assignment/form/:formId/field/:fieldId', (req, res) => {
 		const { formId, fieldId } = req.params
-		const field = formModel.getFieldForForm(formId, fieldId)
-		res.status(200).send({ field })
+		formModel.getFieldForForm(formId, fieldId)
+			.then(field => { res.status(200).send({ field }) },
+				error => { res.status(400).send({ error })})
+
 	})
 
 	app.delete('/api/assignment/form/:formId/field/:fieldId', (req, res) => {
 		const { formId, fieldId } = req.params
-		const updatedFields = formModel.deleteFieldForForm(formId, fieldId)
-		res.status(200).send({ fields: updatedFields })
+		formModel.deleteFieldForForm(formId, fieldId)
+			.then(field => { res.status(200).send({ field }) },
+				error => { res.status(400).send({ error })})
 	})
 
 	app.post('/api/assignment/form/:formId/field', (req, res) => {
 		const formId = req.params.formId
 		const field = req.body.field
-		const updatedFields = formModel.addFieldToForm(formId, field)
-		res.status(200).send({ fields: updatedFields })
+		formModel.addFieldToForm(formId, field)
+			.then(field => { res.status(200).send({ field }) },
+				error => { res.status(400).send({ error }) })
 	})
 
 	app.put('/api/assignment/form/:formId/field/:fieldId', (req, res) => {
 		const { formId, fieldId } = req.params
-		const field = req.body.field
-		const updatedFields = formModel.updateFieldForForm(formId, fieldId, field)
-		res.status(200).send({ fields: updatedFields })
+		const newField = req.body.field
+		formModel.updateFieldForForm(formId, fieldId, newField)
+			.then(field => { res.status(200).send({ field }) },
+				error => { res.status(400).send({ error }) })
 	})
 }

@@ -1,6 +1,7 @@
 import * as express from 'express'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
+import * as mongoose from 'mongoose'
 
 import Userendpoints from './services/user.service.server'
 import FormEndpoints from './services/form.service.server'
@@ -15,20 +16,31 @@ import UserEndpoints from './project/endpoints/UserEndpoints'
 
 const ipaddress:string = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const port:number = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+let mongoConnectionString: string = "mongodb://127.0.0.1:27017/webdevevelopment"
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+	const DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME
+	const DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD
+	const DB_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST
+	const DB_PORT = process.env.OPENSHIFT_MONGODB_DB_PORT
+	const APP_NAME = process.env.OPENSHIFT_APP_NAME
+	mongoConnectionString = `${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${APP_NAME}`
+}
+
+const db = mongoose.connect(mongoConnectionString)
 let app = express();
 
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
 
 // initialize endpoints
-const userModel = new UserModel()
+const userModel = new UserModel(db)
 Userendpoints(app, userModel)
 
-const formModel = new FormModel()
+const formModel = new FormModel(db)
 FormEndpoints(app, formModel)
 FieldEndpoints(app, formModel)
 
-const db = new Database()
+//const db = new Database()
 LibraryEndpoints(app, db)
 MovieEndpoints(app, db)
 UserEndpoints(app, db)

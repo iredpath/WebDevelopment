@@ -1,43 +1,71 @@
-import * as _ from 'lodash'
+import * as mongoose from 'mongoose'
+import * as Q from 'q'
+
+import UserSchema from './user.schema.server'
 export default class UserModel {
 
-	users: Array<any>
+	db: any
+	userSchema: any
+	userModel: any
 
-	constructor() {
-		this.users = require('./user.mock.json').users
+	constructor(db) {
+		this.userSchema = UserSchema()
+		this.userModel = mongoose.model('User', this.userSchema)
 	}
 
 	create(newUser) {
-		this.users.push(newUser)
-		return this.users
+		let deferred = Q.defer()
+		this.userModel.create(newUser, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findAll() {
-		return this.users
+		let deferred = Q.defer()
+		this.userModel.find({}, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findById(id: number) {
-		return _.find(this.users, user => { return user.id === id })
+		let deferred = Q.defer()
+		this.userModel.findById(id, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	update(id: number, what) {
-		_.forEach(this.users, user => {
-			if (user.id === id) {
-				user = what
-			}
+		let deferred = Q.defer()
+		this.userModel.findByIdAndUpdate(id, what, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
-		return this.users
+		return deferred.promise
 	}
 
 	delete(id: number) {
-		return _.remove(this.users, user => { return user.id === id })
+		let deferred = Q.defer()
+		this.userModel.findByIdAndRemove(id, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findUserByUsername(username: string) {
-		return _.find(this.users, user => { return user.username === username })
+		let deferred = Q.defer()
+		this.userModel.findOne({ username }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findUserByCredentials(username: string, password: string) {
-		return _.find(this.users, user => { return user.username === username && user.password === password })
+		let deferred = Q.defer()
+		this.userModel.findOne({ username, password }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 }

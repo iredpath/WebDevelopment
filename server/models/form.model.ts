@@ -1,55 +1,76 @@
-import * as _ from 'lodash'
+import * as mongoose from 'mongoose'
+import FormSchema from './form.schema.server'
+import FieldSchema from './field.schema.server'
+
 export default class FormModel {
 
-	forms: Array<any>
-	idNumber: number
+	db: any
+	formSchema: any
+	formModel: any
+	fieldSchema: any
+	fieldModel: any
 
-	constructor() {
-		this.forms = require('./form.mock.json').forms
-		this.idNumber = 999999999999
+	constructor(db) {
+		this.formSchema = FormSchema()
+		this.formModel = mongoose.model('Form', this.formSchema)
+		this.fieldSchema = FieldSchema()
+		this.fieldModel = mongoose.model('Field', this.fieldSchema)
 	}
 
 	create(newForm) {
-		newForm._id = (this.idNumber++).toString()
-		newForm.fields = []
-		this.forms.push(newForm)
-		return this.findFormsByUser(newForm.userId)
+		let deferred = Q.defer()
+		this.formModel.create(newForm, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findAll() {
-		return this.forms
+		let deferred = Q.defer()
+		this.formModel.find({}, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findById(id: string) {
-		return _.find(this.forms, form => { return form._id === id })
+		let deferred = Q.defer()
+		this.formModel.findById(id, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	update(id: string, what) {
-		_.forEach(this.forms, form => {
-			if (form._id === id) {
-				form = what
-				return what
-			}
+		let deferred = Q.defer()
+		this.formModel.findByIdAndUpdate(id, what, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
-		return null
+		return deferred.promise
 	}
 
 	delete(id: string) {
-		const form = this.findById(id)
-		_.remove(this.forms, form => { return form._id === id })
-		return this.findFormsByUser(form.userId)
+		let deferred = Q.defer()
+		this.formModel.findByIdAndRemove(id, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findformByTitle(title: string) {
-		return _.find(this.forms, form => { return form.title === title })
+		let deferred = Q.defer()
+		this.formModel.findOne({ title }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
 	}
 
 	findFormsByUser(userId: number) {
-		console.log(this.forms)
-		console.log(userId)
-		return _.filter(this.forms, form => { 
-			return form.userId.toString() === userId.toString()
+		let deferred = Q.defer()
+		this.formModel.findOne({ userId }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
+		return deferred.promise
 	}
 
 	getFieldsForForm(formId: string): Array<any> {

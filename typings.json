@@ -6,6 +6,7 @@
     "gulp-typescript": "github:DefinitelyTyped/DefinitelyTyped/gulp-typescript/gulp-typescript.d.ts#960fd659b456e2fb5d23c52794ffdc56b09796cf",
     "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#c22a5e55b062c7b2af9df92ea0820c2afa153b2a",
     "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#a3900b896f7b3361b79f9b503224777619907d53",
+    "mongoose": "github:DefinitelyTyped/DefinitelyTyped/mongoose/mongoose.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
     "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#20e1eb9616922d382d918cc5a21870a9dbe255f5"
   },
   "dependencies": {

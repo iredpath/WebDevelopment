@@ -4,9 +4,9 @@ export default function() {
 
 	const FieldSchema = new mongoose.Schema({
 		label: String,
-		type: String,
+		type: { type: String, enum: ['TEXT', 'EMAIL', 'PASSWORD', 'RADIOS', 'CHECKBOXES', 'OPTIONS', 'DATE'] },
 		placeholder: String,
-		options: [Object]
+		options: [{ label: String, value: String }]
 	}, { collection: 'assignment.field' })
 	return FieldSchema
 }

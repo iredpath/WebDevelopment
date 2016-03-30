@@ -73,39 +73,75 @@ export default class FormModel {
 		return deferred.promise
 	}
 
-	getFieldsForForm(formId: string): Array<any> {
-		return this.findById(formId).fields
+	getFieldsForForm(formId: string) {
+		let deferred = Q.defer()
+		this.formModel.findById(formId, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				// get the fields
+				deferred.resolve(resp.fields)
+			}
+		})
+		return deferred.promise
 	}
 
 	getFieldForForm(formId: string, fieldId: string) {
-		const fields = this.getFieldsForForm(formId)
-		return _.find(fields, field => { return field._id.toString() === fieldId.toString() })
+		let deferred = Q.defer()
+		this.formModel.findById(formId, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				deferred.resolve(_.find(resp.fields, field => { return (<any>field)._id === fieldId }))
+			}
+		})
+		return deferred.promise
 	}
 
 	deleteFieldForForm(formId: string, fieldId: string) {
-		const form = this.findById(formId)
-		const fields: Array<any> = form.fields
-		_.remove(fields, field => { return field._id.toString() === fieldId.toString() })
-		return fields
+		let deferred = Q.defer()
+		this.formModel.findById(formId, (err, form) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				_.remove(form.fields, field => { return (<any>field)._id === fieldId })
+				this.formModel.save(form, (err, resp) => {
+					err ? deferred.reject(err) : deferred.resolve(resp)
+				})
+			}
+		})
+		return deferred.promise
 	}
 
 	addFieldToForm(formId: string, field) {
-		const form = this.findById(formId)
-		field._id = (this.idNumber * 2).toString()
-		form.fields.push(field)
-		return form.fields
+		let deferred = Q.defer()
+		this.formModel.findById(formId, (err, form) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				form.fields.push(field)
+				this.formModel.save(form, (err, resp) => {
+					err ? deferred.reject(err) : deferred.resolve(resp)
+				})
+			}
+		})
+		return deferred.promise
 	}
 
 	updateFieldForForm(formId: string, fieldId: string, field) {
-		console.log(field)
-		const form = this.findById(formId)
-		const fields: Array<any> = form.fields
-		form.fields = fields.map(f => {
-			if (f._id.toString() === fieldId) {
-				return field
+		let deferred = Q.defer()
+		this.formModel.findById(formId, (err, form) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				form.fields = _.map(form.fields, f => {
+					return (<any>f)._id === fieldId ? field : f
+				})
+				this.formModel.save(form, (err, resp) => {
+					err ? deferred.reject(err) : deferred.resolve(resp)
+				})
 			}
-			return f
 		})
-		return form.fields
+		return deferred.promise
 	}
 }

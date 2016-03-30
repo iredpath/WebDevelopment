@@ -5,10 +5,10 @@ export default function() {
 
 	const FormSchema = new mongoose.Schema({
 		userId: String,
-		title: String,
-		fields: [FieldSchema()],
-		created: Date,
-		updated: Date
+		title: { type: String, default: "New Form" },
+		fields: { type: [FieldSchema()], default: [] },
+		created: { type: Date, default: Date.now() },
+		updated: { type: Date, default: Date.now() }
 	}, { collection: 'assignment.form' })
 	return FormSchema
 }

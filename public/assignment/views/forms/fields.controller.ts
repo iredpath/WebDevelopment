@@ -71,16 +71,24 @@ export class FieldsController {
 	addNewField() {
 		this.fieldsService.createFieldForForm(this.formId, this.getNewField())
 			.subscribe(resp => {
-				this.fields = resp.json().fields
-				this.updateOptions()
+				if (resp.json().form) {
+					this.fields = resp.json().form.fields
+					this.updateOptions()
+				} else {
+					alert(resp.json().error)
+				}
 			})
 	}
 
 	deleteField(fieldId: string) {
 		this.fieldsService.deleteFieldFromForm(this.formId, fieldId)
 			.subscribe(resp => {
-				this.fields = resp.json().fields
-				this.updateOptions()
+				if (resp.json().form) {
+					this.fields = resp.json().form.fields
+					this.updateOptions()
+				} else {
+					alert(resp.json().error)
+				}
 		})
 	}
 
@@ -91,8 +99,13 @@ export class FieldsController {
 		console.log(field.options)
 		this.fieldsService.updateField(this.formId, field._id, field)
 			.subscribe(resp => {
-				this.fields = resp.json().fields
-				this.updateOptions()
+				const newForm = resp.json().form
+				if (newForm) {
+					this.fields = newForm.fields
+					this.updateOptions()
+				} else {
+					alert(resp.json().error)
+				}
 			})
 	}
 
@@ -100,7 +113,7 @@ export class FieldsController {
 		const optionString = this.optionsMap[id]
 		const optionsArray = optionString.split('\n')
 		let retVal = []
-		optionsArray.forEach(opt => {
+		_.forEach(optionsArray, opt => {
 			if (opt) {
 				const labelValuePair = opt.split(":")
 				retVal.push({ label: labelValuePair[0], value: labelValuePair[1] })
@@ -119,7 +132,7 @@ export class FieldsController {
 		this.fields.forEach(field => {
 			if (field.options) {
 				let base = ""
-				field.options.forEach(opt => {
+				_.forEach(field.options, opt => {
 					base += `${opt.label}:${opt.value}\n`
 				})
 				this.optionsMap[field._id] = base

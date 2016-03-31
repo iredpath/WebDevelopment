@@ -40,9 +40,9 @@ const formModel = new FormModel(db)
 FormEndpoints(app, formModel)
 FieldEndpoints(app, formModel)
 
-//const db = new Database()
-LibraryEndpoints(app, db)
-MovieEndpoints(app, db)
-UserEndpoints(app, db)
+const db_proj = new Database()
+LibraryEndpoints(app, db_proj)
+MovieEndpoints(app, db_proj)
+UserEndpoints(app, db_proj)
 
 app.listen(port, ipaddress)

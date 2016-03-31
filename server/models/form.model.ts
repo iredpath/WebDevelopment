@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose'
+import * as Q from 'q'
 import FormSchema from './form.schema.server'
 import FieldSchema from './field.schema.server'
 
@@ -67,7 +68,7 @@ export default class FormModel {
 
 	findFormsByUser(userId: number) {
 		let deferred = Q.defer()
-		this.formModel.findOne({ userId }, (err, resp) => {
+		this.formModel.find({ userId }, (err, resp) => {
 			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise

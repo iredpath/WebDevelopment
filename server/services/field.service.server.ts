@@ -20,7 +20,7 @@ export default function FieldEndpoints(app, formModel: FormModel) {
 	app.delete('/api/assignment/form/:formId/field/:fieldId', (req, res) => {
 		const { formId, fieldId } = req.params
 		formModel.deleteFieldForForm(formId, fieldId)
-			.then(field => { res.status(200).send({ field }) },
+			.then(form => { res.status(200).send({ form }) },
 				error => { res.status(400).send({ error })})
 	})
 
@@ -28,7 +28,7 @@ export default function FieldEndpoints(app, formModel: FormModel) {
 		const formId = req.params.formId
 		const field = req.body.field
 		formModel.addFieldToForm(formId, field)
-			.then(field => { res.status(200).send({ field }) },
+			.then(form => { res.status(200).send({ form }) },
 				error => { res.status(400).send({ error }) })
 	})
 
@@ -36,7 +36,7 @@ export default function FieldEndpoints(app, formModel: FormModel) {
 		const { formId, fieldId } = req.params
 		const newField = req.body.field
 		formModel.updateFieldForForm(formId, fieldId, newField)
-			.then(field => { res.status(200).send({ field }) },
+			.then(form => { res.status(200).send({ form }) },
 				error => { res.status(400).send({ error }) })
 	})
 }

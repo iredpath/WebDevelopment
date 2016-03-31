@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose'
+import * as _ from 'lodash'
 import * as Q from 'q'
 import FormSchema from './form.schema.server'
 import FieldSchema from './field.schema.server'
@@ -106,7 +107,7 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				_.remove(form.fields, field => { return (<any>field)._id === fieldId })
-				this.formModel.save(form, (err, resp) => {
+				form.save(form, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}
@@ -138,7 +139,7 @@ export default class FormModel {
 				form.fields = _.map(form.fields, f => {
 					return (<any>f)._id === fieldId ? field : f
 				})
-				this.formModel.save(form, (err, resp) => {
+				form.save(form, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}

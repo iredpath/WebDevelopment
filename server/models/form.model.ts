@@ -44,7 +44,7 @@ export default class FormModel {
 
 	update(id: string, what) {
 		let deferred = Q.defer()
-		this.formModel.findByIdAndUpdate(id, what, (err, resp) => {
+		this.formModel.findByIdAndUpdate(id, what, { new: true }, (err, resp) => {
 			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
@@ -121,7 +121,7 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				form.fields.push(field)
-				this.formModel.save(form, (err, resp) => {
+				form.save(form, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}

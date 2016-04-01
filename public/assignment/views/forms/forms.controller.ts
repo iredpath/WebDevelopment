@@ -29,8 +29,12 @@ export class FormsController {
 
 	addForm() {
 		const callback = resp => {
-			this.forms = resp.json().forms
-			this.form = {}
+			if (resp.json().form) {
+				this.forms.push(resp.json().form)
+				this.form = {}
+			} else {
+				alert(resp.json().error)
+			}
 		}
 		const activeUser = this.stateService.getActiveUser()
 		this.form.userId = activeUser._id
@@ -39,17 +43,32 @@ export class FormsController {
 	}
 
 	updateForm() {
-		const callback = resp => this.forms = resp.json().forms
+		const callback = resp => {
+			const form = resp.json().form
+			if (resp.json().form) {
+				this.forms = _.map(this.forms, f => {
+					return f._id === form._id ? form : f
+				})
+				this.form = {}
+			} else {
+				alert(resp.json().error)
+			}
+		}
 		this.formsService.updateFormById(this.form._id, this.form)
 			.subscribe(callback)
 	}
 
 	deleteForm(selected) {
-		console.log(selected)
 		if(selected._id === this.form._id) {
 			this.form = {}
 		}
-		const callback = resp => this.forms = resp.json().forms
+		const callback = resp => {
+			if (resp.json().form) {
+				_.remove(this.forms, form => { return form._id === selected._id })
+			} else {
+				alert(resp.json().error)
+			}
+		}
 		this.formsService.deleteFormById(selected._id)
 			.subscribe(callback)
 	}

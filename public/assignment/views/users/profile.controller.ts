@@ -28,6 +28,7 @@ export class ProfileController {
 		this.userService.updateUser(this.user._id, this.user)
 			.subscribe(resp => {
 				console.log("successfully updated user " + resp.json().user)
+				this.user = resp.json().user
 			})
 	}
 }

@@ -45,7 +45,7 @@ export default class FormModel {
 
 	update(id: string, what) {
 		let deferred = Q.defer()
-		this.formModel.findByIdAndUpdate(id, what, { new: true }, (err, resp) => {
+		this.formModel.findByIdAndUpdate(id, _.omit(what, '_id'), { new: true }, (err, resp) => {
 			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
@@ -110,7 +110,7 @@ export default class FormModel {
 					// I have NO idea why I need toString() here, but I do
 					return (<any>field)._id.toString() === fieldId.toString()
 				})
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
+				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}
@@ -125,7 +125,7 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				form.fields.push(field)
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
+				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}
@@ -143,7 +143,7 @@ export default class FormModel {
 					// Same toString weirdness here
 					return (<any>f)._id.toString() === fieldId.toString() ? field : f
 				})
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
+				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}

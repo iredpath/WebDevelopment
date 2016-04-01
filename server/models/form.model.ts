@@ -110,7 +110,8 @@ export default class FormModel {
 					// I have NO idea why I need toString() here, but I do
 					return (<any>field)._id.toString() === fieldId.toString()
 				})
-				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
+				delete form._id
+				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}
@@ -125,7 +126,9 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				form.fields.push(field)
-				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
+				delete form._id
+				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
+					console.log(`${err} as error, ${resp} as resp`)
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}
@@ -143,7 +146,8 @@ export default class FormModel {
 					// Same toString weirdness here
 					return (<any>f)._id.toString() === fieldId.toString() ? field : f
 				})
-				this.formModel.findByIdAndUpdate(formId, _.omit(form, '_id'), { new: true }, (err, resp) => {
+				delete form._id
+				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
 					err ? deferred.reject(err) : deferred.resolve(resp)
 				})
 			}

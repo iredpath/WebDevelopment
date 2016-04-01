@@ -102,55 +102,29 @@ export default class FormModel {
 
 	deleteFieldForForm(formId: string, fieldId: string) {
 		let deferred = Q.defer()
-		this.formModel.findById(formId, (err, form) => {
-			if (err) {
-				deferred.reject(err)
-			} else {
-				_.remove(form.fields, field => {
-					// I have NO idea why I need toString() here, but I do
-					return (<any>field)._id.toString() === fieldId.toString()
-				})
-				delete form._id
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
-					err ? deferred.reject(err) : deferred.resolve(resp)
-				})
-			}
+		const update = { $pull: { fields: { _id: fieldId } } }
+		this.formModel.findByIdAndUpdate(formId, update, { new: true }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
 	}
 
 	addFieldToForm(formId: string, field) {
 		let deferred = Q.defer()
-		this.formModel.findById(formId, (err, form) => {
-			if (err) {
-				deferred.reject(err)
-			} else {
-				form.fields.push(field)
-				form.save(err => { err ? deferred.reject(err) : deferred.resolve(form) })
-				/*this.formModel.findByIdAndUpdate(formId, _.omit(form, "_id"), { new: true }, (err, resp) => {
-					console.log(err)
-					err ? deferred.reject({ err, form }) : deferred.resolve(resp)
-				})*/
-			}
+		const update = { $push: { fields: field } }
+		this.formModel.findByIdAndUpdate(formId, update, { new: true }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
 	}
 
 	updateFieldForForm(formId: string, fieldId: string, field) {
 		let deferred = Q.defer()
-		this.formModel.findById(formId, (err, form) => {
-			if (err) {
-				deferred.reject(err)
-			} else {
-				form.fields = _.map(form.fields, f => {
-					// Same toString weirdness here
-					return (<any>f)._id.toString() === fieldId.toString() ? field : f
-				})
-				delete form._id
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
-					err ? deferred.reject(err) : deferred.resolve(resp)
-				})
-			}
+		const update = { $set: { "fields.$": field } }
+		const query = { "_id": formId, "fields._id": fieldId }
+		console.log(query)
+		this.formModel.findOneAndUpdate(query, update, { new: true }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
 	}

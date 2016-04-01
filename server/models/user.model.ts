@@ -39,7 +39,7 @@ export default class UserModel {
 
 	update(id: number, what) {
 		let deferred = Q.defer()
-		this.userModel.findByIdAndUpdate(id, what, { new: true }, (err, resp) => {
+		this.userModel.findByIdAndUpdate(id, _.omit(what, '_id'), { new: true }, (err, resp) => {
 			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise

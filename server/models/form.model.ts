@@ -133,8 +133,7 @@ export default class FormModel {
 				})
 				console.log(form)
 				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
-					console.log(`${err} as error, ${resp} as resp`)
-					err ? deferred.reject(err) : deferred.resolve(resp)
+					err ? deferred.reject({ err, form }) : deferred.resolve(resp)
 				})
 			}
 		})

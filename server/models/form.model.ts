@@ -126,9 +126,11 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				form.fields.push(field)
-				this.formModel.findByIdAndUpdate(formId, _.omit(form, "_id"), { new: true }, (err, resp) => {
+				form.save(err => { err ? deferred.reject(err) : deferred.resolve(form) })
+				/*this.formModel.findByIdAndUpdate(formId, _.omit(form, "_id"), { new: true }, (err, resp) => {
+					console.log(err)
 					err ? deferred.reject({ err, form }) : deferred.resolve(resp)
-				})
+				})*/
 			}
 		})
 		return deferred.promise

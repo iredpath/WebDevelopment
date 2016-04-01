@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose'
 import * as Q from 'q'
+import * as _ from 'lodash'
 
 import UserSchema from './user.schema.server'
 export default class UserModel {

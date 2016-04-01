@@ -126,13 +126,7 @@ export default class FormModel {
 				deferred.reject(err)
 			} else {
 				form.fields.push(field)
-				delete form._id
-				form.fields = _.map(form.fields, f => { 
-					delete (<any>f)._id
-					return f
-				})
-				console.log(form)
-				this.formModel.findByIdAndUpdate(formId, form, { new: true }, (err, resp) => {
+				this.formModel.findByIdAndUpdate(formId, _.omit(form, "_id"), { new: true }, (err, resp) => {
 					err ? deferred.reject({ err, form }) : deferred.resolve(resp)
 				})
 			}

@@ -8,6 +8,17 @@
 echo "INFO: running 'typings install'"
 typings install
 
+## Install all node/js dependencies
+echo "INFO: running npm install"
+npm install
+
+## Some stupidity here to simplify my git repo
+## For some reason, angular2 is only available via npm
+## This means the type definitions file needs to be added
+##   to the parent typings definition file manually
+echo "INFO: adding angular2 dependencies to type definition file"
+echo '/// <reference path="../node_modules/angular2/typings/browser.d.ts" />' >> typings/browser.d.ts
+
 ## Compile gulpfile into js
 echo "INFO: running 'tsc' to generate gulpfile.js"
 tsc

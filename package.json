@@ -43,5 +43,7 @@
     "typings": "^0.6.8"
   },
   "main": "dist/server.js",
-  "scripts": {}
+  "scripts": {
+    "start": "./scripts/bash/run-local.sh"
+  }
 }

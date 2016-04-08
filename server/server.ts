@@ -45,4 +45,6 @@ LibraryEndpoints(app, db_proj)
 MovieEndpoints(app, db_proj)
 UserEndpoints(app, db_proj)
 
-app.listen(port, ipaddress)
+app.listen(port, ipaddress, () => {
+	console.log(`Server running at: ${ipaddress}:${port}`)
+})

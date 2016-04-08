@@ -4,13 +4,13 @@
 ## ASSUMES: mongod running at default port
 ## ASSUMES: script run from root directory (run via 'npm start')
 
-## Install all typescript dependencies
-echo "INFO: running 'typings install'"
-typings install
-
 ## Install all node/js dependencies
 echo "INFO: running npm install"
 npm install
+
+## Install all typescript dependencies
+echo "INFO: running 'typings install'"
+typings install
 
 ## Some stupidity here to simplify my git repo
 ## For some reason, angular2 is only available via npm

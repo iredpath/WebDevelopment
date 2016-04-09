@@ -57,11 +57,12 @@ export default class LibraryModel {
 					this.commentModel.find({ target: id })
 				])
 					.then(success => {
-						resp.userObject = success[0]
-						resp.movieObjects = success[1]
-						resp.ratingObjects = success[2]
-						resp.commentObjects = success[3]
-						deferred.resolve(resp)
+						console.log(success)
+						const user = (<any>success[0])
+						const movies = (<any>success[1])
+						const ratings = (<any>success[2])
+						const comments = (<any>success[3])
+						deferred.resolve({ library: resp, user, movies, ratings, comments })
 					}, error => { deferred.reject(error)})
 			}
 		})

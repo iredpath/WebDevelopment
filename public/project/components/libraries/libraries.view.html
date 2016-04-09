@@ -3,7 +3,7 @@
 	<div class="libraries">
 		<ul>
 			<li *ngFor="#library of libraries" class="library">
-        		<a class="thumbnail" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</a>
+        		<a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
       		</li>
       	</ul>
 	</div>

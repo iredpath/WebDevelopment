@@ -32,6 +32,11 @@ export class Login {
 						this.username = ""
 						this.password = ""
 					}
+				},
+				err => { 
+					alert(err.json().message)
+					this.username = ""
+					this.password = ""
 				})
 	}
 }

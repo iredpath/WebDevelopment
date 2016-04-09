@@ -1,38 +1,49 @@
 export default function(app, db) {
 
 	app.get('/api/project/library', (req, res) => {
-		const libraries = db.getAllLibraries()
-		res.status(200).send({ libraries })
+		db.getAllLibraries()
+			.then(libraries => { res.status(200).send({ libraries }) },
+				error => { res.status(400).send(error) })
 
 	})
 
 	app.get('/api/project/library/:id', (req, res) => {
 		const id = req.params.id
-		const library = db.getLibraryById(id)
-		res.status(200).send({ library })
+		db.getLibraryById(id)
+			.then(data => { res.status(200).send({ data }) },
+			error => { res.status(400).send(error) })
+
 	})
 
 	app.post('/api/project/library', (req, res) => {
 		const newLibrary = req.body.library
-		const library = db.createLibrary(newLibrary)
-		res.status(200).send({ library })
+		db.createLibrary(newLibrary)
+			.then(library => { res.status(200).send({ library }) },
+			error => { res.status(400).send(error) })
+
 	})
 
 	app.put('/api/project/library', (req, res) => {
 		const updatedLibrary = req.body.library
-		const library = db.updateLibrary(updatedLibrary)
-		res.status(200).send({ library })
+		db.updateLibrary(updatedLibrary)
+			.then(library => { res.status(200).send({ library }) },
+			error => { res.status(400).send(error) })
+
 	})
 
 	app.delete('/api/project/library/:id', (req, res) => {
 		const id = req.params.id
-		const library = db.deleteLibrary(id)
-		res.status(200).send({ library })
+		db.deleteLibrary(id)
+			.then(library => { res.status(200).send({ library }) },
+			error => { res.status(400).send(error) })
+
 	})
 
 	app.delete('/api/project/library/:libId/movie/:movId', (req, res) => {
 		const { libId, movId } = req.params
-		const library = db.deleteMovieFromLibrary(movId, libId)
-		res.status(200).send({ library })
+		db.deleteMovieFromLibrary(movId, libId)
+			.then(library => { res.status(200).send({ library }) },
+			error => { res.status(400).send(error) })
+
 	})
 }

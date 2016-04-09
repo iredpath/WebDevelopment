@@ -42,7 +42,7 @@ export class UserService {
 	getActiveUser() {
 		return this.activeUser
 	}
-	getUserById(id: number) {
+	getUserById(id: string) {
 		return this.http.get(`/api/project/user/${id}`,
 			{ headers: this.headers })
 	}

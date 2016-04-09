@@ -14,20 +14,26 @@ import { UserService } from '../../services/userService'
 
 export class Library {
 
-	library: LibraryModel
-	libraryBackup: LibraryModel
+	library: any
+	libraryBackup: any
 	fetchingLibrary: boolean
 	isEditingLibraryName: boolean
 
 	constructor(public params:RouteParams, public libraryService:LibraryService,
 		public userService: UserService) {
 		this.fetchingLibrary = true
-		const libraryId: number = +params.get('library')
+		const libraryId: string = params.get('library')
 		libraryService.get(libraryId)
 			.subscribe(resp => {
-				if (resp.json().library) {
-					this.library = resp.json().library
+				const data = resp.json().data
+				if (data.library) {
+					this.library = data.library
+					this.library.user = data.user
+					this.library.movies = data.movies
+					this.library.comments = data.comments
+					this.library.ratings = data.ratings
 				}
+				console.log(this.library)
 				this.fetchingLibrary = false
 			})
 	}
@@ -58,7 +64,7 @@ export class Library {
 	}
 
 	removeMovie(id: string) {
-		this.libraryService.removeMovie(this.library.id, id)
+		this.libraryService.removeMovie(this.library._id, id)
 			.subscribe(resp => {
 				if (resp.json().library) {
 					this.library = resp.json().library

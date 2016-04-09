@@ -36,7 +36,7 @@ export default class UserModelProj {
 		return deferred.promise
 	}
 
-	getUserById(id: number) {
+	getUserById(id: string) {
 		let deferred = Q.defer()
 		this.userModel.findById(id, (err, resp) => {
 			if (err) {
@@ -70,7 +70,7 @@ export default class UserModelProj {
 		return deferred.promise
 	}
 
-	deleteUser(id: number) {
+	deleteUser(id: string) {
 		let deferred = Q.defer()
 		this.userModel.findByIdAndRemove(id, (err, resp) => {
 			// remove all associated stuff
@@ -111,6 +111,8 @@ export default class UserModelProj {
 		this.userModel.findOne({ username }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
+			} else if (!resp) {
+				deferred.reject({ message: " no such user" })
 			} else {
 				this.libraryModel.find({ user: resp._id }, (error, libs) => {
 					if (err) {
@@ -130,6 +132,8 @@ export default class UserModelProj {
 		this.userModel.findOne({ username, password }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
+			} else if (!resp) {
+				deferred.reject({ message: "no such user" })
 			} else {
 				this.libraryModel.find({ user: resp._id }, (error, libs) => {
 					if (err) {

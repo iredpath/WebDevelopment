@@ -13,12 +13,12 @@ export class LibraryService {
 		this.headers.append("Content-Type", "application/json")
 	}
 
-	get(id: number) {
+	get(id: string) {
 		return this.http.get(`/api/project/library/${id}`,
 			{ headers: this.headers })
 	}
 
-	addLibrary(library: LibraryModel) {
+	addLibrary(library: any) {
 		return this.http.post('/api/project/library', JSON.stringify({ library }),
 			{ headers: this.headers })
 	}
@@ -32,12 +32,12 @@ export class LibraryService {
 		return this.http.put('/api/project/library', JSON.stringify({ library}), { headers: this.headers })
 	}
 
-	removeLibrary(id: number) {
+	removeLibrary(id: string) {
 		return this.http.delete(`/api/project/library/${id}`,
 			{ headers: this.headers })
 	}
 
-	removeMovie(libraryId: number, movieId: string) {
+	removeMovie(libraryId: string, movieId: string) {
 		return this.http.delete(`/api/project/library/${libraryId}/movie/${movieId}`,
 			{ headers: this.headers })
 	}

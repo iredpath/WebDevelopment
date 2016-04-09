@@ -2,12 +2,6 @@ import * as mongoose from 'mongoose'
 import * as Q from 'q'
 import * as _ from 'lodash'
 
-import UserSchema from './user.schema'
-import LibrarySchema from './library.schema'
-import MovieSchema from './movie.schema'
-import RatingSchema from './rating.schema'
-import CommentSchema from './comment.schema'
-
 export default class UserModelProj {
 
 	userSchema: any
@@ -18,13 +12,12 @@ export default class UserModelProj {
 	ratingModel: any
 	commentModel: any
 
-	constructor() {
-		this.userSchema = UserSchema()
-		this.userModel = mongoose.model('User', this.userSchema)
-		this.libraryModel = mongoose.model('Library', LibrarySchema())
-		this.movieModel = mongoose.model('Movie', MovieSchema())
-		this.ratingModel = mongoose.model('Rating', RatingSchema())
-		this.commentModel = mongoose.model('Comment', CommentSchema())
+	constructor(userModel, libraryModel, movieModel, ratingModel, commentModel) {
+		this.userModel = userModel
+		this.libraryModel = libraryModel
+		this.movieModel = movieModel
+		this.ratingModel = ratingModel
+		this.commentModel = commentModel
 	}
 
 	createUser(newUser) {

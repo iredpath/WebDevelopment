@@ -10,6 +10,11 @@ import UserModel from './models/user.model'
 import FormModel from './models/form.model'
 
 import Database from './project/data/database'
+import UserSchema from './project/models/user.schema'
+import LibrarySchema from './project/models/library.schema'
+import MovieSchema from './project/models/movie.schema'
+import RatingSchema from './project/models/rating.schema'
+import CommentSchema from './project/models/comment.schema'
 import UserModelProj from './project/models/user.model'
 import LibraryModel from './project/models/library.model'
 import MovieModel from './project/models/movie.model'
@@ -46,11 +51,16 @@ const formModel = new FormModel(db)
 FormEndpoints(app, formModel)
 FieldEndpoints(app, formModel)
 
-const userModelProj = new UserModelProj()
-const libraryModel = new LibraryModel()
-const movieModel = new MovieModel()
-const ratingModel = new RatingModel()
-const commentModel = new CommentModel()
+const userModelMongoose = mongoose.model('UserProj', LibrarySchema()) 
+const libraryModelMongoose = mongoose.model('Library', LibrarySchema()) 
+const movieModelMongoose = mongoose.model('Movie', LibrarySchema()) 
+const ratingModelMongoose = mongoose.model('Rating', LibrarySchema()) 
+const commentModelMongoose = mongoose.model('Comment', LibrarySchema())
+const userModelProj = new UserModelProj(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
+const libraryModel = new LibraryModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
+const movieModel = new MovieModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
+const ratingModel = new RatingModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
+const commentModel = new CommentModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
 LibraryEndpoints(app, libraryModel)
 MovieEndpoints(app, movieModel)
 UserEndpoints(app, userModelProj)

@@ -10,6 +10,12 @@ import UserModel from './models/user.model'
 import FormModel from './models/form.model'
 
 import Database from './project/data/database'
+import UserModelProj from './project/models/user.model'
+import LibraryModel from './project/models/library.model'
+import MovieModel from './project/models/movie.model'
+import CommentModel from './project/models/comment.model'
+import RatingModel from './project/models/rating.model'
+
 import LibraryEndpoints from './project/endpoints/libraryEndpoints'
 import MovieEndpoints from './project/endpoints/movieEndpoints'
 import UserEndpoints from './project/endpoints/userEndpoints'
@@ -40,10 +46,14 @@ const formModel = new FormModel(db)
 FormEndpoints(app, formModel)
 FieldEndpoints(app, formModel)
 
-const db_proj = new Database()
-LibraryEndpoints(app, db_proj)
-MovieEndpoints(app, db_proj)
-UserEndpoints(app, db_proj)
+const userModelProj = new UserModelProj()
+const libraryModel = new LibraryModel()
+const movieModel = new MovieModel()
+const ratingModel = new RatingModel()
+const commentModel = new CommentModel()
+LibraryEndpoints(app, libraryModel)
+MovieEndpoints(app, movieModel)
+UserEndpoints(app, userModelProj)
 
 app.listen(port, ipaddress, () => {
 	console.log(`Server running at: ${ipaddress}:${port}`)

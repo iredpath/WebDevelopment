@@ -10,7 +10,8 @@ export default function() {
 		email: String,
 		phone: String,
 		libraries: [String], // library _id
-		ratings: [String] // rating _id ?
+		ratings: [String], // rating _id ?
+		comments: [String]
 	}, { collection: 'project.user' })
 	return UserSchema
 }

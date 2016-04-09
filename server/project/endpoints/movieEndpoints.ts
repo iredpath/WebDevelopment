@@ -27,7 +27,7 @@ export default function(app, db) {
 		const body = req.body
 		console.log(body)
 		const movie = body.library ?
-			db.updateMovieLibrary(body.movie, body.library) :
+			db.addMovieToLibrary(body.movie, body.library) :
 			db.updateMovie(body.movie)
 		res.status(200).send({ movie })
 	})

@@ -5,11 +5,11 @@ export default function(app, db) {
 		const { password, username } = query
 		if (username && password) {
 			db.getUserByCredentials(username, password)
-				.then(user => { res.status(200).send({ user }) },
+				.then(data => { res.status(200).send({ data }) },
 				error => { res.status(400).send(error) })
 		} else if (username) {
 			db.getUserByUsername(username)
-				.then(user => { res.status(200).send({ user }) },
+				.then(data => { res.status(200).send({ data }) },
 				error => { res.status(400).send(error) })
 		} else {
 			db.getAllUsers()
@@ -22,7 +22,7 @@ export default function(app, db) {
 	app.get('/api/project/user/:id', (req, res) => {
 		const id = req.params.id
 		db.getUserById(id)
-			.then(user => { res.status(200).send({ user }) },
+			.then(data => { res.status(200).send({ data }) },
 			error => { res.status(400).send(error) })
 	})
 

@@ -16,7 +16,7 @@ export default function(app, db) {
 	app.get('/api/project/movie/:id', (req, res) => {
 		const id = req.params.id
 		db.getMovieById(id)
-			.then(movie => { res.status(200).send({ movie }) },
+			.then(data => { res.status(200).send({ data }) },
 			error => { res.status(400).send(error) })
 	})
 

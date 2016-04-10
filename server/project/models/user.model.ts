@@ -42,12 +42,11 @@ export default class UserModelProj {
 			if (err) {
 				deferred.reject(err)
 			} else {
-				this.libraryModel.find({ user: id }, (error, libs) => {
+				this.libraryModel.find({ user: id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
-						resp.libraries = libs
-						deferred.resolve(resp)
+						deferred.resolve({ user: resp, libraries })
 					}
 				})
 			}
@@ -114,12 +113,11 @@ export default class UserModelProj {
 			} else if (!resp) {
 				deferred.reject({ message: " no such user" })
 			} else {
-				this.libraryModel.find({ user: resp._id }, (error, libs) => {
+				this.libraryModel.find({ user: resp._id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
-						resp.libraries = libs
-						deferred.resolve(resp)
+						deferred.resolve({ user: resp, libraries })
 					}
 				})
 			}
@@ -135,12 +133,11 @@ export default class UserModelProj {
 			} else if (!resp) {
 				deferred.reject({ message: "no such user" })
 			} else {
-				this.libraryModel.find({ user: resp._id }, (error, libs) => {
+				this.libraryModel.find({ user: resp._id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
-						resp.libraries = libs
-						deferred.resolve(resp)
+						deferred.resolve({ user: resp, libraries })
 					}
 				})
 			}

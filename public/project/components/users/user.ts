@@ -19,16 +19,17 @@ export class User {
 	newLibraryName: string
 	fetchingUser: boolean
 
-	constructor(public params: RouteParams, public router: Router, /*public movieService: MovieService,*/
+	constructor(public params: RouteParams, public router: Router, 
 		public userService: UserService, public libraryService: LibraryService) {
 		this.fetchingUser = true
 		const id: string = params.get('user')
 		this.newLibraryName = ""
 		this.userService.getUserById(id)
 			.subscribe(resp => {
-				if (resp.json().user) {
-					this.user = resp.json().user
-					console.log(this.user)
+				const data = resp.json().data
+				if (data.user) {
+					this.user = data.user
+					this.user.libraries = data.libraries
 				} else {
 					alert(`can't find user with id ${id}`)
 

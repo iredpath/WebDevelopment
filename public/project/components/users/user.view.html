@@ -16,7 +16,7 @@
     </div>
     <div class="library-carousel">
       <div *ngFor="#library of user.libraries" class="user-library">
-        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library.id)"></span>
+        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)"></span>
         <a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
       </div>
     </div>

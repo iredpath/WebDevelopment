@@ -76,9 +76,9 @@ export default class LibraryModel {
 			} else {
 				const update = { $pull: { libraries: resp._id } }
 				Q.all([
-					this.libraryModel.findAndUpdate({}, update, { new: true }),
-					this.ratingModel.findAndRemove({ target: id }),
-					this.commentModel.findAndRemove({ target: id })
+					this.libraryModel.update({}, update, { new: true }),
+					this.ratingModel.remove({ target: id }),
+					this.commentModel.remove({ target: id })
 				])
 					.then(success => { deferred.resolve(resp) }, error => { deferred.reject(error) })
 			}

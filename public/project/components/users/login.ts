@@ -24,8 +24,11 @@ export class Login {
 		this.userService.findUserByCredentials(this.username, this.password)
 			.subscribe(
 				resp => {
-					if (resp.json().user) {
-						this.userService.login(resp.json().user)
+					const data = resp.json().data
+					if (data.user) {
+						const user = data.user
+						user.libraries = data.libraries
+						this.userService.login(user)
 						this.router.navigate(['/Home', {}])
 					} else {
 						alert('Invalid name/password')

@@ -65,12 +65,12 @@ export class User {
 	}
 
 	removeLibrary(id: string) {
-		this.userService.removeLibrary(id, this.userService.getActiveUser()._id)
+		this.libraryService.removeLibrary(id)
 			.subscribe(resp => {
-				if (resp.json().user) {
+				if (resp.json().library) {
 					_.remove(this.user.libraries, lib => { return (<any>lib)._id === id })
 				}
-			})
+			}, error => { alert(error.message) })
 
 	}
 }

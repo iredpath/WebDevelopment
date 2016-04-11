@@ -47,8 +47,7 @@ export class UserService {
 			{ headers: this.headers })
 	}
 
-	removeLibrary(libId, userId) {
-		return this.http.delete(`/api/project/user/${userId}/library/${libId}`, { headers: this.headers })
+	updateUser(user: any) {
+		return this.http.put('/api/project/user', JSON.stringify({ user }), { headers: this.headers })
 	}
-
 }

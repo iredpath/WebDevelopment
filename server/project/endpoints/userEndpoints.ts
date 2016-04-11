@@ -35,7 +35,7 @@ export default function(app, db) {
 
 	app.put('/api/project/user', (req, res) => {
 		const updatedUser = req.body.user
-		db.update(updatedUser)
+		db.updateUser(updatedUser)
 			.then(user => { res.status(200).send({ user }) },
 			error => { res.status(400).send(error) })
 	})

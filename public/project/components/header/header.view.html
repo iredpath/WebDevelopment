@@ -18,8 +18,8 @@
         <li *ngIf="!isActiveUser()" [class.active]="isRouteActive('login')">
           <a [routerLink]='["/Login"]'>Sign In</a>
         </li>
-        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('edit')">
-          <a>Edit Info</a>
+        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('details')">
+          <a [routerLink]='["/Details", { user: userService.getActiveUser()._id }]'>Edit Info</a>
         </li>
         <li *ngIf="isActiveUser()" [class.active]="isRouteActive('user')">
           <a [routerLink]='["/User", { user: userService.getActiveUser()._id }]'>Profile Icon</a>

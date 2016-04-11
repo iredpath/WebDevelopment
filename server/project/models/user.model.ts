@@ -56,7 +56,7 @@ export default class UserModelProj {
 
 	updateUser(what) {
 		let deferred = Q.defer()
-		this.userModel.findByIdAndUpdate(what._id, _.omit(what, '_id', 'libraries', 'comments'),
+		this.userModel.findByIdAndUpdate(what._id, _.omit(what, '_id', 'libraries', 'comments', 'ratings'),
 						{ new: true }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)

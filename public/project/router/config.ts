@@ -7,6 +7,7 @@ import { Register } from '../components/users/register'
 import { Login } from '../components/users/login'
 import { User } from '../components/users/user'
 import { Results } from '../components/search/results'
+import { Profile } from '../components/users/profile'
 
 export const ROUTER_CONFIG = [
 	{ path: '/home', component: Home, as: "Home", useAsDefault: true },
@@ -17,5 +18,6 @@ export const ROUTER_CONFIG = [
 	{ path: '/register', component: Register, as: 'Register' },
 	{ path: '/login', component: Login, as: 'Login'},
 	{ path: '/users/:user', component: User, as: 'User' },
+	{ path: '/users/:user/details', component: Profile, as: 'Details' },
 	{ path: '/results', component: Results, as: 'Results'}
 ]

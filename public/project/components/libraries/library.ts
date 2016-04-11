@@ -18,6 +18,7 @@ export class Library {
 	backupName: any
 	fetchingLibrary: boolean
 	isEditingLibraryName: boolean
+	newComment: string
 
 	constructor(public params:RouteParams, public libraryService:LibraryService,
 		public userService: UserService) {
@@ -69,6 +70,23 @@ export class Library {
 					_.remove(this.library.movies, movie => { return (<any>movie)._id === id })
 				}
 			})
+	}
+
+	addComment() {
+		if (this.newComment) {
+			const comment = { comment: this.newComment,
+				userId: this.userService.getActiveUser()._id,
+				username: this.userService.getActiveUser().username,
+				target: this.library._id
+			}
+			this.libraryService.addCommentToLibrary(this.library._id, comment)
+				.subscribe(resp => {
+					if (resp.json().comment) {
+						this.library.comments.push(resp.json().comment)
+						this.newComment = ""
+					}
+				})
+		}
 	}
 
 }

@@ -46,4 +46,12 @@ export default function(app, db) {
 			error => { res.status(400).send(error) })
 
 	})
+
+	app.put('/api/project/library/:libId/comment', (req, res) => {
+		const { comment } = req.body
+		const libId = req.params.libId
+		db.addCommentToLibrary(libId, comment)
+			.then(comment => { res.status(200).send({ comment }) },
+				error => { res.status(400).send(error) })
+	})
 }

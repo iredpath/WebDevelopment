@@ -35,7 +35,14 @@
   </div>
 
   <h3>COMMENTS</h3>
-  <table>COMMENT TABLE</table>
-  <input type="text" class="comment-input">
-  <button class="btn">COMMENT!</button>
+  <table>
+    <tr *ngFor="#comment of library.comments">
+      <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
+      <td>{{comment.comment}}</td>
+    </tr>
+  </table>
+  <div *ngIf="userService.getActiveUser()">
+    <input type="text" class="comment-input" [(ngModel)]="newComment">
+    <button class="btn" (click)="addComment()">COMMENT!</button>
+  </div>
 </div>

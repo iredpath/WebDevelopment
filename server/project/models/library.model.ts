@@ -116,4 +116,23 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
+	addCommentToLibrary(libId: string, comment: any) {
+		let deferred = Q.defer()
+		this.commentModel.create(comment, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				// add comment to relevant user and library
+				const update = { $push: { comments: resp._id } }
+				Q.all([
+					this.userModel.findByIdAndUpdate(comment.userId, update),
+					this.libraryModel.findByIdAndUpdate(comment.target, update)
+				]).then(success => {
+					deferred.resolve(resp)
+				}, error => { deferred.reject(error) })
+			}
+		})
+		return deferred.promise
+	}
+
 }

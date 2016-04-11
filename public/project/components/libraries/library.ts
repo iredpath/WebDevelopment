@@ -3,6 +3,7 @@ import { RouteParams, RouterLink } from 'angular2/router'
 import { LibraryModel } from '../../models/libraryModel'
 import { LibraryService } from '../../services/libraryService'
 import { UserService } from '../../services/userService'
+import { RatingService } from '../../services/ratingService'
 
 @Component({
 	selector: "vml-libraries"
@@ -27,7 +28,7 @@ export class Library {
 
 
 	constructor(public params:RouteParams, public libraryService:LibraryService,
-		public userService: UserService) {
+		public userService: UserService, public ratingService: RatingService) {
 		this.fetchingLibrary = true
 		const libraryId: string = params.get('library')
 		libraryService.get(libraryId)
@@ -50,9 +51,10 @@ export class Library {
 		const user = this.userService.getActiveUser()
 		let myRat
 		if (user) {
-			myRat = _.find(this.library.ratings, rat => { return (<any>rat).user === user._id })
+			myRat = _.find(this.library.ratings, rat => { return (<any>rat).userId === user._id })
 		}
 		this.myRating = myRat ? (<any>myRat).value : 0
+		this.myRatingBackup = this.myRating
 		this.avgRating = _.reduce(this.library.ratings, (acc, rat) => { 
 			return acc + (<any>rat).value }, 0) / this.library.ratings.length || 0
 
@@ -70,10 +72,46 @@ export class Library {
 
 	clearPreview() {
 		this.myRating = this.myRatingBackup
-		console.log('CLEAR')
 	}
 
-	unrate() {}
+	rate(val: number) {
+		const user = this.userService.getActiveUser()
+		if (user) {
+			const myRat = _.find(this.library.ratings, rat => { return (<any>rat).userId === user._id })
+			if (myRat) { // update
+				this.ratingService.updateRating((<any>myRat)._id, val)
+					.subscribe(resp => {
+						if (resp.json().rating) {
+							const index = _.findIndex(this.library.ratings, rat => { return rat === myRat })
+							this.library.ratings.splice(index, 1, resp.json().rating)
+							this.calculateRatings()
+						}
+				})
+			} else {
+				const rating = { value: val, userId: user._id, target: this.library._id }
+				this.ratingService.createRating(rating)
+					.subscribe(resp => {
+						if (resp.json().rating) {
+							this.library.ratings.push(resp.json().rating)
+							this.calculateRatings()
+						}
+				})
+			}
+		}
+	}
+	unrate() {
+		const user = this.userService.getActiveUser()
+		if (user) {
+			const myRat = _.find(this.library.ratings, rat => { return (<any>rat).userId === user._id })
+			this.ratingService.deleteRating((<any>myRat)._id)
+				.subscribe(resp => {
+					if (resp.json().rating) {
+						_.remove(this.library.ratings, rat => { return rat === myRat })
+						this.calculateRatings()
+					}
+				})
+		}
+	}
 	hasEditRights() {
 		return this.userService.getActiveUser() && this.library.user._id === this.userService.getActiveUser()._id
 	}
@@ -108,10 +146,11 @@ export class Library {
 	}
 
 	addComment() {
-		if (this.newComment) {
+		const user = this.userService.getActiveUser()
+		if (this.newComment && user) {
 			const comment = { comment: this.newComment,
-				userId: this.userService.getActiveUser()._id,
-				username: this.userService.getActiveUser().username,
+				userId: user._id,
+				username: user.username,
 				target: this.library._id
 			}
 			this.libraryService.addCommentToLibrary(this.library._id, comment)

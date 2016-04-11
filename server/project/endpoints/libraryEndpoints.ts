@@ -61,4 +61,18 @@ export default function(app, db) {
 			.then(comment => { res.status(200).send({ comment }) },
 			error => { res.status(400).send(error) })
 	})
+	app.post('/api/project/library/:libId/rating', (req, res) => {
+		const { rating } = req.body
+		const libId = req.params.libId
+		db.rateLibrary(libId, rating)
+			.then(rating => { res.status(200).send({ rating }) },
+			error => { res.status(400).send(error) })
+	})
+	app.put('/api/project/library/:libId/rating/:ratingId', (req, res) => {
+		const { rating } = req.body
+		const { ratingId } = req.params.libId
+		db.updateRating(ratingId, rating)
+			.then(rating => { res.status(200).send({ rating }) },
+			error => { res.status(400).send(error) })
+	})
 }

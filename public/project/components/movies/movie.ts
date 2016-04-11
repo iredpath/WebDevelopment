@@ -7,6 +7,7 @@ import { OmdbService } from '../../services/omdbService'
 import { MovieService } from '../../services/movieService'
 import { LibraryService } from '../../services/libraryService'
 import { UserService } from '../../services/userService'
+import { RatingService } from '../../services/ratingService'
 
 @Component({
 	selector: "vml-movies"
@@ -27,7 +28,7 @@ export class Movie {
 
 	constructor(public params:RouteParams, public omdbService:OmdbService,
 		public movieService: MovieService, public libraryService: LibraryService,
-		public userService: UserService) {
+		public userService: UserService, public ratingService: RatingService) {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
 		this.possibleLibs = []

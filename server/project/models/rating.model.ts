@@ -32,9 +32,18 @@ export default class RatingModel {
 				]).then(success => { deferred.resolve(resp) }, error => { deferred.reject(error) })
 			}
 		})
+		return deferred.promise
 	}
 
-	deleteComment(id) {
+	updateRating(ratingId: string, newRating: number) {
+		let deferred = Q.defer()
+		this.ratingModel.findByIdAndUpdate(ratingId, { value: newRating }, { new: true }, (err, resp) => {
+			err ? deferred.reject(err) : deferred.resolve(resp)
+		})
+		return deferred.promise
+	}
+
+	deleteRating(id) {
 		let deferred = Q.defer()
 		this.ratingModel.findByIdAndRemove(id, (err, resp) => {
 			if (err) {
@@ -47,7 +56,7 @@ export default class RatingModel {
 				]).then(success => { deferred.resolve(resp) }, error => { deferred.reject(error) })
 			}
 		})
+		return deferred.promise
 	}
-
 
 }

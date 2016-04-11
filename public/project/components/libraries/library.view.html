@@ -22,16 +22,16 @@
   <div class="ratings-container">
     <label for="my-rating">My Rating:</label>
     <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
-      <span class="glyphicon {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(1)"></span>
-      <span class="glyphicon {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(2)"></span>
-      <span class="glyphicon {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(3)"></span>
-      <span class="glyphicon {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(4)"></span>
-      <span class="glyphicon {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(5)"></span>
+      <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
+      <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
+      <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
+      <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
+      <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
     </div>
     <button class="btn btn-default" (click)="unrate()">Clear</button>
 

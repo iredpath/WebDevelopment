@@ -38,7 +38,16 @@
   <table>
     <tr *ngFor="#comment of library.comments">
       <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
-      <td>{{comment.comment}}</td>
+      <td>
+        <div *ngIf="isEditingComment(comment._id)">
+          <input type="text" [(ngModel)]="editCommentText">
+          <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
+          <button class="btn btn-default" (click)="cancelEditComment()">Cancel</button>
+        </div>
+        <div *ngIf="!isEditingComment(comment._id)" (click)="editComment(comment)">
+          {{comment.comment}}
+        </div>
+      </td>
     </tr>
   </table>
   <div *ngIf="userService.getActiveUser()">

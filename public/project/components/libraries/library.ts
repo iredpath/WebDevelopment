@@ -19,6 +19,8 @@ export class Library {
 	fetchingLibrary: boolean
 	isEditingLibraryName: boolean
 	newComment: string
+	editCommentText: string
+	editCommentId: string
 
 	constructor(public params:RouteParams, public libraryService:LibraryService,
 		public userService: UserService) {
@@ -87,6 +89,33 @@ export class Library {
 					}
 				})
 		}
+	}
+
+	isEditingComment(id: string) {
+		return id === this.editCommentId
+	}
+
+	editComment(comment: any) {
+		if (this.userService.getActiveUser() && this.userService.getActiveUser()._id === comment.userId) {
+			this.editCommentId = comment._id
+			this.editCommentText = (<any>comment).comment
+		}
+	}
+
+	saveEditComment() {
+		this.libraryService.editCommentForLibrary(this.library._id, this.editCommentId, this.editCommentText)
+			.subscribe(resp => {
+				if (resp.json().comment) {
+					const comm: any = _.find(this.library.comments, c => { return (<any>c)._id === this.editCommentId })
+					comm.comment = this.editCommentText
+					this.cancelEditComment()
+				}
+			})
+	}
+
+	cancelEditComment() {
+		this.editCommentId = null
+		this.editCommentText = ""
 	}
 
 }

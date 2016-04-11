@@ -43,7 +43,12 @@ export class LibraryService {
 	}
 
 	addCommentToLibrary(libraryId: string, comment: any) {
-		return this.http.put(`/api/project/library/${libraryId}/comment`, JSON.stringify({ comment }),
+		return this.http.post(`/api/project/library/${libraryId}/comment`, JSON.stringify({ comment }),
+			{ headers: this.headers })
+	}
+
+	editCommentForLibrary(libraryId: string, commentId: string, commentText: string) {
+		return this.http.put(`/api/project/library/${libraryId}/comment/${commentId}`, JSON.stringify({ commentText }),
 			{ headers: this.headers })
 	}
 

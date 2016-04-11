@@ -103,6 +103,7 @@ export class Library {
 		const user = this.userService.getActiveUser()
 		if (user) {
 			const myRat = _.find(this.library.ratings, rat => { return (<any>rat).userId === user._id })
+			if (myRat) {
 			this.ratingService.deleteRating((<any>myRat)._id)
 				.subscribe(resp => {
 					if (resp.json().rating) {
@@ -110,6 +111,7 @@ export class Library {
 						this.calculateRatings()
 					}
 				})
+			}
 		}
 	}
 	hasEditRights() {

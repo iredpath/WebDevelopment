@@ -20,8 +20,8 @@
 
 
   <div class="ratings-container">
-    <label for="my-rating">My Rating:</label>
-    <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
+    <label *ngIf="userService.getActiveUser()" for="my-rating">My Rating:</label>
+    <div *ngIf="userService.getActiveUser()" class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
       <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
         (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
       <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
@@ -33,7 +33,7 @@
       <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
         (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
     </div>
-    <button class="btn btn-default" (click)="unrate()">Clear</button>
+    <button *ngIf="userService.getActiveUser()" class="btn btn-default" (click)="unrate()">Clear</button>
 
     <label for="ratings">Average Rating:</label>
       <div class="ratings">

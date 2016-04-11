@@ -37,7 +37,7 @@ export class LibraryService {
 			{ headers: this.headers })
 	}
 
-	removeMovie(libraryId: string, movieId: string) {
+	removeMovieFromLibrary(libraryId: string, movieId: string) {
 		return this.http.delete(`/api/project/library/${libraryId}/movie/${movieId}`,
 			{ headers: this.headers })
 	}

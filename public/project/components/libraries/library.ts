@@ -15,7 +15,7 @@ import { UserService } from '../../services/userService'
 export class Library {
 
 	library: any
-	libraryBackup: any
+	backupName: any
 	fetchingLibrary: boolean
 	isEditingLibraryName: boolean
 
@@ -44,12 +44,12 @@ export class Library {
 
 	editLibraryName() {
 		this.isEditingLibraryName = true
-		this.libraryBackup = this.library
+		this.backupName = this.library.name
 	}
 
 	cancelEditingLibraryName() {
 		this.isEditingLibraryName = false
-		this.library = this.libraryBackup
+		this.library.name = this.backupName
 	}
 
 	saveNewLibraryName() {
@@ -57,17 +57,16 @@ export class Library {
 		this.libraryService.updateLibrary(this.library)
 			.subscribe(resp => {
 				if(resp.json().library) {
-					this.library = resp.json().library
-					this.libraryBackup = resp.json().library
+					this.backupName = this.library.name
 				}
-			})
+			}, error => { alert(error.message) })
 	}
 
 	removeMovie(id: string) {
-		this.libraryService.removeMovie(this.library._id, id)
+		this.libraryService.removeMovieFromLibrary(this.library._id, id)
 			.subscribe(resp => {
 				if (resp.json().library) {
-					this.library = resp.json().library
+					_.remove(this.library.movies, movie => { return (<any>movie)._id === id })
 				}
 			})
 	}

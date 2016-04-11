@@ -36,8 +36,12 @@ export class Movie {
 					this.omdbMovie = OmdbMovieModel.newMovie(data.json())
 					movieService.getOrCreate(imdbId, this.omdbMovie.title)
 						.subscribe(resp => {
-							if (resp.json().movie) {
-								this.movie = resp.json().movie
+							const data = resp.json().data
+							if (data.movie) {
+								this.movie = data.movie
+								this.movie.comments = data.comments
+								this.movie.libraries = data.libraries
+								this.movie.ratings = data.ratings
 							} else {
 								console.log('error fetching movie')
 							}
@@ -53,8 +57,10 @@ export class Movie {
 		if (this.libraryId) {
 			this.movieService.addMovieToLibrary(this.movie, this.libraryId)
 				.subscribe(resp => {
-					if (resp.json().movie) {
-						this.movie = resp.json().movie
+					const data = resp.json().data
+					if (data.movie) {
+						this.movie = data.movie
+						this.movie.libraries = data.libraries
 					}
 				})
 		} else {

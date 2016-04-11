@@ -4,7 +4,7 @@ export default function(app, db) {
 		const query = req.query
 		if (query.id && query.title) {
 			db.getMovie(query.id, query.title)
-				.then(movie => { res.status(200).send({ movie }) },
+				.then(data => { res.status(200).send({ data }) },
 					error => { res.status(400).send(error) })
 		} else {
 			db.getAllMovies()
@@ -31,7 +31,7 @@ export default function(app, db) {
 		const body = req.body
 		if (body.library) {
 			db.addMovieToLibrary(body.movie, body.library)
-				.then(movie => { res.status(200).send({ movie }) },
+				.then(data => { res.status(200).send({ data }) },
 				error => { res.status(400).send(error) })
 		} else {
 			db.updateMovie(body.movie)

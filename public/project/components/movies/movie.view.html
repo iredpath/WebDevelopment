@@ -5,7 +5,7 @@
     <div *ngIf="userService.getActiveUser()">
       <div>
         <select [(ngModel)]="libraryId">
-          <option *ngFor="#library of userService.getActiveUser().libraries" value={{library.id}}>{{library.name}}</option>
+          <option *ngFor="#library of userService.getActiveUser().libraries" value={{library._id}}>{{library.name}}</option>
         </select>
         <button class="btn btn-small" (click)="addMovie()">+</button>
       </div>
@@ -57,7 +57,7 @@
     <h3>Libraries With This Title</h3>
     <div class="movie-in-libraries">
       <div *ngFor="#library of movie.libraries" class="movie-in-library">
-        <a class="thumbnail" [routerLink]="['/Library', { library: library.id }]">{{library.name}}</a>
+        <a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
       </div>
     </div>
   </div>

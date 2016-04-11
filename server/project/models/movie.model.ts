@@ -35,7 +35,7 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
-	getMovieById(id: number) {
+	getMovieById(id: string) {
 		let deferred = Q.defer()
 		this.libraryModel.findById(id, (err, resp) => {
 			if (err) {
@@ -68,7 +68,7 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
-	deleteMovie(id: number) {
+	deleteMovie(id: string) {
 		let deferred = Q.defer()
 		this.movieModel.findByIdAndRemove(id, (err, resp) => {
 			if (err) {
@@ -99,7 +99,8 @@ export default class LibraryModel {
 					if (err) {
 						deferred.reject(err)
 					} else {
-						deferred.resolve(resp) // just want the movie back
+
+						deferred.resolve({ movie: resp, libraries: lib })
 					}
 				})
 			}
@@ -109,11 +110,20 @@ export default class LibraryModel {
 
 	getMovie(id: string, title: string) {
 		let deferred = Q.defer()
-		this.movieModel.findById(id, (err, resp) => {
+		this.movieModel.findOne({ imdbId: id }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
 			} else if (resp) {
-				deferred.resolve(resp)
+				Q.all([
+					this.libraryModel.find({ movies: resp._id }),
+					this.ratingModel.find({ target: resp._id }),
+					this.commentModel.find({ target: resp._id })
+				]).then(success => {
+					const libraries = success[0]
+					const ratings = success[1]
+					const comments = success[2]
+					deferred.resolve({ movie: resp, libraries, ratings, comments })
+				}, error => { deferred.reject(error) })
 			} else {
 				// create the movie
 				this.createMovie({ imdbId: id, title })
@@ -121,6 +131,7 @@ export default class LibraryModel {
 						error => { deferred.reject(error) })
 			}
 		})
+		return deferred.promise
 	}
 
 }

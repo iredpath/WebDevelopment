@@ -18,19 +18,30 @@
     </div>
   </div>
 
-  <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
-      <span class="glyphicon glyphicon-star"></span>
+
   <div class="ratings-container">
+    <label for="my-rating">My Rating:</label>
+    <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
+      <span class="glyphicon {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(1)"></span>
+      <span class="glyphicon {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(2)"></span>
+      <span class="glyphicon {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(3)"></span>
+      <span class="glyphicon {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(4)"></span>
+      <span class="glyphicon {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+        (mouseenter)="ratePreview(5)"></span>
+    </div>
+    <button class="btn btn-default" (click)="unrate()">Clear</button>
+
     <label for="ratings">Average Rating:</label>
       <div class="ratings">
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
+        <span class="glyphicon {{ avgRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+        <span class="glyphicon {{ avgRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+        <span class="glyphicon {{ avgRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+        <span class="glyphicon {{ avgRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+        <span class="glyphicon {{ avgRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
     </div>
   </div>
 

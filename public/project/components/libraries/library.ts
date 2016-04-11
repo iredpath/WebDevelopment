@@ -21,6 +21,10 @@ export class Library {
 	newComment: string
 	editCommentText: string
 	editCommentId: string
+	avgRating: number
+	myRating: number
+	myRatingBackup: number
+
 
 	constructor(public params:RouteParams, public libraryService:LibraryService,
 		public userService: UserService) {
@@ -36,11 +40,40 @@ export class Library {
 					this.library.comments = data.comments
 					this.library.ratings = data.ratings
 				}
+				this.calculateRatings()
 				console.log(this.library)
 				this.fetchingLibrary = false
 			})
 	}
 
+	calculateRatings() {
+		const user = this.userService.getActiveUser()
+		let myRat
+		if (user) {
+			myRat = _.find(this.library.ratings, rat => { return (<any>rat).user === user._id })
+		}
+		this.myRating = myRat ? (<any>myRat).value : 0
+		this.avgRating = _.reduce(this.library.ratings, (acc, rat) => { 
+			return acc + (<any>rat).value }, 0) / this.library.ratings.length || 0
+
+		console.log(this.myRating)
+		console.log(this.avgRating)
+	}
+
+	storeRating() {
+		this.myRatingBackup = this.myRating
+	}
+	ratePreview(val: number) {
+		//this.myRatingBackup = this.myRating
+		this.myRating = val
+	}
+
+	clearPreview() {
+		this.myRating = this.myRatingBackup
+		console.log('CLEAR')
+	}
+
+	unrate() {}
 	hasEditRights() {
 		return this.userService.getActiveUser() && this.library.user._id === this.userService.getActiveUser()._id
 	}

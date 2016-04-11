@@ -31,7 +31,7 @@ export class MovieService {
 			{ headers: this.headers })
 	}
 
-	addMovieToLibrary(movie: any, libId: string) {
+	addMovieToLibrary(movie: string, libId: string) {
 		return this.http.put('/api/project/movie', JSON.stringify({ library: libId, movie }),
 			{ headers: this.headers })
 	}

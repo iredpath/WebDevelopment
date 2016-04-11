@@ -22,7 +22,11 @@ export default class LibraryModel {
 	createMovie(newMovie) {
 		let deferred = Q.defer()
 		this.movieModel.create(newMovie, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+			if (err) {
+				deferred.reject(err)
+			} else {
+				deferred.resolve({ movie: resp, libraries: [], ratings: [], comments: [] })
+			}
 		})
 		return deferred.promise
 	}
@@ -87,14 +91,14 @@ export default class LibraryModel {
 	}
 
 
-	addMovieToLibrary(movie, libraryId) {
+	addMovieToLibrary(movieId, libraryId) {
 		let deferred = Q.defer()
 		const update = { $push: { libraries: libraryId } }
-		this.movieModel.findByIdAndUpdate(movie._id, update, { new: true }, (err, resp) => {
+		this.movieModel.findByIdAndUpdate(movieId, update, { new: true }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
 			} else {
-				const libUpdate = { $push: { movies: movie._id } }
+				const libUpdate = { $push: { movies: movieId } }
 				this.libraryModel.findByIdAndUpdate(libraryId, libUpdate, { new: true }, (err, lib) => {
 					if (err) {
 						deferred.reject(err)

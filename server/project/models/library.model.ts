@@ -96,8 +96,8 @@ export default class LibraryModel {
 				])
 					.then(success => { deferred.resolve(resp) }, error => { deferred.reject(error) })
 			}
-			return deferred.promise
 		})
+		return deferred.promise
 	}
 
 	deleteMovieFromLibrary(movieId: string, libraryId: string) {

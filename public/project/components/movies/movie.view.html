@@ -3,9 +3,9 @@
   <div class="col-sm-4 col-md-5">
     <img *ngIf="omdbMovie.image !== 'N/A'" class="movie-image" src="">
     <div *ngIf="userService.getActiveUser()">
-      <div>
+      <div *ngIf="possibleLibs.length > 0">
         <select [(ngModel)]="libraryId">
-          <option *ngFor="#library of userService.getActiveUser().libraries" value={{library._id}}>{{library.name}}</option>
+          <option *ngFor="#library of possibleLibs" value={{library._id}}>{{library.name}}</option>
         </select>
         <button class="btn btn-small" (click)="addMovie()">+</button>
       </div>

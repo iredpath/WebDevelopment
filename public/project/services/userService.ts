@@ -10,7 +10,7 @@ import { MovieService } from '../services/movieService'
 @Injectable()
 export class UserService {
 
-	activeUser: UserModel
+	activeUser: any
 	headers
 
 	constructor(public libraryService: LibraryService, public movieService: MovieService, public http: Http) {

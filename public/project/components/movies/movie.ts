@@ -23,12 +23,14 @@ export class Movie {
 	fetchingMovie:boolean
 	fetchingLibraries: boolean
 	libraryId: string
+	possibleLibs: Array<any>
 
 	constructor(public params:RouteParams, public omdbService:OmdbService,
 		public movieService: MovieService, public libraryService: LibraryService,
 		public userService: UserService) {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
+		this.possibleLibs = []
 		const imdbId: string = params.get('movie')
 		omdbService.findMovieById(imdbId)
 			.subscribe(
@@ -42,6 +44,7 @@ export class Movie {
 								this.movie.comments = data.comments
 								this.movie.libraries = data.libraries
 								this.movie.ratings = data.ratings
+								this.userService.getActiveUser() && this.calculatePossibleLibs()
 							} else {
 								console.log('error fetching movie')
 							}
@@ -52,17 +55,29 @@ export class Movie {
 				() => { this.fetchingMovie = false }
 			)
 	}
+
+	calculatePossibleLibs() {
+		const userLibs = this.userService.getActiveUser().libraries
+		console.log(this.movie)
+		console.log(userLibs)
+		this.possibleLibs =  _.filter(userLibs, lib => 
+			{ return !_.some((<any>lib).movies, mov => { return mov === this.movie._id })
+		})
+	}
 	// eventually, this will be part of a new component and logic will be moved out of here
 	addMovie() {
 		if (this.libraryId) {
-			this.movieService.addMovieToLibrary(this.movie, this.libraryId)
+			this.movieService.addMovieToLibrary(this.movie._id, this.libraryId)
 				.subscribe(resp => {
 					const data = resp.json().data
 					if (data.movie) {
+						let libraries = this.movie.libraries
+						libraries.push(data.libraries)
 						this.movie = data.movie
-						this.movie.libraries = data.libraries
+						this.movie.libraries = libraries
+						this.calculatePossibleLibs()
 					}
-				})
+				}, error => { alert(error.message) })
 		} else {
 			alert("please select a library first")
 		}

@@ -75,7 +75,7 @@ export class Movie {
 						libraries.push(data.libraries)
 						this.movie = data.movie
 						this.movie.libraries = libraries
-						this.calculatePossibleLibs()
+						this.calculatePossibleLibs()	
 					}
 				}, error => { alert(error.message) })
 		} else {

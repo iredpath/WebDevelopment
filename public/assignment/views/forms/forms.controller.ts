@@ -1,7 +1,7 @@
 import { View, Component } from 'angular2/core'
 import { Router, RouterLink } from 'angular2/router'
 import { FormsService } from '../../services/forms.service.client'
-import { UserService } from '../../services/User.service.client'
+import { UserService } from '../../services/user.service.client'
 
 @Component({
 	selector: "form-builder-forms"
@@ -14,8 +14,10 @@ import { UserService } from '../../services/User.service.client'
 export class FormsController {
 	form
 	forms:Array<any>
+	loading: boolean
 
 	constructor(public formsService:FormsService, public userService: UserService, public router:Router) {
+		this.loading = true
 		this.userService.loggedIn()
 			.subscribe(user => { 
 				if (user.json()) {
@@ -24,6 +26,7 @@ export class FormsController {
 					formsService.findAllFormsForUser(user.json()._id)
 						.subscribe(resp => {
 							this.forms = resp.json().forms
+							this.loading = false
 					})
 				} else {
 					router.navigate(['/Login', {}]) 

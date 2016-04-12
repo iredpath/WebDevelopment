@@ -11,6 +11,13 @@ export class UserService {
 		this.headers.append("Content-Type", "application/json")
 	}
 
+	login(username: string, password: string) {
+		return this.http.post('/api/assignment/login', JSON.stringify({ username, password }),
+			{ headers: this.headers })
+	}
+	loggedIn() {
+		return this.http.get('/api/assignment/loggedin')
+	}
 	findUserByCredentials(username: string, password: string) {
 		return this.http.get(`/api/assignment/user?username=${username}&password=${password}`)
 	}

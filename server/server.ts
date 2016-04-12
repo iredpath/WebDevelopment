@@ -2,6 +2,9 @@ import * as express from 'express'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
 import * as mongoose from 'mongoose'
+import * as session from 'express-session'
+import * as passport from 'passport'
+import * as cookieParser from 'cookie-parser'
 
 import Userendpoints from './services/user.service.server'
 import FormEndpoints from './services/form.service.server'
@@ -40,6 +43,11 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 const db = mongoose.connect(mongoConnectionString)
 let app = express();
+
+app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }))
+app.use(cookieParser())
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(bodyParser.json())
 app.use(express.static(__dirname))

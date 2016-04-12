@@ -26,9 +26,9 @@ export class LoginController {
 	}
 
 	login() {
-		this.userService.findUserByCredentials(this.user.username, this.user.password)
+		this.userService.login(this.user.username, this.user.password)
 			.subscribe(resp => {
-				const { user } = resp.json()
+				const user = resp.json()
 				if (user) {
 					this.stateService.setActiveUser(user)
 					this.router.navigate(['/Profile', {}])

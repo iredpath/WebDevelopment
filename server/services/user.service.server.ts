@@ -1,7 +1,44 @@
+import * as passport from 'passport'
+import * as local from 'passport-local'
 import UserModel from '../models/user.model'
 
 export default function Userendpoints(app, userModel: UserModel) {
 
+	// (de)serialization funcs
+	passport.serializeUser((user, done) => {
+		done(null, user)
+	})
+	passport.deserializeUser((user, done) => {
+		userModel.findById(user._id)
+			.then(user => { done(null, user) }, err => { done(err, null) })
+	})
+
+	// local strategy
+	const localStrat = (username, password, done) => {
+		userModel.findUserByCredentials(username, password)
+			.then(user => { return done(null, user ? user : false) },
+				err => { return done(err) })
+	}
+	passport.use(new local.Strategy(localStrat))
+
+	const authenticate = (req, res, next) => {
+		if (!req.isAuthenticated()) {
+			res.status(401).send()
+		} else {
+			next()
+		}
+	}
+
+	app.post('/api/assignment/login', passport.authenticate('local'), (req, res) => {
+		res.status(200).send(req.user)
+	})
+	app.post('/api/assignment/logout', (req, res) => {
+		req.logout()
+		res.status(200).send()
+	})
+	app.get('/api/assignment/loggedin', (req, res) => {
+		res.status(200).send(req.isAuthenticated() ? req.user : '0')
+	})
 	app.post('/api/assignment/user', (req, res) => {
 		const newUser = req.body.user
 		userModel.create(newUser)
@@ -34,7 +71,7 @@ export default function Userendpoints(app, userModel: UserModel) {
 				error => { res.status(400).send({ error })})
 	})
 
-	app.put('/api/assignment/user/:id', (req, res) => {
+	app.put('/api/assignment/user/:id', authenticate, (req, res) => {
 		const id = req.params.id
 		const newUser = req.body.user
 		userModel.update(id, newUser)
@@ -42,7 +79,7 @@ export default function Userendpoints(app, userModel: UserModel) {
 				error => { res.status(400).send({ error })})
 	})
 
-	app.delete('/api/assignment/user/:id', (req, res) => {
+	app.delete('/api/assignment/user/:id', authenticate, (req, res) => {
 		const id = req.params.id
 		userModel.delete(id)
 			.then(user => { res.status(200).send({ user }) },

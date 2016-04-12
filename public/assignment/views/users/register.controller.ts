@@ -26,9 +26,16 @@ export class RegisterController {
 	}
 
 	register() {
+		//this.user.roles = ["admin"]
 		this.userService.createUser(this.user)
 			.subscribe(resp => {
-				this.router.navigate(['/Profile', {}])
+				if (resp.json().user) {
+					// login
+					this.userService.login(resp.json().user.username, resp.json().user.password)
+						.subscribe(resp => {
+							this.router.navigate(['/Profile', {}])
+						})	
+				}
 			})
 	}
 }

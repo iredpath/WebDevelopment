@@ -10,11 +10,8 @@ import { UserService } from '../../services/user.service.client'
 	directives: [RouterLink]
 })
 export class HeaderController {
-	location:Location
 
-	constructor(public userService: UserService, public router:Router, location:Location) {
-		this.location = location
-	}
+	constructor(public userService: UserService, public router:Router, public location:Location) {}
 
 	isRouteActive(route) {
 		return this.location.path().indexOf(route) > -1
@@ -31,6 +28,7 @@ export class HeaderController {
 	logout() {
 		this.userService.logout()
 			.subscribe(resp => {
+				this.userService.clearActiveUser()
 				this.router.navigate(['/Home', {}])
 			})
 	}

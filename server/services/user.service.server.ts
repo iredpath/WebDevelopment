@@ -34,7 +34,7 @@ export default function Userendpoints(app, userModel: UserModel) {
 	})
 	app.post('/api/assignment/logout', (req, res) => {
 		req.logout()
-		res.status(200).send()
+		res.status(200).send({ message: 'logged out' })
 	})
 	app.get('/api/assignment/loggedin', (req, res) => {
 		res.status(200).send(req.isAuthenticated() ? req.user : '0')

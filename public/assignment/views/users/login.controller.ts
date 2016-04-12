@@ -37,6 +37,9 @@ export class LoginController {
 					alert('Invalid name/password')
 					this.user = {}
 				}
+			}, err => {
+				alert(err._body)
+				this.user = {}
 			})
 	}
 }

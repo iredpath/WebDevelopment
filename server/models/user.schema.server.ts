@@ -8,7 +8,8 @@ export default function() {
 		firstName: String,
 		lastName: String,
 		email: String,
-		phones: [String]
+		phones: [String],
+		roles: [String]
 	}, { collection: 'assignment.user' })
 	return UserSchema
 }

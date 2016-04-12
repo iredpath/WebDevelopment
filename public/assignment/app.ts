@@ -9,7 +9,6 @@ import { HeaderController } from './views/header/header.controller'
 import { SidebarController } from './views/sidebar/sidebar.controller'
 import { ROUTER_CONFIG } from './router/config'
 import { UserService } from './services/user.service.client'
-import { StateService } from './services/state.service.client'
 import { FormsService } from './services/forms.service.client'
 import { FieldsService } from './services/fields.service.client'
 import { UserFactory } from './models/user.factory'
@@ -25,5 +24,5 @@ import { UserFactory } from './models/user.factory'
 
 class App {}
 
-bootstrap(App, [UserService, StateService, FormsService, FieldsService, UserFactory, HTTP_PROVIDERS,
+bootstrap(App, [UserService, FormsService, FieldsService, UserFactory, HTTP_PROVIDERS,
 	ROUTER_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })])

@@ -5,19 +5,39 @@ import { Http, Headers } from 'angular2/http'
 export class UserService {
 
 	headers
+	activeUser: any
 
 	constructor(public http: Http) {
 		this.headers = new Headers()
 		this.headers.append("Content-Type", "application/json")
+		this.activeUser = null
 	}
+
+	setActiveUser(user) {
+		this.activeUser = user
+	}
+
+	getActiveUser() { return this.activeUser }
+
+	isActiveUser() { return !!this.activeUser }
+
+	isActiveAdminUser() { return this.activeUser && _.includes(this.activeUser.roles, 'admin') }
+
+	clearActiveUser() { this.activeUser = null }
 
 	login(username: string, password: string) {
 		return this.http.post('/api/assignment/login', JSON.stringify({ username, password }),
 			{ headers: this.headers })
 	}
+
 	loggedIn() {
 		return this.http.get('/api/assignment/loggedin')
 	}
+
+	logout() {
+		return this.http.post('/api/assignment/logout', '')
+	}
+
 	findUserByCredentials(username: string, password: string) {
 		return this.http.get(`/api/assignment/user?username=${username}&password=${password}`)
 	}

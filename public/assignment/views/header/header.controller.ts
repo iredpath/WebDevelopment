@@ -1,7 +1,6 @@
 import { View, Component } from 'angular2/core'
 import { RouterLink, Router, Location } from 'angular2/router'
-import { StateService } from '../../services/state.service.client'
-import { UserFactory } from '../../models/user.factory'
+import { UserService } from '../../services/user.service.client'
 
 @Component({
 	selector: "form-builder-header"
@@ -13,8 +12,7 @@ import { UserFactory } from '../../models/user.factory'
 export class HeaderController {
 	location:Location
 
-	constructor(public userFactory:UserFactory, public stateService:StateService,
-		public router:Router, location:Location) {
+	constructor(public userService: UserService, public router:Router, location:Location) {
 		this.location = location
 	}
 
@@ -23,15 +21,17 @@ export class HeaderController {
 	}
 
 	isActiveUser() {
-		return this.stateService.isActiveUser()
+		return this.userService.isActiveUser()
 	}
 
 	isActiveAdminUser() {
-		return this.stateService.isActiveAdminUser()
+		return this.userService.isActiveAdminUser()
 	}
 
 	logout() {
-		this.stateService.setActiveUser({})
-		this.router.navigate(['/Home', {}])
+		this.userService.logout()
+			.subscribe(resp => {
+				this.router.navigate(['/Home', {}])
+			})
 	}
 }

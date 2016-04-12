@@ -1,7 +1,6 @@
 import { View, Component, Inject } from 'angular2/core'
 import { Router } from 'angular2/router'
 import { UserService } from '../../services/user.service.client'
-import { StateService } from '../../services/state.service.client'
 import { User } from '../../models/user.model'
 
 @Component({
@@ -16,19 +15,19 @@ export class RegisterController {
 
 	user: any
 
-	constructor(
-		public userService:UserService, public stateService:StateService,
-		public router:Router
-	) {
-		this.user = stateService.getActiveUser()
+	constructor(public userService:UserService, public router:Router) {
+		this.user = {}
+		userService.loggedIn()
+			.subscribe(user => { 
+				if (user.json()) {
+					this.router.navigate(['/Profile', {}])
+				}
+			})
 	}
 
 	register() {
 		this.userService.createUser(this.user)
 			.subscribe(resp => {
-				const { user } = resp.json()
-				console.log('successfully created user ' + user)
-				this.stateService.setActiveUser(user)
 				this.router.navigate(['/Profile', {}])
 			})
 	}

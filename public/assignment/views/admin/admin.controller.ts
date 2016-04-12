@@ -1,7 +1,6 @@
 import { View, Component } from 'angular2/core'
 import { Router } from 'angular2/router'
-import { StateService } from '../../services/state.service.client'
-import { User } from '../../models/user.model'
+import { UserService } from '../../services/user.service.client'
 
 
 @Component({
@@ -13,13 +12,17 @@ import { User } from '../../models/user.model'
 
 export class AdminController {
 
-	user:User
+	user: any
 
-	constructor(public stateService:StateService, public router:Router) {
-		if (!stateService.isActiveUser()) {
-			router.navigate(['/Login', {}])
-		} else {
-			this.user = stateService.getActiveUser()
-		}
+	constructor(public userService: UserService, public router: Router) {
+		userService.loggedIn()
+			.subscribe(user => { 
+				if (user.json()) {
+					this.userService.setActiveUser(user.json())
+					this.user = user.json()
+				} else {
+					router.navigate(['/Login', {}]) 
+				}
+		})
 	}
 }

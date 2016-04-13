@@ -18,6 +18,7 @@ export default function(app) {
 		/**
 		 * option 1: store the image directly in the server
 		 * may not be permitted by openshift
+		 **/
 		let request = http.request(options, (resp) => {
 			resp.setEncoding('binary')
 			resp.on('data', chunk => {
@@ -34,8 +35,8 @@ export default function(app) {
 			})
 		})
 		
-		**/
-
+		/**/
+/**
 		let request = http.request(options, resp => {
 			resp.setEncoding('base64')
 			resp.on('data', chunk => {
@@ -48,7 +49,7 @@ export default function(app) {
 
 		request.write("")
 		request.end()
-
+**/
 	})
 
 }

@@ -37,7 +37,7 @@ export class Results {
 								//console.log(mov)
 								this.posterService.getPosterFor(mov)
 									.subscribe(posterResp => {
-										(<any>mov).image = `url(data:image/png;base64,${posterResp.json()})`
+										(<any>mov).image = `data:image/png;base64,${posterResp.text()}`
 										cb(null)
 									})
 							})

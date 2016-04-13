@@ -8,6 +8,7 @@ import { MovieService } from '../../services/movieService'
 import { LibraryService } from '../../services/libraryService'
 import { UserService } from '../../services/userService'
 import { RatingService } from '../../services/ratingService'
+import { PosterService } from '../../services/posterService'
 
 @Component({
 	selector: "vml-movies"
@@ -32,7 +33,7 @@ export class Movie {
 
 	constructor(public params:RouteParams, public omdbService:OmdbService,
 		public movieService: MovieService, public libraryService: LibraryService,
-		public userService: UserService, public ratingService: RatingService) {
+		public userService: UserService, public ratingService: RatingService, public posterService: PosterService) {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
 		this.userService.loggedIn()
@@ -49,7 +50,6 @@ export class Movie {
 								this.userService.setActiveUser(user)
 							}
 						})
-					//this.userService.setActiveUser(data.json().user)
 				}
 			}, error => { alert(error) },
 			() => {
@@ -59,6 +59,7 @@ export class Movie {
 					.subscribe(
 					data => {
 						this.omdbMovie = OmdbMovieModel.newMovie(data.json())
+
 						movieService.getOrCreate(imdbId, this.omdbMovie.title)
 							.subscribe(resp => {
 								const data = resp.json().data
@@ -69,14 +70,18 @@ export class Movie {
 									this.movie.ratings = data.ratings
 									this.userService.getActiveUser() && this.calculatePossibleLibs()
 									this.calculateRatings()
+									this.posterService.getPosterFor(this.movie)
+										.subscribe(posterResp => {
+											this.movie.image = `data:image/png;base64,${posterResp.text()}`
+									})
 								} else {
 									console.log('error fetching movie')
 								}
 								this.fetchingLibraries = false
+								this.fetchingMovie = false
 							})
 					},
-					err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() },
-					() => { this.fetchingMovie = false })
+					err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() })
 			})
 	}
 

@@ -22,7 +22,7 @@ export class UserService {
 
 	isActiveUser() { return !!this.activeUser }
 
-	isActiveAdminUser() { return this.activeUser && _.includes(this.activeUser.roles, 'admin') }
+	isActiveAdminUser() { return this.activeUser && this.activeUser.role === 'admin' }
 
 	clearActiveUser() { this.activeUser = null }
 

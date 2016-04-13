@@ -26,7 +26,7 @@ export class RegisterController {
 	}
 
 	register() {
-		//this.user.roles = ["admin"]
+		//this.user.role = "admin"
 		this.userService.createUser(this.user)
 			.subscribe(resp => {
 				if (resp.json().user) {

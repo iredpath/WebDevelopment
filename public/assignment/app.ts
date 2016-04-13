@@ -11,7 +11,7 @@ import { ROUTER_CONFIG } from './router/config'
 import { UserService } from './services/user.service.client'
 import { FormsService } from './services/forms.service.client'
 import { FieldsService } from './services/fields.service.client'
-import { UserFactory } from './models/user.factory'
+import { AdminService } from './services/admin.service.client'
 
 @Component({
 	selector: 'form-maker-app'
@@ -24,5 +24,5 @@ import { UserFactory } from './models/user.factory'
 
 class App {}
 
-bootstrap(App, [UserService, FormsService, FieldsService, UserFactory, HTTP_PROVIDERS,
+bootstrap(App, [UserService, FormsService, FieldsService, AdminService, HTTP_PROVIDERS,
 	ROUTER_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })])

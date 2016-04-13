@@ -1,59 +1,70 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main table-responsive">
   <h1 class="page-header">Admin</h1>
   <h2>Users</h2>
-  <table class="table table-striped">
+  <table *ngIf="!loading" class="table table-striped">
     <thead>
       <tr>
         <th>
-          <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
+          <div class="table-header-div" [ngSwitch]="usernameSorted">
+            <span *ngSwitchWhen="'asc'" class="glyphicon glyphicon-chevron-down" (click)="sort('username', 'desc')"></span>
+            <span *ngSwitchWhen="'desc'" class="glyphicon glyphicon-chevron-up" (click)="sort('username', 'asc')"></span>
             Username
           </div>
         </th>
         <th>
           <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
             Password
           </div>
         </th>
          <th>
-          <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
+          <div class="table-header-div" [ngSwitch]="firstnameSorted">
+            <span *ngSwitchWhen="'asc'" class="glyphicon glyphicon-chevron-down" (click)="sort('firstname', 'desc')"></span>
+            <span *ngSwitchWhen="'desc'" class="glyphicon glyphicon-chevron-up" (click)="sort('firstname', 'asc')"></span>
             First name
           </div>
         </th>
          <th>
-          <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
+          <div class="table-header-div" [ngSwitch]="lastnameSorted">
+            <span *ngSwitchWhen="'asc'" class="glyphicon glyphicon-chevron-down" (click)="sort('lastname', 'desc')"></span>
+            <span *ngSwitchWhen="'desc'" class="glyphicon glyphicon-chevron-up" (click)="sort('lastname', 'asc')"></span>
             Lastname
           </div>
         </th>
         <th>
           <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            Role
+            Roles
           </div>
         </th>
         <th>
           <div class="table-header-div">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            Action
+            Actions
           </div>
         </th>
       </tr>
        <tr>
-        <th><input type="text" placeholder="username"></th>
-        <th><input type="text" placeholder="password"></th>
-        <th><input type="text" placeholder="first name"></th>
-        <th><input type="text" placeholder="last name"></th>
-        <th><input type="text" placeholder="role1, role2"></th>
+        <th><input type="text" placeholder="username" [(ngModel)]="user.username"></th>
+        <th><input type="text" placeholder="password" [(ngModel)]="user.password"></th>
+        <th><input type="text" placeholder="first name" [(ngModel)]="user.firstname"></th>
+        <th><input type="text" placeholder="last name" [(ngModel)]="user.lastname"></th>
+        <th><input type="text" placeholder="role1, role2" [(ngModel)]="user.role"></th>
         <th><div class="icon-div-2">
-          <span class="glyphicon glyphicon-plus"></span>
-          <span class="glyphicon glyphicon-ok"></span>
+          <span class="glyphicon glyphicon-plus" (click)="createUser()"></span>
+          <span class="glyphicon glyphicon-ok" (click)="updateUser()"></span>
         </div></th>
       </tr>
     </thead>
     <tbody>
+      <tr *ngFor="#user of users">
+        <th>{{user.username}}</th>
+        <th>{{user.password}}</th>
+        <th>{{user.firstname}}</th>
+        <th>{{user.lastname}}</th>
+        <th>{{user.role}}</th>
+        <th><div class="icon-div-2">
+          <span class="glyphicon glyphicon-pencil" (click)="selectUser(user)"></span>
+          <span class="glyphicon glyphicon-remove" (click)="deleteUser(user._id)"></span>
+        </div></th>
+      </tr>
     </tbody>
   </table>
 </div>

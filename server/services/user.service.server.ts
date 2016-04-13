@@ -17,7 +17,7 @@ export default function Userendpoints(app, userModel: UserModel) {
 	const localStrat = (username, password, done) => {
 		userModel.findUserByCredentials(username, password)
 			.then(user => { return done(null, user ? user : false) },
-				err => { return done(err) })
+			err => { return done(err) })
 	}
 	passport.use(new local.Strategy(localStrat))
 
@@ -84,5 +84,41 @@ export default function Userendpoints(app, userModel: UserModel) {
 		userModel.delete(id)
 			.then(user => { res.status(200).send({ user }) },
 				error => { res.status(400).send({ error })})
+	})
+
+	const isAdmin = (req, res, next) => {
+		if (!req.isAuthenticated || req.user.role !== 'admin') {
+			res.status(403).send()
+		} else {
+			next()
+		}
+	}
+
+	app.post('/api/assignment/admin/user', isAdmin, (req, res) => {
+		const newUser = req.body.user
+		userModel.create(newUser)
+			.then(user => { res.status(200).send({ user }) },
+			error => { res.status(400).send({ error }) })
+	})
+
+	app.get('/api/assignment/admin/user', isAdmin, (req, res) => {
+		userModel.findAll()
+			.then(users => { res.status(200).send({ users }) },
+			error => { res.status(400).send({ error }) })
+	})
+
+	app.put('/api/assignment/admin/user/:id', isAdmin, (req, res) => {
+		const id = req.params.id
+		const newUser = req.body.user
+		userModel.update(id, newUser)
+			.then(user => { res.status(200).send({ user }) },
+			error => { res.status(400).send({ error }) })
+	})
+
+	app.delete('/api/assignment/admin/user/:id', isAdmin, (req, res) => {
+		const id = req.params.id
+		userModel.delete(id)
+			.then(user => { res.status(200).send({ user }) },
+			error => { res.status(400).send({ error }) })
 	})
 }

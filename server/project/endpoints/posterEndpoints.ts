@@ -25,7 +25,7 @@ export default function(app) {
 				img += chunk
 			})
 			resp.on('end', () => {
-				fs.writeFile(`public/project/assets/posters/${id}.png`, img, 'binary', err => {
+				fs.writeFile(`${id}.png`, img, 'binary', err => {
 					if (err) {
 						res.status(400).send(err)
 					} else {

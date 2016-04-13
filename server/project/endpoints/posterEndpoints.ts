@@ -46,10 +46,9 @@ export default function(app) {
 				res.status(200).send(img)
 			})
 		})
-
+**/
 		request.write("")
 		request.end()
-**/
 	})
 
 }

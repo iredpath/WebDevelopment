@@ -15,7 +15,14 @@ export class Register {
 	user: any
 
 	constructor(public userService: UserService, public router: Router) {
-		this.user = {}
+		this.userService.loggedIn()
+			.subscribe(data => {
+				if (data.json().user) {
+					this.router.navigate(['/User', { user: data.json().user._id }])
+				} else {
+					this.user = {}
+				}
+			})
 	}
 
 	register() {

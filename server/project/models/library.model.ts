@@ -43,7 +43,15 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
-	getLibraryById(id: number) {
+	getLibrariesForUser(id: string) {
+		let deferred = Q.defer()
+		this.libraryModel.find({ user: id }, (err, libs) => {
+			err ? deferred.reject(err) : deferred.resolve(libs)
+		})
+		return deferred.promise
+	}
+
+	getLibraryById(id: string) {
 		let deferred = Q.defer()
 		this.libraryModel.findById(id, (err, resp) => {
 			if (err) {
@@ -52,7 +60,7 @@ export default class LibraryModel {
 				const userId = resp.user
 				Q.all([
 					this.userModel.findById(userId),
-					this.movieModel.find({libraries: id}),
+					this.movieModel.find({ libraries: id }),
 					this.ratingModel.find({ target: id }),
 					this.commentModel.find({ target: id })
 				])
@@ -80,7 +88,7 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
-	deleteLibrary(id: number) {
+	deleteLibrary(id: string) {
 		let deferred = Q.defer()
 		this.libraryModel.findByIdAndRemove(id, (err, resp) => {
 			if (err) {

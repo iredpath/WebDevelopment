@@ -16,8 +16,15 @@ export class Login {
 	password: string
 
 	constructor(public userService: UserService, public router: Router) {
-		this.username = ""
-		this.password = ""
+		this.userService.loggedIn()
+			.subscribe(data => {
+				if (data.json().user) {
+					this.router.navigate(['/User', { user: data.json().user._id }])
+				} else {
+					this.username = ""
+					this.password = ""
+				}
+			})
 	}
 
 	login() {

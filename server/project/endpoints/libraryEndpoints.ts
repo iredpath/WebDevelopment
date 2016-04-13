@@ -15,6 +15,13 @@ export default function(app, db) {
 
 	})
 
+	app.get('/api/project/user/:id/library', (req, res) => {
+		const id = req.params.id
+		db.getLibrariesForUser(id)
+			.then(libraries => { res.status(200).send({ libraries }) },
+				error => { res.status(400).send(error) })
+	})
+
 	app.post('/api/project/library', (req, res) => {
 		const newLibrary = req.body.library
 		db.createLibrary(newLibrary)

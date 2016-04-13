@@ -19,6 +19,7 @@ import { RatingService } from '../../services/ratingService'
 
 export class Movie {
 
+	user: any
 	movie: any
 	omdbMovie:OmdbMovieModel
 	fetchingMovie:boolean
@@ -34,31 +35,49 @@ export class Movie {
 		public userService: UserService, public ratingService: RatingService) {
 		this.fetchingMovie = true
 		this.fetchingLibraries = true
-		this.possibleLibs = []
-		const imdbId: string = params.get('movie')
-		omdbService.findMovieById(imdbId)
-			.subscribe(
-				data => { 
-					this.omdbMovie = OmdbMovieModel.newMovie(data.json())
-					movieService.getOrCreate(imdbId, this.omdbMovie.title)
+		this.userService.loggedIn()
+			.subscribe(resp => {
+				const data = resp.json()
+				if (data.user) {
+					// now we need the actual libraries
+					this.libraryService.getLibrariesForUser(data.user._id)
 						.subscribe(resp => {
-							const data = resp.json().data
-							if (data.movie) {
-								this.movie = data.movie
-								this.movie.comments = data.comments
-								this.movie.libraries = data.libraries
-								this.movie.ratings = data.ratings
-								this.userService.getActiveUser() && this.calculatePossibleLibs()
-								this.calculateRatings()
-							} else {
-								console.log('error fetching movie')
+							const dataLib = resp.json()
+							if (dataLib.libraries) {
+								const user = data.user
+								user.libraries = dataLib.libraries
+								this.userService.setActiveUser(user)
 							}
-							this.fetchingLibraries = false
 						})
-				},
-				err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() },
-				() => { this.fetchingMovie = false }
-			)
+					//this.userService.setActiveUser(data.json().user)
+				}
+			}, error => { alert(error) },
+			() => {
+				this.possibleLibs = []
+				const imdbId: string = params.get('movie')
+				omdbService.findMovieById(imdbId)
+					.subscribe(
+					data => {
+						this.omdbMovie = OmdbMovieModel.newMovie(data.json())
+						movieService.getOrCreate(imdbId, this.omdbMovie.title)
+							.subscribe(resp => {
+								const data = resp.json().data
+								if (data.movie) {
+									this.movie = data.movie
+									this.movie.comments = data.comments
+									this.movie.libraries = data.libraries
+									this.movie.ratings = data.ratings
+									this.userService.getActiveUser() && this.calculatePossibleLibs()
+									this.calculateRatings()
+								} else {
+									console.log('error fetching movie')
+								}
+								this.fetchingLibraries = false
+							})
+					},
+					err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() },
+					() => { this.fetchingMovie = false })
+			})
 	}
 
 	calculatePossibleLibs() {
@@ -69,7 +88,7 @@ export class Movie {
 			{ return !_.some((<any>lib).movies, mov => { return mov === this.movie._id })
 		})
 	}
-	// eventually, this will be part of a new component and logic will be moved out of here
+	
 	addMovie() {
 		if (this.libraryId) {
 			this.movieService.addMovieToLibrary(this.movie._id, this.libraryId)
@@ -80,6 +99,7 @@ export class Movie {
 						libraries.push(data.libraries)
 						this.movie = data.movie
 						this.movie.libraries = libraries
+						this.addMovieToUserLib(this.movie._id, this.libraryId)
 						this.calculatePossibleLibs()	
 					}
 				}, error => { alert(error.message) })
@@ -87,6 +107,13 @@ export class Movie {
 			alert("please select a library first")
 		}
 
+	}
+
+	addMovieToUserLib(movieId: string, libraryId: string) {
+		const user = this.userService.getActiveUser()
+		const library: any = _.find(user.libraries, lib => { return (<any>lib)._id === libraryId })
+		library.movies.push(movieId)
+		this.libraryId = null
 	}
 
 	calculateRatings() {

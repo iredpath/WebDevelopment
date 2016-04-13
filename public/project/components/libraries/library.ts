@@ -30,21 +30,30 @@ export class Library {
 	constructor(public params:RouteParams, public libraryService:LibraryService,
 		public userService: UserService, public ratingService: RatingService) {
 		this.fetchingLibrary = true
-		const libraryId: string = params.get('library')
-		libraryService.get(libraryId)
-			.subscribe(resp => {
-				const data = resp.json().data
-				if (data.library) {
-					this.library = data.library
-					this.library.user = data.user
-					this.library.movies = data.movies
-					this.library.comments = data.comments
-					this.library.ratings = data.ratings
+		this.userService.loggedIn()
+			.subscribe(data => {
+				if (data.json().user) {
+					this.userService.setActiveUser(data.json().user)
 				}
-				this.calculateRatings()
-				console.log(this.library)
-				this.fetchingLibrary = false
-			})
+			}, error => { alert(error) },
+				() => {
+					const libraryId: string = params.get('library')
+					libraryService.get(libraryId)
+						.subscribe(resp => {
+							const data = resp.json().data
+							if (data.library) {
+								this.library = data.library
+								this.library.user = data.user
+								this.library.movies = data.movies
+								this.library.comments = data.comments
+								this.library.ratings = data.ratings
+							}
+							this.calculateRatings()
+							console.log(this.library)
+							this.fetchingLibrary = false
+						})
+				})
+		
 	}
 
 	calculateRatings() {
@@ -115,7 +124,7 @@ export class Library {
 		}
 	}
 	hasEditRights() {
-		return this.userService.getActiveUser() && this.library.user._id === this.userService.getActiveUser()._id
+		return this.userService.hasEditRights(this.library.user._id)
 	}
 
 	editLibraryName() {

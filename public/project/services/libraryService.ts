@@ -52,4 +52,8 @@ export class LibraryService {
 			{ headers: this.headers })
 	}
 
+	getLibrariesForUser(id: string) {
+		return this.http.get(`/api/project/user/${id}/library`)
+	}
+
 }

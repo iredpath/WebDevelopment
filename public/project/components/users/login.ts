@@ -44,6 +44,7 @@ export class Login {
 					}
 				},
 				err => {
+					console.log(err)
 					alert(err._body)
 					this.username = ""
 					this.password = ""

@@ -45,25 +45,6 @@ export default class UserModelProj {
 				deferred.reject({ message: "no such user" })
 			} else {
 				deferred.resolve({ user: resp })
-				/*
-				Q.all([
-					this.libraryModel.find({ user: id }),
-					this.commentModel.find({ userId: id }),
-					this.ratingModel.find({ userId: id })
-				]).then(response => {
-					const libraries = (<any>response[0])
-					const comments = (<any>response[1])
-					const ratings = (<any>response[2])
-					//console.log(`${libraries}\n${comments}\n${ratings}`)
-					deferred.resolve({ user: resp, libraries, comments, ratings })
-				}, error => { deferred.reject(error) })
-				/*this.libraryModel.find({ user: id }, (error, libraries) => {
-					if (err) {
-						deferred.reject(error)
-					} else {
-						deferred.resolve({ user: resp, libraries })
-					}
-				})*/
 			}
 		})
 		return deferred.promise
@@ -158,16 +139,8 @@ export default class UserModelProj {
 					const libraries = (<any>response[0])
 					const comments = (<any>response[1])
 					const ratings = (<any>response[2])
-					//console.log(`${libraries}\n${comments}\n${ratings}`)
 					deferred.resolve({ user: resp, libraries, comments, ratings })
 				}, error => { deferred.reject(error) })
-				/*this.libraryModel.find({ user: resp._id }, (error, libraries) => {
-					if (err) {
-						deferred.reject(error)
-					} else {
-						deferred.resolve({ user: resp, libraries })
-					}
-				})*/
 			}
 		})
 		return deferred.promise
@@ -177,29 +150,10 @@ export default class UserModelProj {
 		let deferred = Q.defer()
 		this.userModel.findOne({ username, password }, (err, resp) => {
 			if (err) {
+				console.log(err)
 				deferred.reject(err)
-			} else if (!resp) {
-				deferred.reject({ message: "no such user" })
 			} else {
 				deferred.resolve(resp)
-				/*
-				Q.all([
-					this.libraryModel.find({ user: resp._id }),
-					this.commentModel.find({ userId: resp._id }),
-					this.ratingModel.find({ userId: resp._id })
-				]).then(response => {
-					const libraries = (<any>response[0])
-					const comments = (<any>response[1])
-					const ratings = (<any>response[2])
-					deferred.resolve({ user: resp, libraries, comments, ratings })
-				}, error => { deferred.reject(error) })
-				/*this.libraryModel.find({ user: resp._id }, (error, libraries) => {
-					if (err) {
-						deferred.reject(error)
-					} else {
-						deferred.resolve({ user: resp, libraries })
-					}
-				})*/
 			}
 		})
 		return deferred.promise

@@ -8,8 +8,12 @@ export default function(app, db) {
 	const localStrat = (username, password, done) => {
 		db.getUserByCredentials(username, password)
 			.then(user => {
-				return done(null, user ? user : false)
-			}, err => { return done(err) })
+				console.log('non error case')
+				return user ? done(null, user) : done(null, false, { message: 'invalid username/password' })
+			}, err => { 
+				console.log('error case')
+				return done(null, false, err)
+			})
 	}
 	passport.use('project', new local.Strategy(localStrat))
 
@@ -20,8 +24,12 @@ export default function(app, db) {
 			next()
 		}
 	}
-	app.post('/api/project/login', passport.authenticate('project'), (req, res) => {
-		res.status(200).send({ user: req.user })
+	app.post('/api/project/login', (req, res, next) => {
+		passport.authenticate('project', (err, user) => {
+			req.logIn(user, () => { 
+				res.status(err ? 400 : 200).send(err ? err : { user: req.user })
+			})
+		})(req, res, next)
 	})
 	app.post('/api/project/logout', (req, res) => {
 		req.logout()

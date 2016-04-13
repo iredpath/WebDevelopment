@@ -44,6 +44,7 @@ export class OmdbMovieModel {
 		console.log(movieData)
 		let movie: OmdbMovieModel = new OmdbMovieModel()
 		movie.configure(movieData)
+		console.log(movie)
 		return movie
 	}
 	static emptyMovie(): OmdbMovieModel {

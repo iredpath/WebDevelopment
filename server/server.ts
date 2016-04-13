@@ -29,6 +29,7 @@ import LibraryEndpoints from './project/endpoints/libraryEndpoints'
 import MovieEndpoints from './project/endpoints/movieEndpoints'
 import UserEndpoints from './project/endpoints/userEndpoints'
 import RatingEndpoints from './project/endpoints/ratingEndpoints'
+import PosterEndpoints from './project/endpoints/posterEndpoints'
 
 const ipaddress:string = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const port:number = process.env.OPENSHIFT_NODEJS_PORT || 3000;
@@ -89,6 +90,7 @@ Userendpoints(app, userModel)
 FormEndpoints(app, formModel)
 FieldEndpoints(app, formModel)
 
+PosterEndpoints(app)
 LibraryEndpoints(app, libraryModel)
 MovieEndpoints(app, movieModel)
 UserEndpoints(app, userModelProj)

@@ -14,6 +14,7 @@ import { MovieService } from './services/movieService'
 import { UserService } from './services/userService'
 import { ResultsService } from './services/resultsService'
 import { RatingService } from './services/ratingService'
+import { PosterService } from './services/posterService'
 
 @Component({
 	selector: 'vml-app'
@@ -27,4 +28,4 @@ import { RatingService } from './services/ratingService'
 class App { }
 
 bootstrap(App, [ROUTER_PROVIDERS, OmdbService, LibraryService, MovieService, UserService, ResultsService, RatingService,
-	HTTP_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })])
+	PosterService, HTTP_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })])

@@ -5,6 +5,8 @@ import { Http } from 'angular2/http'
 export class OmdbService {
 	
 	BASE_URL:string = "http://www.omdbapi.com/"
+	BASE_POSTER_URL: string = "http://img.omdbapi.com/"
+	API_KEY: string
 
 	constructor(public http:Http) {
 	}

@@ -1,8 +1,6 @@
 import { Http, Headers } from 'angular2/http'
 
 import { Injectable } from 'angular2/core'
-import { UserModel } from '../models/userModel'
-import { MovieModel } from '../models/movieModel'
 import { LibraryModel } from '../models/LibraryModel'
 import { LibraryService } from '../services/libraryService'
 import { MovieService } from '../services/movieService'
@@ -13,12 +11,40 @@ export class UserService {
 	activeUser: any
 	headers
 
+	setActiveUser(user) {
+		console.log(user)
+		this.activeUser = user
+	}
+
+	getActiveUser() { return this.activeUser }
+
+	isActiveUser() { return !!this.activeUser }
+
+	clearActiveUser() { this.activeUser = null }
+
+	hasEditRights(id: string) {
+		return this.isActiveUser() && this.getActiveUser()._id === id
+	}
+
+	login(username: string, password: string) {
+		return this.http.post('/api/project/login', JSON.stringify({ username, password }),
+			{ headers: this.headers })
+	}
+
+	loggedIn() {
+		return this.http.get('/api/project/loggedin')
+	}
+
+	logout() {
+		return this.http.post('/api/project/logout', '')
+	}
+
 	constructor(public libraryService: LibraryService, public movieService: MovieService, public http: Http) {
 		this.headers = new Headers()
 		this.headers.append("Content-Type", "application/json")
 	}
 
-	findUserByCredentials(username: string, password: string) {//, callback: Function) {
+	findUserByCredentials(username: string, password: string) {
 		return this.http.get(`/api/project/user?username=${username}&password=${password}`,
 			{ headers: this.headers })
 	}
@@ -33,15 +59,7 @@ export class UserService {
 			{ headers: this.headers })
 	}
 
-	login(user: UserModel) {
-		this.activeUser = user
-	}
-	logout() {
-		this.activeUser = null
-	}
-	getActiveUser() {
-		return this.activeUser
-	}
+	
 	getUserById(id: string) {
 		return this.http.get(`/api/project/user/${id}`,
 			{ headers: this.headers })

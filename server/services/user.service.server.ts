@@ -4,22 +4,13 @@ import UserModel from '../models/user.model'
 
 export default function Userendpoints(app, userModel: UserModel) {
 
-	// (de)serialization funcs
-	passport.serializeUser((user, done) => {
-		done(null, user)
-	})
-	passport.deserializeUser((user, done) => {
-		userModel.findById(user._id)
-			.then(user => { done(null, user) }, err => { done(err, null) })
-	})
-
 	// local strategy
 	const localStrat = (username, password, done) => {
 		userModel.findUserByCredentials(username, password)
 			.then(user => { return done(null, user ? user : false) },
 			err => { return done(err) })
 	}
-	passport.use(new local.Strategy(localStrat))
+	passport.use('assignment', new local.Strategy(localStrat))
 
 	const authenticate = (req, res, next) => {
 		if (!req.isAuthenticated()) {
@@ -29,7 +20,7 @@ export default function Userendpoints(app, userModel: UserModel) {
 		}
 	}
 
-	app.post('/api/assignment/login', passport.authenticate('local'), (req, res) => {
+	app.post('/api/assignment/login', passport.authenticate('assignment'), (req, res) => {
 		res.status(200).send(req.user)
 	})
 	app.post('/api/assignment/logout', (req, res) => {

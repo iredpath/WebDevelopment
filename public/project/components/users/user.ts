@@ -21,25 +21,34 @@ export class User {
 
 	constructor(public params: RouteParams, public router: Router, 
 		public userService: UserService, public libraryService: LibraryService) {
+		
 		this.fetchingUser = true
-		const id: string = params.get('user')
-		this.newLibraryName = ""
-		this.userService.getUserById(id)
-			.subscribe(resp => {
-				const data = resp.json().data
-				if (data.user) {
-					this.user = data.user
-					this.user.libraries = data.libraries
-				} else {
-					alert(`can't find user with id ${id}`)
-
+		this.userService.loggedIn()
+			.subscribe(data => {
+				if (data.json().user) {
+					this.userService.setActiveUser(data.json().user)
 				}
-				this.fetchingUser = false
-			})
+				const id: string = params.get('user')
+				this.newLibraryName = ""
+				this.userService.getUserById(id)
+					.subscribe(resp => {
+						const data = resp.json().data
+						if (data && data.user) {
+							this.user = data.user
+							this.user.libraries = data.libraries
+							this.user.ratings = data.ratings
+							this.user.comments = data.comments
+						} else {
+							alert(`can't find user with id ${id}`)
+
+						}
+						this.fetchingUser = false
+					})
+			}, err => { alert(err._body) })
 	}
 
 	hasEditRights() {
-		return this.userService.getActiveUser() && this.user._id === this.userService.getActiveUser()._id
+		return this.userService.hasEditRights(this.user._id)
 	}
 
 	newLibrary() {
@@ -52,7 +61,7 @@ export class User {
 					if (resp.json().library) {
 						const id = resp.json().library._id
 						this.user.libraries.push(resp.json().library)
-						this.userService.login(this.user)
+						this.userService.setActiveUser(this.user)
 						this.router.navigate(["/Library", { library: id }])
 					} else {
 						alert(`error creating library ${this.newLibraryName}`)

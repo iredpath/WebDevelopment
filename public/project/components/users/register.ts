@@ -19,15 +19,24 @@ export class Register {
 	}
 
 	register() {
-		this.userService.createUser(this.user)
-			.subscribe(resp => {
-				const response = resp.json()
-				if(response.user) {
-					this.userService.login(response.user)
-					this.router.navigate(['/Home', {}])
-				} else if (response.error) {
-					alert(response.error)
-				}
-			})
+		if (this.user.username && this.user.password && this.user.verifyPassword) {
+			this.userService.createUser(this.user)
+				.subscribe(resp => {
+					if (resp.json().user) {
+						// login
+						this.userService.login(resp.json().user.username, resp.json().user.password)
+							.subscribe(resp => {
+								const data = resp.json()
+								if (data && data.user) {
+									const user = data.user
+									this.userService.setActiveUser(user)
+									this.router.navigate(['/Home', {}])
+								}
+							})
+					}
+				}, error => { alert(error._body) })
+		} else {
+			alert('make sure to enter at least a username and a password')
+		}
 	}
 }

@@ -16,33 +16,37 @@ export class Profile {
 	fetchingUser: boolean
 
 	constructor(public userService: UserService, public router: Router, public params: RouteParams) {
-		if (!userService.getActiveUser()) {
-			router.navigate(['/Login', {}])
-		} else {
 		this.fetchingUser = true
-		const id: string = params.get('user')
-		this.userService.getUserById(id)
+		this.userService.loggedIn()
 			.subscribe(resp => {
-				const data = resp.json().data
-				if (data.user) {
+				const data = resp.json()
+				if (data.user && this.isUsersPage(data.user._id)) {
 					this.user = data.user
+					this.userService.setActiveUser(this.user)
+					this.fetchingUser = false
 				} else {
-					alert(`can't find user with id ${id}`)
+					router.navigate(['/Login', {}])
 				}
-				this.fetchingUser = false
-			})
-		}
+			}, err => { alert(err) })
+	}
+
+	isUsersPage(id: string) {
+		return id === this.params.get('user')
 	}
 
 	update() {
-		this.userService.updateUser(this.user)
-			.subscribe(resp => {
-				const response = resp.json()
-				if(response.user) {
-					this.userService.login(response.user)
-				} else if (response.error) {
-					alert(response.error)
-				}
-			})
+		if (this.user.username && this.user.password && this.user.verifyPassword) {
+			this.userService.updateUser(this.user)
+				.subscribe(resp => {
+					const response = resp.json()
+					if (response.user) {
+						this.userService.setActiveUser(response.user)
+					} else if (response.error) {
+						alert(response.error)
+					}
+				})
+		} else {
+			alert('don\'t delete username or password')
+		}
 	}
 }

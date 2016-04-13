@@ -53,14 +53,6 @@ app.use(passport.session())
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
 
-// initialize endpoints
-const userModel = new UserModel(db)
-Userendpoints(app, userModel)
-
-const formModel = new FormModel(db)
-FormEndpoints(app, formModel)
-FieldEndpoints(app, formModel)
-
 const userModelMongoose = mongoose.model('UserProj', UserSchema()) 
 const libraryModelMongoose = mongoose.model('Library', LibrarySchema()) 
 const movieModelMongoose = mongoose.model('Movie', MovieSchema()) 
@@ -71,6 +63,32 @@ const libraryModel = new LibraryModel(userModelMongoose, libraryModelMongoose, m
 const movieModel = new MovieModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
 const ratingModel = new RatingModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
 const commentModel = new CommentModel(userModelMongoose, libraryModelMongoose, movieModelMongoose, ratingModelMongoose, commentModelMongoose)
+
+const userModel = new UserModel(db)
+const formModel = new FormModel(db)
+
+// passport stuff that is singular
+// (de)serialization funcs
+passport.serializeUser((user, done) => {
+	done(null, user)
+})
+passport.deserializeUser((user, done) => {
+	if (user.libraries) { // this is a PROJECT user
+		userModelProj.getUserById(user._id)
+			.then(user => {
+				done(null, user)
+			}, err => { done(err, null) })
+	} else {
+		userModel.findById(user._id)
+			.then(user => { done(null, user) }, err => { done(err, null) })
+	}
+})
+
+
+Userendpoints(app, userModel)
+FormEndpoints(app, formModel)
+FieldEndpoints(app, formModel)
+
 LibraryEndpoints(app, libraryModel)
 MovieEndpoints(app, movieModel)
 UserEndpoints(app, userModelProj)

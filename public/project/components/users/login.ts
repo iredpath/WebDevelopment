@@ -21,14 +21,14 @@ export class Login {
 	}
 
 	login() {
-		this.userService.findUserByCredentials(this.username, this.password)
-			.subscribe(
+		if (this.username && this.password) {
+			this.userService.login(this.username, this.password)
+				.subscribe(
 				resp => {
-					const data = resp.json().data
-					if (data.user) {
+					const data = resp.json()
+					if (data && data.user) {
 						const user = data.user
-						user.libraries = data.libraries
-						this.userService.login(user)
+						this.userService.setActiveUser(user)
 						this.router.navigate(['/Home', {}])
 					} else {
 						alert('Invalid name/password')
@@ -36,10 +36,13 @@ export class Login {
 						this.password = ""
 					}
 				},
-				err => { 
-					alert(err.json().message)
+				err => {
+					alert(err._body)
 					this.username = ""
 					this.password = ""
 				})
+		} else {
+			alert('please enter a username and password')
+		}
 	}
 }

@@ -18,7 +18,7 @@ export class Header {
 	}
 
 	isRouteActive(route) {
-		return this.location.path().indexOf(route) > -1
+		return this.location.path().indexOf(route) == this.location.path().length - route.length
 	}
 
 	isActiveUser() {
@@ -27,6 +27,11 @@ export class Header {
 
 	logout() {
 		this.userService.logout()
-		this.router.navigate(['/Home', {}])
+			.subscribe(resp => {
+				if (resp.json()) {
+					this.userService.clearActiveUser()
+					this.router.navigate(['/Home', {}])
+				}
+			}, error => { alert(error) })
 	}
 }

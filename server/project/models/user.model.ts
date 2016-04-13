@@ -41,16 +41,49 @@ export default class UserModelProj {
 		this.userModel.findById(id, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
+			} else if (!resp) {
+				deferred.reject({ message: "no such user" })
 			} else {
-				this.libraryModel.find({ user: id }, (error, libraries) => {
+				deferred.resolve({ user: resp })
+				/*
+				Q.all([
+					this.libraryModel.find({ user: id }),
+					this.commentModel.find({ userId: id }),
+					this.ratingModel.find({ userId: id })
+				]).then(response => {
+					const libraries = (<any>response[0])
+					const comments = (<any>response[1])
+					const ratings = (<any>response[2])
+					//console.log(`${libraries}\n${comments}\n${ratings}`)
+					deferred.resolve({ user: resp, libraries, comments, ratings })
+				}, error => { deferred.reject(error) })
+				/*this.libraryModel.find({ user: id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
 						deferred.resolve({ user: resp, libraries })
 					}
-				})
+				})*/
 			}
 		})
+		return deferred.promise
+	}
+
+	getUserWithEverythingById(id: string) {
+		let deferred = Q.defer()
+		this.getUserById(id)
+			.then(data => {
+				Q.all([
+					this.libraryModel.find({ user: id }),
+					this.commentModel.find({ userId: id }),
+					this.ratingModel.find({ userId: id })
+				]).then(response => {
+					const libraries = (<any>response[0])
+					const comments = (<any>response[1])
+					const ratings = (<any>response[2])
+					deferred.resolve({ user: (<any>data).user, libraries, comments, ratings })
+				}, error => { deferred.reject(error) })
+			}, error => { deferred.reject(error) })
 		return deferred.promise
 	}
 
@@ -62,7 +95,11 @@ export default class UserModelProj {
 				deferred.reject(err)
 			} else {
 				this.commentModel.update({ user: resp.id }, { username: resp.username }, { multi: true }, (error, comms) => {
-					error ? deferred.reject(error) : deferred.resolve(resp)
+					if (error) {
+						deferred.reject(error)
+					} else {
+						deferred.resolve({ user: resp, comments: comms, ratings: what.ratings, libraries: what.libraries })
+					}
 				})
 			}
 		})
@@ -78,13 +115,13 @@ export default class UserModelProj {
 			} else {
 				Q.all([
 					this.libraryModel.findAndRemove({ user: id }),
-					this.ratingModel.findAndRemove({ user: id }),
-					this.commentModel.findAndRemove({ user: id })
+					this.ratingModel.findAndRemove({ userId: id }),
+					this.commentModel.findAndRemove({ userId: id })
 				]).then(success => {
 					// remove everything we just deleted
-					const libIds = _.map((<any>success[0]).value, l => { return (<any>l)._id })
-					const ratingIds = _.map((<any>success[1]).value, r => { return (<any>r)._id })
-					const commentIds = _.map((<any>success[1]).value, c => { return (<any>c)._id })
+					const libIds = _.map((<any>success[0]), l => { return (<any>l)._id })
+					const ratingIds = _.map((<any>success[1]), r => { return (<any>r)._id })
+					const commentIds = _.map((<any>success[1]), c => { return (<any>c)._id })
 					const movieUpdate = { $pull: { libraries: { $in: libIds },
 													ratings: { $in: ratingIds },
 													comments: { $in: commentIds }
@@ -113,13 +150,24 @@ export default class UserModelProj {
 			} else if (!resp) {
 				deferred.reject({ message: " no such user" })
 			} else {
-				this.libraryModel.find({ user: resp._id }, (error, libraries) => {
+				Q.all([
+					this.libraryModel.find({ user: resp._id }),
+					this.commentModel.find({ userId: resp._id }),
+					this.ratingModel.find({ userIs: resp._id })
+				]).then(response => {
+					const libraries = (<any>response[0])
+					const comments = (<any>response[1])
+					const ratings = (<any>response[2])
+					//console.log(`${libraries}\n${comments}\n${ratings}`)
+					deferred.resolve({ user: resp, libraries, comments, ratings })
+				}, error => { deferred.reject(error) })
+				/*this.libraryModel.find({ user: resp._id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
 						deferred.resolve({ user: resp, libraries })
 					}
-				})
+				})*/
 			}
 		})
 		return deferred.promise
@@ -133,13 +181,25 @@ export default class UserModelProj {
 			} else if (!resp) {
 				deferred.reject({ message: "no such user" })
 			} else {
-				this.libraryModel.find({ user: resp._id }, (error, libraries) => {
+				deferred.resolve(resp)
+				/*
+				Q.all([
+					this.libraryModel.find({ user: resp._id }),
+					this.commentModel.find({ userId: resp._id }),
+					this.ratingModel.find({ userId: resp._id })
+				]).then(response => {
+					const libraries = (<any>response[0])
+					const comments = (<any>response[1])
+					const ratings = (<any>response[2])
+					deferred.resolve({ user: resp, libraries, comments, ratings })
+				}, error => { deferred.reject(error) })
+				/*this.libraryModel.find({ user: resp._id }, (error, libraries) => {
 					if (err) {
 						deferred.reject(error)
 					} else {
 						deferred.resolve({ user: resp, libraries })
 					}
-				})
+				})*/
 			}
 		})
 		return deferred.promise

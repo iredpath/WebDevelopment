@@ -22,6 +22,7 @@ export class Profile {
 				const data = resp.json()
 				if (data.user && this.isUsersPage(data.user._id)) {
 					this.user = data.user
+					this.user.password = "" // its encrypted, so its useless
 					this.userService.setActiveUser(this.user)
 					this.fetchingUser = false
 				} else {
@@ -35,12 +36,14 @@ export class Profile {
 	}
 
 	update() {
-		if (this.user.username && this.user.password && this.user.verifyPassword) {
+		if (this.user.username && this.user.password) {
 			this.userService.updateUser(this.user)
 				.subscribe(resp => {
 					const response = resp.json()
 					if (response.user) {
-						this.userService.setActiveUser(response.user)
+						let user = response.user
+						user.password = "" // still encrypted
+						this.userService.setActiveUser(user)
 					} else if (response.error) {
 						alert(response.error)
 					}

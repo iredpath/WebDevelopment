@@ -22,7 +22,7 @@
           <a [routerLink]='["/Details", { user: userService.getActiveUser()._id }]'>Edit Info</a>
         </li>
         <li *ngIf="isActiveUser()" [class.active]="isRouteActive('user') && !isRouteActive('details')">
-          <a [routerLink]='["/User", { user: userService.getActiveUser()._id }]'>Profile Icon</a>
+          <a [routerLink]='["/User", { user: userService.getActiveUser()._id }]'>My Profile</a>
         </li>
         <li *ngIf="isActiveUser()"><a (click)="logout()">Logout</a></li>
       </ul>

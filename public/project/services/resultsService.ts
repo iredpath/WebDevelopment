@@ -10,8 +10,8 @@ export class ResultsService {
 		this.query = ""
 	}
 
-	getResults(query: string) {
-		return this.omdbService.findMovieBySearch(query)
+	getResults(query: string, page: number) {
+		return this.omdbService.findMovieBySearch(query, page)
 	}
 
 	getQuery() {

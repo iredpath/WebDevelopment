@@ -33,7 +33,7 @@ import PosterEndpoints from './project/endpoints/posterEndpoints'
 
 const ipaddress:string = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const port:number = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-let mongoConnectionString: string = "mongodb://127.0.0.1:27017/webdevevelopment"
+let mongoConnectionString: string = "mongodb://127.0.0.1:27017/webdevevelopment2"
 if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 	const DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME
 	const DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD

@@ -17,8 +17,11 @@ export class OmdbService {
 	}
 
 	// TODO: pagination for 10+responses
-	findMovieBySearch(query:string) {
-		const url:string = `${this.BASE_URL}?s=${query}&r=json&tomatoes=true`
+	findMovieBySearch(query: string, page: number) {
+		let url: string = `${this.BASE_URL}?s=${query}&r=json&tomatoes=true`
+		if (page) {
+			url += `&page=${page}`
+		}
 		return this.http.get(url)
 	}
 

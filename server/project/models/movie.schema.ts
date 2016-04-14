@@ -7,7 +7,7 @@ export default function() {
 	const MovieSchema = new mongoose.Schema({
 		imdbId: String,
 		title: String,
-		image: String, // base64 encoded image for now, maybe I have openshift write privleges to avoid this?
+		image: String, // base64 encoded image, least bad of two bad options
 		libraries: [String], // library _id
 		ratings: [String], // ratings _id ?
 		comments: [String] // comment _id ?

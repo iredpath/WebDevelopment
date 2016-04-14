@@ -112,6 +112,29 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
+	getMovieByImdbId(id: string) {
+		let deferred = Q.defer()
+		this.movieModel.findOne({ imdbId: id }, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else if (!resp) {
+				deferred.resolve({ movie: resp })
+			} else {
+				// get all the stuff we need
+				Q.all([
+					this.libraryModel.find({ movies: resp._id }),
+					this.ratingModel.find({ target: resp._id }),
+					this.commentModel.find({ target: resp._id })
+				]).then(success => {
+					const libraries = success[0]
+					const ratings = success[1]
+					const comments = success[2]
+					deferred.resolve({ movie: resp, libraries, ratings, comments })
+				}, error => { deferred.reject(error) })
+			}
+		})
+		return deferred.promise
+	}
 	getMovie(id: string, title: string) {
 		let deferred = Q.defer()
 		this.movieModel.findOne({ imdbId: id }, (err, resp) => {

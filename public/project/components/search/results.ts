@@ -34,8 +34,7 @@ export class Results {
 							})
 							// let's get some poster
 							async.each(this.results.movies, (mov, cb) => {
-								//console.log(mov)
-								this.posterService.getPosterFor(mov)
+								this.posterService.getPosterFor((<any>mov).imdbId)
 									.subscribe(posterResp => {
 										(<any>mov).image = `data:image/png;base64,${posterResp.text()}`
 										cb(null)

@@ -10,8 +10,8 @@ export class PosterService {
 		this.headers.append("Content-Type", "application/json")
 	}
 
-	getPosterFor(movie: any) {
-		return this.http.get(`/api/project/poster/${movie.imdbId}`, { headers: this.headers })
+	getPosterFor(movie: string) {
+		return this.http.get(`/api/project/poster/${movie}`, { headers: this.headers })
 	}
 
 }

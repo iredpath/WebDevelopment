@@ -2,8 +2,8 @@ export default function(app, db) {
 
 	app.get('/api/project/movie', (req, res) => {
 		const query = req.query
-		if (query.id && query.title) {
-			db.getMovie(query.id, query.title)
+		if (query.imdbId) {
+			db.getMovieByImdbId(query.imdbId)
 				.then(data => { res.status(200).send({ data }) },
 					error => { res.status(400).send(error) })
 		} else {
@@ -23,7 +23,7 @@ export default function(app, db) {
 	app.post('/api/project/movie', (req, res) => {
 		const newMovie = req.body.movie
 		db.createMovie(newMovie)
-			.then(movie => { res.status(200).send({ movie }) },
+			.then(data => { res.status(200).send({ data }) },
 			error => { res.status(400).send(error) })
 	})
 

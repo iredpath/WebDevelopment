@@ -1,7 +1,5 @@
 import { Injectable } from 'angular2/core'
 import { Http, Headers } from 'angular2/http'
-import { MovieModel } from '../models/movieModel'
-import { OmdbMovieModel } from '../models/omdbMovieModel'
 
 @Injectable()
 export class MovieService {
@@ -21,7 +19,7 @@ export class MovieService {
 		return this.http.get('/api/project/movie',
 			{ headers: this.headers })
 	}
-	addMovie(movie: MovieModel) {
+	addMovie(movie: any) {
 		return this.http.post('/api/project/movie', JSON.stringify({ movie }),
 			{ headers: this.headers })
 	}
@@ -36,8 +34,12 @@ export class MovieService {
 			{ headers: this.headers })
 	}
 
-	getOrCreate(imdbid: string, title: string) {
-		return this.http.get(`/api/project/movie?id=${imdbid}&title=${title}`, { headers: this.headers })
+	getMovieByImdbId(imdbId: string) {
+		return this.http.get(`/api/project/movie?imdbId=${imdbId}`, { headers: this.headers })
 	}
-
+/*
+	getOrCreate(imdbid: string, title: string) {
+		return this.http.post(`/api/project/movie?id=${imdbid}&title=${title}&`, { headers: this.headers })
+	}
+*/
 }

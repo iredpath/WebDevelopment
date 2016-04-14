@@ -31,6 +31,7 @@ export class Movie {
 	myRatingBackup: number
 	avgRating: number
 
+	// HOLY CRAP MAKE THIS LOOK LESS AWFUL PLEASE
 	constructor(public params:RouteParams, public omdbService:OmdbService,
 		public movieService: MovieService, public libraryService: LibraryService,
 		public userService: UserService, public ratingService: RatingService, public posterService: PosterService) {
@@ -59,27 +60,42 @@ export class Movie {
 					.subscribe(
 					data => {
 						this.omdbMovie = OmdbMovieModel.newMovie(data.json())
-
-						movieService.getOrCreate(imdbId, this.omdbMovie.title)
+						this.movieService.getMovieByImdbId(imdbId)
 							.subscribe(resp => {
-								const data = resp.json().data
-								if (data.movie) {
-									this.movie = data.movie
-									this.movie.comments = data.comments
-									this.movie.libraries = data.libraries
-									this.movie.ratings = data.ratings
+								const getResp = resp.json()
+								if (getResp.movie) {
+									this.movie = getResp.movie
+									this.movie.comments = getResp.comments
+									this.movie.libraries = getResp.libraries
+									this.movie.ratings = getResp.ratings
 									this.userService.getActiveUser() && this.calculatePossibleLibs()
 									this.calculateRatings()
-									this.posterService.getPosterFor(this.movie)
-										.subscribe(posterResp => {
-											this.movie.image = `data:image/png;base64,${posterResp.text()}`
-									}, error => { console.log(error) })
+									this.fetchingLibraries = false
+									this.fetchingMovie = false
 								} else {
-									console.log('error fetching movie')
+									// movie doesn't exist yet.  We need to create it
+									this.posterService.getPosterFor(imdbId)
+										.subscribe(posterResp => {
+											const image = `data:image/png;base64,${posterResp.text()}`
+											this.movieService.addMovie({ imdbId, title: this.omdbMovie.title, image })
+												.subscribe(response => {
+													const createResp = response.json().data
+													if (createResp.movie) {
+														this.movie = createResp.movie
+														this.movie.comments = createResp.comments
+														this.movie.libraries = createResp.libraries
+														this.movie.ratings = createResp.ratings
+														this.userService.getActiveUser() && this.calculatePossibleLibs()
+														this.calculateRatings()
+														this.fetchingLibraries = false
+														this.fetchingMovie = false
+													}
+												})
+										})
+
 								}
-								this.fetchingLibraries = false
-								this.fetchingMovie = false
 							})
+						
 					},
 					err => { alert(err); this.omdbMovie = OmdbMovieModel.emptyMovie() })
 			})

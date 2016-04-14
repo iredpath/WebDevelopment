@@ -21,9 +21,12 @@ export default function(app) {
 				img += chunk
 			})
 			resp.on('end', () => {
-				res.status(200).send(img)
+				// possible? hack to only include legitimate posters
+				// I don't know enough about encoding to know if this is a good practice
+				res.status(200).send(img.indexOf("/9j") === 0 ? img : "")
 			})
 		})
+		request.on('error', (err) => { console.log(err) })
 		request.write("")
 		request.end()
 	})

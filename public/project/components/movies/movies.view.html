@@ -2,7 +2,7 @@
 	<h1>Movies</h1>
 	<ul>
 		<li *ngFor="#movie of movies" class="movie-li">
-			<img *ngIf="movie.image !== 'N/A'" class={{movie.imdbId}} src="">
+			<img *ngIf="movie.image" class={{movie.imdbId}} src={{movie.image}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
 			<label attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
 				{{movie.title}}
 			</label>

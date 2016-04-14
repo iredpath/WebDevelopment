@@ -62,7 +62,7 @@ export class Movie {
 						this.omdbMovie = OmdbMovieModel.newMovie(data.json())
 						this.movieService.getMovieByImdbId(imdbId)
 							.subscribe(resp => {
-								const getResp = resp.json()
+								const getResp = resp.json().data
 								if (getResp.movie) {
 									this.movie = getResp.movie
 									this.movie.comments = getResp.comments
@@ -72,8 +72,10 @@ export class Movie {
 									this.calculateRatings()
 									this.fetchingLibraries = false
 									this.fetchingMovie = false
+									console.log(this.movie)
 								} else {
 									// movie doesn't exist yet.  We need to create it
+									console.log('creating b/c ' + resp.json().data)
 									this.posterService.getPosterFor(imdbId)
 										.subscribe(posterResp => {
 											const image = `data:image/png;base64,${posterResp.text()}`

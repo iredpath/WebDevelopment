@@ -64,7 +64,6 @@ export class OmdbMovieModel {
 		this.languages = movieData.Language && movieData.Language.split(",")
 		this.countries = movieData.Country && movieData.Country.split(",")
 		this.awards = movieData.Awards
-		this.image = movieData.Poster
 		this.metascore = +movieData.Metascore
 		this.imdbRating = +movieData.imdbRating
 		this.imdbVotes = movieData.imdbVotes

@@ -18,7 +18,7 @@ export class Header {
 	}
 
 	isRouteActive(route) {
-		return this.location.path().indexOf(route) == this.location.path().length - route.length
+		return this.location.path().indexOf(route) > -1
 	}
 
 	isActiveUser() {

@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose'
 import * as Q from 'q'
 import * as _ from 'lodash'
+import * as bcrypt from 'bcrypt-nodejs'
 
 export default class UserModelProj {
 
@@ -22,8 +23,19 @@ export default class UserModelProj {
 
 	createUser(newUser) {
 		let deferred = Q.defer()
-		this.userModel.create(newUser, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+		bcrypt.hash(newUser.password, null, null, (err, hash) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				newUser.password = hash
+				this.userModel.create(newUser, (err, resp) => {
+					if (err) {
+						deferred.reject(err)
+					} else {
+						deferred.resolve(resp)
+					}
+				})
+			}
 		})
 		return deferred.promise
 	}
@@ -70,18 +82,26 @@ export default class UserModelProj {
 
 	updateUser(what) {
 		let deferred = Q.defer()
-		this.userModel.findByIdAndUpdate(what._id, _.omit(what, '_id', 'libraries', 'comments', 'ratings'),
-						{ new: true }, (err, resp) => {
+
+		bcrypt.hash(what.password, null, null, (err, hash) => {
 			if (err) {
 				deferred.reject(err)
 			} else {
-				this.commentModel.update({ user: resp.id }, { username: resp.username }, { multi: true }, (error, comms) => {
-					if (error) {
-						deferred.reject(error)
-					} else {
-						deferred.resolve({ user: resp, comments: comms, ratings: what.ratings, libraries: what.libraries })
-					}
-				})
+				what.password = hash
+				this.userModel.findByIdAndUpdate(what._id, _.omit(what, '_id', 'libraries', 'comments', 'ratings'),
+					{ new: true }, (err, resp) => {
+						if (err) {
+							deferred.reject(err)
+						} else {
+							this.commentModel.update({ user: resp.id }, { username: resp.username }, { multi: true }, (error, comms) => {
+								if (error) {
+									deferred.reject(error)
+								} else {
+									deferred.resolve({ user: resp, comments: comms, ratings: what.ratings, libraries: what.libraries })
+								}
+							})
+						}
+					})
 			}
 		})
 		return deferred.promise
@@ -148,14 +168,28 @@ export default class UserModelProj {
 
 	getUserByCredentials(username: string, password: string) {
 		let deferred = Q.defer()
-		this.userModel.findOne({ username, password }, (err, resp) => {
-			if (err) {
-				console.log(err)
-				deferred.reject(err)
-			} else {
-				deferred.resolve(resp)
-			}
-		})
+
+		this.getUserByUsername(username)
+			.then(data => {
+				const user = (<any>data).user
+				if (!user) {
+					deferred.reject('invalid username')
+				}
+				bcrypt.compare(password, (<any>user).password, (err, res) => {
+					if (err) {
+						deferred.reject(err)
+					} else if (!res) {
+						// we may be comparing two encrypted passwords
+						if (password === (<any>user).password) {
+							deferred.resolve(user)
+						} else {
+							deferred.reject('invalid password')
+						}
+					} else {
+						deferred.resolve(user)
+					}
+				})
+			}, error => { deferred.reject(error.message) })
 		return deferred.promise
 	}
 

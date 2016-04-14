@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 import * as Q from 'q'
 import * as _ from 'lodash'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt-nodejs'
 
 import UserSchema from './user.schema.server'
 export default class UserModel {
@@ -18,7 +18,8 @@ export default class UserModel {
 	create(newUser) {
 		let deferred = Q.defer()
 		// encrypt password before creating
-		bcrypt.hash(newUser.password, 10, (err, hash) => {
+
+		bcrypt.hash(newUser.password, null, null, (err, hash) => {
 			if (err) {
 				deferred.reject(err)
 			} else {
@@ -54,7 +55,7 @@ export default class UserModel {
 	update(id: number, what) {
 		let deferred = Q.defer()
 		// encrypt password before creating
-		bcrypt.hash(what.password, 10, (err, hash) => {
+		bcrypt.hash(what.password, null, null, (err, hash) => {
 			if (err) {
 				deferred.reject(err)
 			} else {
@@ -97,20 +98,26 @@ export default class UserModel {
 
 	findUserByCredentials(username: string, password: string) {
 		let deferred = Q.defer()
-		console.log(`${username}, ${password}`)
 		this.findUserByUsername(username)
 			.then(user => {
-				console.log(user)
+				if (!user) {
+					deferred.reject('invalid username')
+				}
 				bcrypt.compare(password, (<any>user).password, (err, res) => {
 					if (err) {
 						deferred.reject(err)
 					} else if (!res) {
-						deferred.reject({ message: 'invalid password' })
+						// we may be comparing two encrypted passwords
+						if (password === (<any>user).password) {
+							deferred.resolve(user)
+						} else {
+							deferred.reject('invalid password')
+						}
 					} else {
 						deferred.resolve(user)
 					}
 				})
-			})
+			}, error => { deferred.reject(error.message) })
 		return deferred.promise
 	}
 }

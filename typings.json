@@ -1,7 +1,7 @@
 {
   "ambientDependencies": {
     "async": "github:DefinitelyTyped/DefinitelyTyped/async/async.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
-    "bcrypt": "github:DefinitelyTyped/DefinitelyTyped/bcrypt/bcrypt.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
+    "bcrypt-nodejs": "github:DefinitelyTyped/DefinitelyTyped/bcrypt-nodejs/bcrypt-nodejs.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
     "body-parser": "github:DefinitelyTyped/DefinitelyTyped/body-parser/body-parser.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
     "cookie-parser": "github:DefinitelyTyped/DefinitelyTyped/cookie-parser/cookie-parser.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
     "del": "github:DefinitelyTyped/DefinitelyTyped/del/del.d.ts#9027703c0bd831319dcdf7f3169f7a468537f448",

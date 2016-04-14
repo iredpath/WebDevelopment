@@ -72,7 +72,7 @@ export class Movie {
 									this.calculateRatings()
 									this.posterService.getPosterFor(this.movie)
 										.subscribe(posterResp => {
-											this.movie.image = posterResp.json().location//`data:image/png;base64,${posterResp.text()}`
+											this.movie.image = `data:image/png;base64,${posterResp.text()}`
 									}, error => { console.log(error) })
 								} else {
 									console.log('error fetching movie')

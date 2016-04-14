@@ -15,28 +15,6 @@ export default function(app) {
 		let img = ''
 		console.log(options.path)
 
-		/**
-		 * option 1: store the image directly in the server
-		 * may not be permitted by openshift
-		 **/
-		let request = http.request(options, (resp) => {
-			resp.setEncoding('binary')
-			resp.on('data', chunk => {
-				img += chunk
-			})
-			resp.on('end', () => {
-				fs.writeFile(`${process.env.OPENSHIFT_DATA_DIR}${id}.png`, img, 'binary', err => {
-					if (err) {
-						res.status(400).send(err)
-					} else {
-						res.status(200).send({ location: `${process.env.OPENSHIFT_DATA_DIR}${id}.png` })
-					}
-				})
-			})
-		})
-		
-		/**/
-/**
 		let request = http.request(options, resp => {
 			resp.setEncoding('base64')
 			resp.on('data', chunk => {
@@ -46,7 +24,6 @@ export default function(app) {
 				res.status(200).send(img)
 			})
 		})
-**/
 		request.write("")
 		request.end()
 	})

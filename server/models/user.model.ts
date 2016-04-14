@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose'
 import * as Q from 'q'
 import * as _ from 'lodash'
+import * as bcrypt from 'bcrypt'
 
 import UserSchema from './user.schema.server'
 export default class UserModel {
@@ -16,8 +17,20 @@ export default class UserModel {
 
 	create(newUser) {
 		let deferred = Q.defer()
-		this.userModel.create(newUser, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+		// encrypt password before creating
+		bcrypt.hash(newUser.password, 10, (err, hash) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				newUser.password = hash
+				this.userModel.create(newUser, (err, resp) => {
+					if (err) {
+						deferred.reject(err)
+					} else {
+						deferred.resolve(resp)
+					}
+				})
+			}
 		})
 		return deferred.promise
 	}
@@ -40,8 +53,20 @@ export default class UserModel {
 
 	update(id: number, what) {
 		let deferred = Q.defer()
-		this.userModel.findByIdAndUpdate(id, _.omit(what, '_id'), { new: true }, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+		// encrypt password before creating
+		bcrypt.hash(what.password, 10, (err, hash) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				what.password = hash
+				this.userModel.findByIdAndUpdate(id, _.omit(what, '_id'), { new: true }, (err, resp) => {
+					if (err) {
+						deferred.reject(err)
+					} else {
+						deferred.resolve(resp)
+					}
+				})
+			}
 		})
 		return deferred.promise
 	}
@@ -62,11 +87,30 @@ export default class UserModel {
 		return deferred.promise
 	}
 
-	findUserByCredentials(username: string, password: string) {
+	findUserByEncryptedCredentials(username: string, password: string) {
 		let deferred = Q.defer()
 		this.userModel.findOne({ username, password }, (err, resp) => {
 			err ? deferred.reject(err) : deferred.resolve(resp)
 		})
+		return deferred.promise
+	}
+
+	findUserByCredentials(username: string, password: string) {
+		let deferred = Q.defer()
+		console.log(`${username}, ${password}`)
+		this.findUserByUsername(username)
+			.then(user => {
+				console.log(user)
+				bcrypt.compare(password, (<any>user).password, (err, res) => {
+					if (err) {
+						deferred.reject(err)
+					} else if (!res) {
+						deferred.reject({ message: 'invalid password' })
+					} else {
+						deferred.resolve(user)
+					}
+				})
+			})
 		return deferred.promise
 	}
 }

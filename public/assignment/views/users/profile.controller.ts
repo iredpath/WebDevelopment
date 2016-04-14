@@ -22,6 +22,7 @@ export class ProfileController {
 			.subscribe(user => { 
 				if (user.json()) {
 					this.user = user.json()
+					this.user.password = "" // its encrypted, so we don't want it
 					this.userService.setActiveUser(user.json())
 					this.loading = false
 				} else {
@@ -31,10 +32,14 @@ export class ProfileController {
 	}
 
 	update() {
-		this.userService.updateUser(this.user._id, this.user)
-			.subscribe(resp => {
-				console.log("successfully updated user " + resp.json().user)
-				this.userService.setActiveUser(resp.json().user)
-			})
+		if (this.user.password) {
+			this.userService.updateUser(this.user._id, this.user)
+				.subscribe(resp => {
+					console.log("successfully updated user " + resp.json().user)
+					this.userService.setActiveUser(resp.json().user)
+				})
+		} else {
+			alert('Please enter a password before updating!')
+		}
 	}
 }

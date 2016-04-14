@@ -6,9 +6,15 @@ export default function Userendpoints(app, userModel: UserModel) {
 
 	// local strategy
 	const localStrat = (username, password, done) => {
-		userModel.findUserByCredentials(username, password)
-			.then(user => { return done(null, user ? user : false) },
-			err => { return done(err) })
+		if (password.indexOf('$2a$10') == 0) { // encrypted check hack
+			userModel.findUserByEncryptedCredentials(username, password)
+				.then(user => { return done(null, user ? user : false) },
+				err => { return done(err) })
+		} else {
+			userModel.findUserByCredentials(username, password)
+				.then(user => { return done(null, user ? user : false) },
+				err => { return done(err) })
+		}
 	}
 	passport.use('assignment', new local.Strategy(localStrat))
 

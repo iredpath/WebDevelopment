@@ -25,11 +25,11 @@ export default function(app) {
 				img += chunk
 			})
 			resp.on('end', () => {
-				fs.writeFile(`${process.env.OPENSHIFT_DATA_DIR}/${id}.png`, img, 'binary', err => {
+				fs.writeFile(`${process.env.OPENSHIFT_DATA_DIR}${id}.png`, img, 'binary', err => {
 					if (err) {
 						res.status(400).send(err)
 					} else {
-						res.status(200).send({ location: `${process.env.OPENSHIFT_DATA_DIR}/${id}.png` })
+						res.status(200).send({ location: `${process.env.OPENSHIFT_DATA_DIR}${id}.png` })
 					}
 				})
 			})

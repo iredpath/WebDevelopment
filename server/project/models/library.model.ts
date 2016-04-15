@@ -38,7 +38,31 @@ export default class LibraryModel {
 	getAllLibraries() {
 		let deferred = Q.defer()
 		this.libraryModel.find({}, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+			if (err) {
+				deferred.reject(err)
+			} else {
+				console.log(resp)
+				// PLEASE BE A BETTER WAY TO DO THIS
+				const reqList = _.map(resp, library => {
+					return this.getLibraryById((<any>library)._id)
+				})
+				Q.allSettled(reqList)
+					.then(success => {
+						// oh boy, here we go
+						console.log(success)
+						const response = _.map(success, r => {
+							let library = (<any>r).value.library
+							library.movies = (<any>r).value.movies
+							library.user = (<any>r).value.user
+							library.comments = (<any>r).value.comments
+							library.ratings = (<any>r).value.ratings
+							return library
+						})
+						console.log(response)
+						deferred.resolve(response)
+					}, error => { deferred.reject(error) })
+			}
+			//err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
 	}
@@ -65,7 +89,6 @@ export default class LibraryModel {
 					this.commentModel.find({ target: id })
 				])
 					.then(success => {
-						console.log(success)
 						const user = (<any>success[0])
 						const movies = (<any>success[1])
 						const ratings = (<any>success[2])

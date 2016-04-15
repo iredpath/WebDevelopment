@@ -10,18 +10,17 @@
       <a class="navbar-brand" [routerLink]='["/Home"]'>Logo</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <vml-searchbar></vml-searchbar>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!isActiveUser()" [class.active]="isRouteActive('register')">
+        <li *ngIf="!isActiveUser()" [class.active]="isRegisterRouteActive()">
           <a [routerLink]='["/Register"]'>Sign Up</a>
         </li>
-        <li *ngIf="!isActiveUser()" [class.active]="isRouteActive('login')">
+        <li *ngIf="!isActiveUser()" [class.active]="isLoginRouteActive()">
           <a [routerLink]='["/Login"]'>Sign In</a>
         </li>
-        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('details')">
+        <li *ngIf="isActiveUser()" [class.active]="isDetailsRouteActive()">
           <a [routerLink]='["/Details", { user: userService.getActiveUser()._id }]'>Edit Info</a>
         </li>
-        <li *ngIf="isActiveUser()" [class.active]="isRouteActive('user') && !isRouteActive('details')">
+        <li *ngIf="isActiveUser()" [class.active]="isProfileRouteActive()">
           <a [routerLink]='["/User", { user: userService.getActiveUser()._id }]'>My Profile</a>
         </li>
         <li *ngIf="isActiveUser()"><a (click)="logout()">Logout</a></li>

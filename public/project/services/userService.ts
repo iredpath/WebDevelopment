@@ -49,7 +49,7 @@ export class UserService {
 			{ headers: this.headers })
 	}
 
-	findAllUsers(callback) {
+	findAllUsers() {
 		return this.http.get('/api/project/user',
 			{ headers: this.headers })
 	}

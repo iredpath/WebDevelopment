@@ -1,58 +1,38 @@
-<div *ngIf='!fetchingMovies' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+<div *ngIf='!fetchingUsers' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 	<h1>Users</h1>
 	<div class="row searchbar-wrapper">
 		<div class="col-md-8 col-md-push-2 col-sm-6 col-sm-push-3">
 	    	<div class="input-group">
-	      		<input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="query">
+	      		<input type="text" class="form-control" placeholder="Search by username, name, or email" [(ngModel)]="query">
 	      		<span class="input-group-btn">
 	        		<button class="btn btn-default" type="button" (click)="search()">Go!</button>
 	      		</span>
 	    	</div>
 	  	</div>
   	</div>
-  	<div *ngIf="!showSearchResults" class="movies-no-search">
-	  	<h6>Highest rated movies</h6>
-		<div class="sample-movies">
+  	<div *ngIf="!showSearchResults" class="users-no-search">
+  	<h6>Users with the most libraries</h6>
+		<div class="sample-users">
 			<ul>
-				<li *ngFor="#movie of highestRatedMovies.slice(0, 10)" class="movie">
-	        		<img *ngIf="movie.image" class={{movie.imdbId}} src={{movie.image}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-					<label attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-						{{movie.title}}
-					</label>
+				<li *ngFor="#user of mostLibUsers.slice(0, 10)" class="user">
+	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
 	      		</li>
 	      	</ul>
 		</div>
-		<h6>Movies with the most libraries</h6>
-		<div class="sample-movies">
+	<h6>Users with the most ratings</h6>
+		<div class="sample-users">
 			<ul>
-				<li *ngFor="#movie of mostLibsMovies.slice(0, 10)" class="movie">
-	        		<img *ngIf="movie.image" class={{movie.imdbId}} src={{movie.image}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-					<label attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-						{{movie.title}}
-					</label>
-	      		</li>
-	      	</ul>
-		</div>
-		<h6>Movies with the most comments</h6>
-		<div class="sample-movies">
-			<ul>
-				<li *ngFor="#movie of mostCommentsMovies.slice(0, 10)" class="movie">
-	        		<img *ngIf="movie.image" class={{movie.imdbId}} src={{movie.image}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-					<label attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-						{{movie.title}}
-					</label>
+				<li *ngFor="#user of mostRatingsUsers.slice(0, 10)" class="user">
+	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
 	      		</li>
 	      	</ul>
 		</div>
 	</div>
-	<div class="movies-search" *ngIf="showSearchResults">
-		<div class="movies-search-results">
+	<div class="users-search" *ngIf="showSearchResults">
+		<div class="users-search-results">
 			<ul>
-				<li *ngFor="#movie of getShownResults()" class="movie">
-	        		<img *ngIf="movie.image" class={{movie.imdbId}} src={{movie.image}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-					<label attr.for={{movie.imdbId}} [routerLink]="['/Movie', { movie: movie.imdbId }]">
-						{{movie.title}}
-					</label>
+				<li *ngFor="#user of getShownResults()" class="user">
+	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
 	      		</li>
 	      	</ul>
 		</div>

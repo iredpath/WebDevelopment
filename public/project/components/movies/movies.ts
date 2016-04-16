@@ -109,11 +109,6 @@ export class Movies {
 		this.pages = _.range(minPage, maxPage + 1)
 	}
 
-	getShownResults() {
-		const start = 10 * (this.currentPage - 1)
-		return this.results.slice(start, start + 10)
-	}
-	
 	getResultsPage(page: number) {
 		this.fetchingResults = true
 		this.resultsService.getResults(this.query, page)

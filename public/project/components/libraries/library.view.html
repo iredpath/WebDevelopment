@@ -14,7 +14,7 @@
   <div class="library-contents row">
     <div *ngFor="#movie of library.movies" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
         <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie._id)" style="position:absolute; right:0px; top:0px"></button>
-        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+        <div class="movie-poster-container" style="margin:12px">
           <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
         </div>
         <div class="movie-title-year" style="height:25%">

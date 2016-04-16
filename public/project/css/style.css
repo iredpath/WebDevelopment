@@ -100,3 +100,6 @@
     clear: both;
 }
     }
+.thumbnail-remove:hover {
+	background-color: red;
+}

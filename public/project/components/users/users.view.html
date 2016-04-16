@@ -11,31 +11,41 @@
 	  	</div>
   	</div>
   	<div *ngIf="!showSearchResults" class="users-no-search">
-  	<h6>Users with the most libraries</h6>
-		<div class="sample-users">
-			<ul>
-				<li *ngFor="#user of mostLibUsers.slice(0, 10)" class="user">
-	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
-	      		</li>
-	      	</ul>
-		</div>
-	<h6>Users with the most ratings</h6>
-		<div class="sample-users">
-			<ul>
-				<li *ngFor="#user of mostRatingsUsers.slice(0, 10)" class="user">
-	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
-	      		</li>
-	      	</ul>
-		</div>
+  	<h4>Users with the most libraries</h4>
+  	<div class="sample-users row">
+	    <div *ngFor="#user of mostLibUsers.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+	        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+	          <img src="./assets/default_user.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/User', { user: user._id }]">
+	        </div>
+	        <div class="user-details" style="height:25%">
+	          <span>{{user.username}} ({{user.firstname}} {{user.lastname}})</span>
+	        </div>
+	    </div>
+	  </div>
+	<h4>Users with the most ratings</h4>
+	<div class="sample-users row">
+		<div *ngFor="#user of mostRatingsUsers.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+	        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+	          <img src="./assets/default_user.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/User', { user: user._id }]">
+	        </div>
+	        <div class="user-details" style="height:25%">
+	          <span>{{user.username}} ({{user.firstname}} {{user.lastname}})</span>
+	        </div>
+	    </div>
+	  </div>
 	</div>
 	<div class="users-search" *ngIf="showSearchResults">
-		<div class="users-search-results">
-			<ul>
-				<li *ngFor="#user of getShownResults()" class="user">
-	        		<a class="thumbnail" [routerLink]="['/User', { user: user._id }]">{{user.username}}</a>
-	      		</li>
-	      	</ul>
-		</div>
+
+		<div class="users-search-results row">
+	    <div *ngFor="#user of getShownResults()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+	        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+	          <img src="./assets/default_user.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/User', { user: user._id }]">
+	        </div>
+	        <div class="user-details" style="height:25%">
+	          <span>{{user.username}} ({{user.firstname}} {{user.lastname}})</span>
+	        </div>
+	    </div>
+	  </div>
 		<nav>
 		  <ul class="pagination">
 		    <li *ngIf="pages.length > 2" class="page-item {{ currentPage === 1 ? 'disabled': '' }}">

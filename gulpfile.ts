@@ -15,6 +15,11 @@ export class Gulpfile {
         return del('dist')
     }
 
+    @Task("build:assets")
+    buildAssets() {
+        return gulp.src('public/project/assets/**/*.png')
+            .pipe(gulp.dest('dist/project/assets'))
+    }
     @Task("build:server")
     buildServer() {
         const tsProject = ts.createProject('server/tsconfig.json')
@@ -55,7 +60,7 @@ export class Gulpfile {
 
     @SequenceTask("build")
     build() {
-        return ["clean", "build:server", "build:data", "build:projectData", "build:public"]
+        return ["clean", "build:server", "build:assets", "build:data", "build:projectData", "build:public"]
     }
 
     @SequenceTask("default")

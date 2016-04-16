@@ -51,18 +51,31 @@ export default class LibraryModel {
 						// oh boy, here we go
 						console.log(success)
 						const response = _.map(success, r => {
-							let library = (<any>r).value.library
-							library.movies = (<any>r).value.movies
-							library.user = (<any>r).value.user
-							library.comments = (<any>r).value.comments
-							library.ratings = (<any>r).value.ratings
-							return library
+
+							const library = (<any>r).value.library
+							const movies = (<any>r).value.movies
+							const user = (<any>r).value.user
+							const comments = (<any>r).value.comments
+							const ratings = (<any>r).value.ratings
+							// there is literally NO POSSIBLE WAY to modify movie here
+							// even if let is used over const
+							// so I have to do this idiotic thing in the meantime to overwrite properties
+
+							let libraryResp: any = {}
+							libraryResp.movies = movies
+							libraryResp.user = user
+							libraryResp.comments = comments
+							libraryResp.ratings = ratings
+							// copy over remainig schema props
+							libraryResp._id = library._id
+							libraryResp.name = library.name
+
+							return libraryResp
 						})
 						console.log(response)
 						deferred.resolve(response)
 					}, error => { deferred.reject(error) })
 			}
-			//err ? deferred.reject(err) : deferred.resolve(resp)
 		})
 		return deferred.promise
 	}

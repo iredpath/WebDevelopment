@@ -34,14 +34,49 @@ export default class LibraryModel {
 	getAllMovies() {
 		let deferred = Q.defer()
 		this.movieModel.find({}, (err, resp) => {
-			err ? deferred.reject(err) : deferred.resolve(resp)
+			if (err) {
+				deferred.reject(err)
+			} else {
+				// PLEASE BE A BETTER WAY TO DO THIS
+				const reqList = _.map(resp, movie => {
+					return this.getMovieById((<any>movie)._id)
+				})
+				Q.allSettled(reqList)
+					.then(success => {
+						// oh boy, here we go
+						const response = _.map(success, r => {
+							const libraries = (<any>r).value.libraries
+							const comments = (<any>r).value.comments
+							const ratings = (<any>r).value.ratings
+							const movie = (<any>r).value.movie
+
+							// there is literally NO POSSIBLE WAY to modify movie here
+							// even if let is used over const
+							// so I have to do this idiotic thing in the meantime to overwrite properties
+							let movieResp: any = {}
+							movieResp.ratings = ratings
+							movieResp.comments = comments
+							movieResp.libraries = libraries
+							// copy over remaining schema props
+							movieResp.image = movie.image
+							movieResp.title = movie.title
+							movieResp.year = movie.year
+							movieResp._id = movie._id
+							movieResp.imdbId = movie.imdbId
+
+							console.log(movieResp)
+							return movieResp
+						})
+						deferred.resolve(response)
+					}, error => { deferred.reject(error) })
+			}
 		})
 		return deferred.promise
 	}
 
 	getMovieById(id: string) {
 		let deferred = Q.defer()
-		this.libraryModel.findById(id, (err, resp) => {
+		this.movieModel.findById(id, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
 			} else {

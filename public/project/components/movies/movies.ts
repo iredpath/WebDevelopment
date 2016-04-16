@@ -52,19 +52,17 @@ export class Movies {
 
 	calculateHighestRatedMovies() {
 		return _.sortBy(this.movies, movie => {
-			return _.reduce((<any>movie).ratings,
-				(acc, rat) => { return acc + (<any>rat).value },
-				0) / movie.ratings.length
+			return -1 * this.getAvgRating((<any>movie).ratings)
 		})
 	}
 	calculateMostCommentsMovies() {
 		return _.sortBy(this.movies, movie => {
-			return movie.comments.length
+			return -movie.comments.length
 		})
 	}
 	calculateMostLibsMovies() {
 		return _.sortBy(this.movies, movie => {
-			return movie.libraries.length
+			return -movie.libraries.length
 		})
 	}
 
@@ -138,4 +136,10 @@ export class Movies {
 			() => { this.fetchingResults = false })
 	}
 
+	getAvgRating(ratings: Array<any>) {
+		console.log(ratings)
+		return _.reduce(ratings, (acc, rat) => { return acc + (<any>rat).value }, 0) / Math.max(ratings.length, 1)
+		//console.log(rat)
+		//return rat
+	}
 }

@@ -53,7 +53,7 @@ export class OmdbMovieModel {
 	configure(movieData: any): void {
 		this.title = movieData.Title
 		console.log(movieData.Year)
-		this.year = +movieData.Year || movieData.Year
+		this.year = movieData.Year
 		this.rating = movieData.Rated
 		this.releaseDate = movieData.Released
 		this.runtime = movieData.Runtime

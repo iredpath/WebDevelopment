@@ -12,37 +12,58 @@
   	</div>
   	<div *ngIf="!showSearchResults" class="libraries-no-search">
 	  	<h4>Highest rated libraries</h4>
-		<div class="sample-libraries">
-			<ul>
-				<li *ngFor="#library of highestRatedLibs.slice(0, 10)" class="library">
-	        		<a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
-	      		</li>
-	      	</ul>
+	  	<div class="sample-libraries row">
+		    <div *ngFor="#library of highestRatedLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		          <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
+		        </div>
+		        <div class="library-details" style="height:25%">
+		          <span>{{library.name}} ({{library.user.username}})</span>
+		          <div class="ratings" style="display:block">
+			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+			    	</div>
+		        </div>
+		    </div>
 		</div>
 		<h4>Libraries with the most movies</h4>
-		<div class="sample-libraries">
-			<ul>
-				<li *ngFor="#library of mostMoviesLibs.slice(0, 10)" class="library">
-	        		<a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
-	      		</li>
-	      	</ul>
+		<div class="sample-libraries row">
+		    <div *ngFor="#library of mostMoviesLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		          <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
+		        </div>
+		        <div class="library-details" style="height:25%">
+		          <span>{{library.name}} ({{library.user.username}})</span>
+		          <span style="display:block">{{library.movies.length}} {{library.movies.length === 1 ? 'movie' : 'movies' }}</span>
+		        </div>
+		    </div>
 		</div>
 		<h4>Libraries with the most comments</h4>
-		<div class="sample-libraries">
-			<ul>
-				<li *ngFor="#library of mostCommentsLibs.slice(0, 10)" class="library">
-	        		<a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
-	      		</li>
-	      	</ul>
+		<div class="sample-libraries row">
+		    <div *ngFor="#library of mostCommentsLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		          <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
+		        </div>
+		        <div class="library-details" style="height:25%">
+		          <span>{{library.name}} ({{library.user.username}})</span>
+		          <span style="display:block">{{library.comments.length}} {{library.comments.length === 1 ? 'comment' : 'comments' }}</span>
+		        </div>
+		    </div>
 		</div>
 	</div>
 	<div class="libraries-search" *ngIf="showSearchResults">
-		<div class="libraries-search-results">
-			<ul>
-				<li *ngFor="#library of getShownResults()" class="library">
-	        		<a class="thumbnail" [routerLink]="['/User', { library: library._id }]">{{library.name}}</a>
-	      		</li>
-	      	</ul>
+		<div class="sample-libraries row">
+		    <div *ngFor="#library of getShownResults()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		          <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
+		        </div>
+		        <div class="library-details" style="height:25%">
+		          <span>{{library.name}} ({{library.user.username}})</span>
+		        </div>
+		    </div>
 		</div>
 		<nav>
 		  <ul class="pagination">

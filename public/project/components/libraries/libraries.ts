@@ -45,19 +45,17 @@ export class Libraries {
 
 	calculateHighestRatedLibs() {
 		return _.sortBy(this.libraries, lib => {
-			return _.reduce((<any>lib).ratings,
-							(acc, rat) => { return acc + (<any>rat).value },
-							0) / lib.ratings.length
+			return - this.getAvgRating((<any>lib).ratings)
 		})
 	}
 	calculateMostCommentsLibs() {
 		return _.sortBy(this.libraries, lib => {
-			return lib.comments.length
+			return -lib.comments.length
 		})
 	}
 	calculateMostMoviesLibs() {
 		return _.sortBy(this.libraries, lib => {
-			return lib.movies.length
+			return -lib.movies.length
 		})
 	}
 
@@ -91,5 +89,12 @@ export class Libraries {
 	getResultsPage(page: number) {
 		this.currentPage = page
 	}
+	getAvgRating(ratings: Array<any>) {
+		console.log(ratings)
+		return _.reduce(ratings, (acc, rat) => { return acc + (<any>rat).value }, 0) / Math.max(ratings.length, 1)
+		//console.log(rat)
+		//return rat
+	}
+
 
 }

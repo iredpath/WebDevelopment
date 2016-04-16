@@ -19,6 +19,7 @@
 	        </div>
 	        <div class="user-details" style="height:25%">
 	          <span>{{user.username}} ({{user.firstname}} {{user.lastname}})</span>
+	          <span style="display:block">{{user.libraries.length}} {{user.libraries.length === 1 ? 'library' : 'libraries'}}</span>
 	        </div>
 	    </div>
 	  </div>
@@ -30,6 +31,7 @@
 	        </div>
 	        <div class="user-details" style="height:25%">
 	          <span>{{user.username}} ({{user.firstname}} {{user.lastname}})</span>
+	          <span style="display:block">Has rated {{user.ratings.length}} {{user.ratings.length === 1 ? 'thing' : 'things' }}</span>
 	        </div>
 	    </div>
 	  </div>

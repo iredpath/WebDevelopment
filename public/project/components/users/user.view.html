@@ -1,12 +1,12 @@
 <div *ngIf='!fetchingUser' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
   <div class="profile-header">
-    <div class="col-sm-4 col-md-3">
-      <span class="glyphicon glyphicon-user"></span>
+    <div class="col-sm-4 col-md-4">
+      <img style="width:100%" src="./assets/default_user.png">
     </div>
-    <div class="col-sm-6 col-md-5">
+    <div class="col-sm-6 col-md-6">
       <h1>{{user.username}}</h1>
     </div>
-    <div class="col-sm-2 col-md-4"></div>
+    <div class="col-sm-2 col-md-2"></div>
   </div>
   <div>
     <h3>Libraries</h3>
@@ -14,11 +14,15 @@
       <input type="text" [(ngModel)]="newLibraryName" placeholder="Library name">
       <button class="btn btn-default" (click)='newLibrary()'>+</button>
     </div>
-    <div class="library-carousel">
-      <div *ngFor="#library of user.libraries" class="user-library">
-        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)"></span>
-        <a class="thumbnail" [routerLink]="['/Library', { library: library._id }]">{{library.name}}</a>
-      </div>
+
+    <div class="user-libraries row">
+        <div *ngFor="#library of user.libraries" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)" style="position:absolute; right:0px; top:0px"></button>
+            <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+              <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
+            </div>
+            <span>{{library.name}}</span>
+        </div>
     </div>
   </div>
 </div>

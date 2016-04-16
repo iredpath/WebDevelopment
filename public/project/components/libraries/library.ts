@@ -201,4 +201,8 @@ export class Library {
 		this.editCommentText = ""
 	}
 
+	getRowRange() {
+		return _.range(this.library.movies.length / 4)
+	}
+
 }

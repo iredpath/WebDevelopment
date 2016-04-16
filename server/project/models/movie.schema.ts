@@ -8,6 +8,7 @@ export default function() {
 		imdbId: String,
 		title: String,
 		image: String, // base64 encoded image, least bad of two bad options
+		year: Number,
 		libraries: [String], // library _id
 		ratings: [String], // ratings _id ?
 		comments: [String] // comment _id ?

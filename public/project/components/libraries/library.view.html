@@ -11,13 +11,17 @@
     </div>
     <a [routerLink]='["/User", { user: library.user._id }]'>{{library.user.username}}</a>
   </div>
-  <div class="movie-carousel">
-    <div *ngFor="#movie of library.movies" class="library-movie">
-        <span *ngIf="hasEditRights()" class="glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie._id)"></span>
-        <img src={{movie.image}} class="thumbnail" [routerLink]="['/Movie', { movie: movie.imdbId }]">{{movie.title}}
+  <div class="library-contents row">
+    <div *ngFor="#movie of library.movies" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+        <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie._id)" style="position:absolute; right:0px; top:0px"></button>
+        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
+        </div>
+        <div class="movie-title-year" style="height:25%">
+          <span>{{movie.title}} ({{movie.year}})</span>
+        </div>
     </div>
   </div>
-
 
   <div class="ratings-container">
     <label *ngIf="userService.getActiveUser()" for="my-rating">My Rating:</label>
@@ -33,7 +37,7 @@
       <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
         (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
     </div>
-    <button *ngIf="userService.getActiveUser()" class="btn btn-default" (click)="unrate()">Clear</button>
+    <button *ngIf="userService.getActiveUser()" class="btn btn-default btn-sm" style="display:inline-block" (click)="unrate()">Clear</button>
 
     <label for="ratings">Average Rating:</label>
       <div class="ratings">

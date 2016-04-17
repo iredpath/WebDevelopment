@@ -1,70 +1,97 @@
 <div *ngIf='!fetchingMovie' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-  <h1 class="movie-title">{{omdbMovie.title}}</h1>
-  <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 xxs">
-    <img *ngIf="movie.image" class="movie-image" src={{movie.image}}>
-    <div *ngIf="userService.getActiveUser()">
-      <div *ngIf="possibleLibs.length > 0">
-        <select [(ngModel)]="libraryId">
-          <option *ngFor="#library of possibleLibs" value={{library._id}}>{{library.name}}</option>
-        </select>
-        <button class="btn btn-small" (click)="addMovie()">+</button>
+  <div class="row">
+    <h1 class="movie-title">{{omdbMovie.title}}</h1>
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 xxs">
+      <img *ngIf="movie.image" class="movie-image" src={{movie.image}}>
+      <div *ngIf="userService.getActiveUser()">
+        <div *ngIf="possibleLibs.length > 0">
+          <select [(ngModel)]="libraryId">
+            <option *ngFor="#library of possibleLibs" value={{library._id}}>{{library.name}}</option>
+          </select>
+          <button class="btn btn-small" (click)="addMovie()">+</button>
+        </div>
+        <label for="my-rating">My Rating:</label>
+        <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
+          <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+            (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
+          <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+            (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
+          <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+            (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
+          <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+            (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
+          <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+            (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
+          <button class="btn btn-default" (click)="unrate()">Clear</button>
+        </div>
       </div>
-      <label for="my-rating">My Rating:</label>
-      <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
-        <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-          (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
-        <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-          (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
-        <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-          (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
-        <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-          (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
-        <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-          (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
-        <button class="btn btn-default" (click)="unrate()">Clear</button>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 xxs">
+      <div class="actors-container">
+        <label for="actors">Actors:</label>
+        <ul class="actors">
+          <li *ngFor="#actor of omdbMovie.actors">{{actor}}</li>
+        </ul>
+      </div>
+      <div>
+        <label for="director">Directed By:</label>
+        <span class="director">{{omdbMovie.directors}}</span>
+      </div>
+      <div>
+        <label for="summary">Plot Summary:</label>
+        <p class="summary">{{omdbMovie.plot}}</p>
+      </div>
+      <div>
+        <label for="rating">Rated:</label>
+        <span class="rating">{{omdbMovie.rating}}</span>
+      </div>
+      <div>
+        <label for="released">Released on:</label>
+        <span class="released">{{omdbMovie.releaseDate}}</span>
+      </div>
+      <div class="ratings-container">
+        <label for="ratings">Average Rating:</label>
+        <div class="ratings">
+          <span class="glyphicon {{ avgRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+          <span class="glyphicon {{ avgRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+          <span class="glyphicon {{ avgRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+          <span class="glyphicon {{ avgRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+          <span class="glyphicon {{ avgRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+          <span *ngIf="omdbMovie.tomatoMeter !== 'N/A'" class="rating-rt">
+            <a href={{omdbMovie.tomatoUrl}}>{{omdbMovie.tomatoMeter}}% on rotton tomatoes</a>
+          </span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 xxs">
-    <div class="actors-container">
-      <label for="actors">Actors:</label>
-      <ul class="actors">
-        <li *ngFor="#actor of omdbMovie.actors">{{actor}}</li>
-      </ul>
-    </div>
-    <div>
-      <label for="director">Directed By:</label>
-      <span class="director">{{omdbMovie.directors}}</span>
-    </div>
-    <div>
-      <label for="summary">Plot Summary:</label>
-      <p class="summary">{{omdbMovie.plot}}</p>
-    </div>
-    <div>
-      <label for="rating">Rated:</label>
-      <span class="rating">{{omdbMovie.rating}}</span>
-    </div>
-    <div>
-      <label for="released">Released on:</label>
-      <span class="released">{{omdbMovie.releaseDate}}</span>
-    </div>
-    <div class="ratings-container">
-      <label for="ratings">Average Rating:</label>
-      <div class="ratings">
-        <span class="glyphicon {{ avgRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
-        <span class="glyphicon {{ avgRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
-        <span class="glyphicon {{ avgRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
-        <span class="glyphicon {{ avgRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
-        <span class="glyphicon {{ avgRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
-        <span *ngIf="omdbMovie.tomatoMeter !== 'N/A'" class="rating-rt">
-          <a href={{omdbMovie.tomatoUrl}}>{{omdbMovie.tomatoMeter}}% on rotton tomatoes</a>
-        </span>
-      </div>
-    </div>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments">
+  <h3 class="h4-margins">Comments</h3>
+  <div class="results-row">
+  <span class="no-results" *ngIf="movie.comments.length ===0">No comments</span>
+  <table>
+    <tr *ngFor="#comment of movie.comments">
+      <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
+      <td>
+        <div *ngIf="isEditingComment(comment._id)">
+          <input type="text" [(ngModel)]="editCommentText">
+          <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
+          <button class="btn btn-default" (click)="cancelEditComment()">Cancel</button>
+        </div>
+        <div *ngIf="!isEditingComment(comment._id)" (click)="editComment(comment)">
+          {{comment.comment}}
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div *ngIf="userService.getActiveUser()">
+    <input type="text" class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()">
+    <button class="btn" (click)="addComment()">Comment!</button>
+  </div>
+  </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!fetchingLibraries">
     <h3 class="h4-margins">Libraries With This Title</h3>
-    <div class="sample-libraries row">
+    <div class="sample-libraries row results-row">
     <span class="no-results" *ngIf="movie.libraries.length ===0">No libraries with this title</span>
         <div *ngFor="#library of movie.libraries" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
             <div class="movie-poster-container">

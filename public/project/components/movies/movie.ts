@@ -30,6 +30,9 @@ export class Movie {
 	myRating: number
 	myRatingBackup: number
 	avgRating: number
+	newComment: string
+	editCommentText: string
+	editCommentId: string
 
 	// HOLY CRAP MAKE THIS LOOK LESS AWFUL PLEASE
 	constructor(public params:RouteParams, public omdbService:OmdbService,
@@ -205,5 +208,51 @@ export class Movie {
 				})
 			}
 		}
+	}
+
+	addComment() {
+		const user = this.userService.getActiveUser()
+		if (this.newComment && user) {
+			const comment = {
+				comment: this.newComment,
+				userId: user._id,
+				username: user.username,
+				target: this.movie._id
+			}
+			this.libraryService.addCommentToLibrary(this.movie._id, comment)
+				.subscribe(resp => {
+					if (resp.json().comment) {
+						this.movie.comments.push(resp.json().comment)
+						this.newComment = ""
+					}
+				})
+		}
+	}
+
+	isEditingComment(id: string) {
+		return id === this.editCommentId
+	}
+
+	editComment(comment: any) {
+		if (this.userService.getActiveUser() && this.userService.getActiveUser()._id === comment.userId) {
+			this.editCommentId = comment._id
+			this.editCommentText = (<any>comment).comment
+		}
+	}
+
+	saveEditComment() {
+		this.libraryService.editCommentForLibrary(this.movie._id, this.editCommentId, this.editCommentText)
+			.subscribe(resp => {
+				if (resp.json().comment) {
+					const comm: any = _.find(this.movie.comments, c => { return (<any>c)._id === this.editCommentId })
+					comm.comment = this.editCommentText
+					this.cancelEditComment()
+				}
+			})
+	}
+
+	cancelEditComment() {
+		this.editCommentId = null
+		this.editCommentText = ""
 	}
 }

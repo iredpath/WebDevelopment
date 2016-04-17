@@ -12,12 +12,12 @@
     
     <div class="new-library" *ngIf='hasEditRights()'>
       <h4 class="no-bot-margin">Create a new library!</h4>
-      <input type="text" [(ngModel)]="newLibraryName" placeholder="Library name">
+      <input type="text" [(ngModel)]="newLibraryName" placeholder="Library name" (keyup.enter)="newLibrary()">
       <button class="btn btn-default" (click)='newLibrary()'>+</button>
     </div>
 
     <h3 class="no-bot-margin">{{ getWhoseLibraries() }} libraries</h3>
-    <div class="user-libraries row">
+    <div class="user-libraries row results-row">
     <span class="no-results" *ngIf="user.libraries.length ===0">No libraries found</span>
         <div *ngFor="#library of user.libraries" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
           <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)"></button>

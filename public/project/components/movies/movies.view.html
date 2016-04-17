@@ -5,14 +5,14 @@
 	    	<div class="input-group">
 	      		<input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="query">
 	      		<span class="input-group-btn">
-	        		<button class="btn btn-default" type="button" (click)="search()">Go!</button>
+	        		<button class="btn btn-default glyphicon glyphicon-search search-icon" type="button" (click)="search()" (keyup.enter)="search()"></button>
 	      		</span>
 	    	</div>
 	  	</div>
   	</div>
   	<div *ngIf="!showSearchResults" class="movies-no-search">
 	  	<h4 class="h4-margins">Highest rated movies</h4>
-	  	<div class="sample-movies row">
+	  	<div class="sample-movies row results-row">
 	  	<span class="no-results" *ngIf="highestRatedMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of highestRatedMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
@@ -32,7 +32,7 @@
 		    </div>
 		  </div>	
 		<h4 class="h4-margins">Movies with the most libraries</h4>
-		<div class="sample-movies row">
+		<div class="sample-movies row results-row">
 		<span class="no-results" *ngIf="mostLibsMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of mostLibsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
@@ -45,7 +45,7 @@
 		    </div>
 		  </div>
 		<h4 class="h4-margins">Movies with the most comments</h4>
-		<div class="sample-movies row">
+		<div class="sample-movies row results-row">
 		<span class="no-results" *ngIf="mostCommentsMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of mostCommentsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
@@ -59,7 +59,7 @@
 		  </div>
 	</div>
 	<div class="movies-search" *ngIf="showSearchResults">
-		<div class="search-results row">
+		<div class="search-results row results-row">
 	<span class="no-results" *ngIf="results.length ===0">No results found</span>
 			<div *ngFor="#movie of results" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">

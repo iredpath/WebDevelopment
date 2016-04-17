@@ -140,7 +140,7 @@
  	margin-bottom: 4px;
  }
 
-.row {
+.results-row {
 	text-align: center;
 }
 
@@ -151,4 +151,13 @@
 
 .search-results {
 	margin-top: 50px;
+}
+
+.search-icon {
+	top: 0px;
+}
+
+.comments {
+	margin-bottom: 20px;
+	margin-top: 20px;
 }

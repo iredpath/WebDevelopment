@@ -12,6 +12,7 @@
     <a [routerLink]='["/User", { user: library.user._id }]'>{{library.user.username}}</a>
   </div>
   <div class="library-contents row">
+  <span class="no-results" *ngIf="library.movies.length ===0">No movies found</span>
     <div *ngFor="#movie of library.movies" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
         <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie._id)"></button>
         <div class="movie-poster-container-library">
@@ -52,6 +53,7 @@
   </div>
 
   <h3>COMMENTS</h3>
+  <span class="no-results" *ngIf="library.comments.length ===0">No comments found</span>
   <table>
     <tr *ngFor="#comment of library.comments">
       <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>

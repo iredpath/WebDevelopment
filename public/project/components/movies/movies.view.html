@@ -12,9 +12,8 @@
   	</div>
   	<div *ngIf="!showSearchResults" class="movies-no-search">
 	  	<h4>Highest rated movies</h4>
-
-
 	  	<div class="sample-movies row">
+	  	<span class="no-results" *ngIf="highestRatedMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of highestRatedMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src={{movie.image}} class="movie-image"[routerLink]="['/Movie', { movie: movie.imdbId }]">
@@ -34,6 +33,7 @@
 		  </div>	
 		<h4>Movies with the most libraries</h4>
 		<div class="sample-movies row">
+		<span class="no-results" *ngIf="mostLibsMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of mostLibsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src={{movie.image}} class="movie-image" [routerLink]="['/Movie', { movie: movie.imdbId }]">
@@ -46,6 +46,7 @@
 		  </div>
 		<h4>Movies with the most comments</h4>
 		<div class="sample-movies row">
+		<span class="no-results" *ngIf="mostCommentsMovies.length ===0">No movies found</span>
 		    <div *ngFor="#movie of mostCommentsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src={{movie.image}} class="movie-image" [routerLink]="['/Movie', { movie: movie.imdbId }]">
@@ -59,6 +60,7 @@
 	</div>
 	<div class="movies-search" *ngIf="showSearchResults">
 		<div class="movies-search-results row">
+	<span class="no-results" *ngIf="results.length ===0">No results found</span>
 			<div *ngFor="#movie of results" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src={{movie.image}} class="movie-image"[routerLink]="['/Movie', { movie: movie.imdbId }]">

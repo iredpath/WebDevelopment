@@ -13,6 +13,7 @@
   	<div *ngIf="!showSearchResults" class="libraries-no-search">
 	  	<h4>Highest rated libraries</h4>
 	  	<div class="sample-libraries row">
+	  	<span class="no-results" *ngIf="highestRatedLibs.length ===0">No libraries found</span>
 		    <div *ngFor="#library of highestRatedLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src="./assets/default_library.png" class="movie-image"[routerLink]="['/Library', { library: library._id }]">
@@ -31,6 +32,7 @@
 		</div>
 		<h4>Libraries with the most movies</h4>
 		<div class="sample-libraries row">
+		<span class="no-results" *ngIf="mostMoviesLibs.length ===0">No libraries found</span>
 		    <div *ngFor="#library of mostMoviesLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src="./assets/default_library.png" class="movie-image"[routerLink]="['/Library', { library: library._id }]">
@@ -43,6 +45,7 @@
 		</div>
 		<h4>Libraries with the most comments</h4>
 		<div class="sample-libraries row">
+		<span class="no-results" *ngIf="mostCommentsLibs.length ===0">No libraries found</span>
 		    <div *ngFor="#library of mostCommentsLibs.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src="./assets/default_library.png" class="movie-image"[routerLink]="['/Library', { library: library._id }]">
@@ -56,6 +59,7 @@
 	</div>
 	<div class="libraries-search" *ngIf="showSearchResults">
 		<div class="sample-libraries row">
+		<span class="no-results" *ngIf="getShownResults.length ===0">No results found</span>
 		    <div *ngFor="#library of getShownResults()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		        <div class="movie-poster-container">
 		          <img src="./assets/default_library.png" class="movie-image"[routerLink]="['/Library', { library: library._id }]">

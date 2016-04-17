@@ -11,7 +11,7 @@
 	  	</div>
   	</div>
   	<div *ngIf="!showSearchResults" class="users-no-search">
-  	<h4>Users with the most libraries</h4>
+  	<h4 class="h4-margins">Users with the most libraries</h4>
   	<div class="sample-users row">
   	<span class="no-results" *ngIf="mostLibUsers.length ===0">No users found</span>
 	    <div *ngFor="#user of mostLibUsers.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
@@ -24,7 +24,7 @@
 	        </div>
 	    </div>
 	  </div>
-	<h4>Users with the most ratings</h4>
+	<h4 class="h4-margins">Users with the most ratings</h4>
 	<div class="sample-users row">
 	<span class="no-results" *ngIf="mostRatingsUsers.length ===0">No users found</span>
 		<div *ngFor="#user of mostRatingsUsers.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
@@ -39,7 +39,7 @@
 	  </div>
 	</div>
 	<div class="users-search" *ngIf="showSearchResults">
-		<div class="users-search-results row">
+		<div class="search-results row">
 		<span class="no-results" *ngIf="getShownResults.length ===0">No results found</span>
 	    <div *ngFor="#user of getShownResults()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
 	        <div class="movie-poster-container">

@@ -1,10 +1,7 @@
 .clickable {
 	cursor: pointer;
 }
-.searchbar {
-	display: inline-block;
-	width: 45%
-}
+
 .movie-title {
 	margin-left: 15px;
 }
@@ -142,3 +139,16 @@
  .no-bot-margin {
  	margin-bottom: 4px;
  }
+
+.row {
+	text-align: center;
+}
+
+.h4-margins {
+	margin-top: 20px;
+	margin-bottom:20px;
+}
+
+.search-results {
+	margin-top: 50px;
+}

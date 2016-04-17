@@ -10,6 +10,24 @@
           </select>
           <button class="btn btn-small" (click)="addMovie()">+</button>
         </div>
+
+        <div class="my-rating-wrapper">
+          <label for="my-rating">My Rating:</label>
+          <div class="my-rating ratings-inline" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
+            <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+              (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
+            <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+              (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
+            <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+              (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
+            <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+              (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
+            <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+              (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
+            <span *ngIf="myRating !== 0 && myRatingBackup !== 0" class="clear-rating clickable glyphicon glyphicon-remove" (click)="unrate()"></span>
+          </div>
+        </div>
+      <!--
         <label for="my-rating">My Rating:</label>
         <div class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
           <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
@@ -23,7 +41,7 @@
           <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
             (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
           <button class="btn btn-default" (click)="unrate()">Clear</button>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 xxs">
@@ -65,29 +83,29 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments">
-  <h3 class="h4-margins">Comments</h3>
-  <div class="results-row">
-  <span class="no-results" *ngIf="movie.comments.length ===0">No comments</span>
-  <table>
-    <tr *ngFor="#comment of movie.comments">
-      <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
-      <td>
-        <div *ngIf="isEditingComment(comment._id)">
-          <input type="text" [(ngModel)]="editCommentText">
-          <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
-          <button class="btn btn-default" (click)="cancelEditComment()">Cancel</button>
-        </div>
-        <div *ngIf="!isEditingComment(comment._id)" (click)="editComment(comment)">
-          {{comment.comment}}
-        </div>
-      </td>
-    </tr>
-  </table>
-  <div *ngIf="userService.getActiveUser()">
-    <input type="text" class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()">
-    <button class="btn" (click)="addComment()">Comment!</button>
-  </div>
-  </div>
+    <h3 class="h4-margins">Comments</h3>
+    <div class="results-row">
+      <span class="no-results" *ngIf="movie.comments.length ===0">No comments</span>
+      <table>
+        <tr *ngFor="#comment of movie.comments">
+          <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
+          <td>
+            <div *ngIf="isEditingComment(comment._id)">
+              <input type="text" [(ngModel)]="editCommentText">
+              <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
+              <button class="btn btn-default" (click)="cancelEditComment()">Cancel</button>
+            </div>
+            <div *ngIf="!isEditingComment(comment._id)" (click)="editComment(comment)">
+              {{comment.comment}}
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div *ngIf="userService.getActiveUser()">
+        <input type="text" class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()">
+        <button class="btn" (click)="addComment()">Comment!</button>
+      </div>
+    </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!fetchingLibraries">
     <h3 class="h4-margins">Libraries With This Title</h3>

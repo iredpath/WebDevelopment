@@ -13,23 +13,23 @@
   </div>
 
   <div class="ratings-container">
-    <label *ngIf="userService.getActiveUser()" for="my-rating">My Rating:</label>
-    <div *ngIf="userService.getActiveUser()" class="my-rating" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
-      <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
-      <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
-      <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
-      <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
-      <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
-        (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
-      <button *ngIf="userService.getActiveUser()" class="btn btn-default btn-sm clear-rating" (click)="unrate()">
-        Clear
-      </button>
+    <div class="my-rating-wrapper" *ngIf="userService.getActiveUser()">
+      <label for="my-rating">My Rating:</label>
+      <div class="my-rating ratings-inline" (mouseleave)="clearPreview()" (mouseenter)="storeRating()">
+        <span class="glyphicon clickable {{ myRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+          (mouseenter)="ratePreview(1)" (click)="rate(1)"></span>
+        <span class="glyphicon clickable {{ myRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+          (mouseenter)="ratePreview(2)" (click)="rate(2)"></span>
+        <span class="glyphicon clickable {{ myRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+          (mouseenter)="ratePreview(3)" (click)="rate(3)"></span>
+        <span class="glyphicon clickable {{ myRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+          (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
+        <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
+          (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
+        <span *ngIf="myRating !== 0 && myRatingBackup !== 0" class="clear-rating clickable glyphicon glyphicon-remove" (click)="unrate()"></span>
+      </div>
     </div>
-
+    <div class="ratings-avg">
     <label for="ratings-inline">Average Rating:</label>
       <div class="ratings-inline">
         <span class="glyphicon {{ avgRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
@@ -37,6 +37,7 @@
         <span class="glyphicon {{ avgRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
         <span class="glyphicon {{ avgRating < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
         <span class="glyphicon {{ avgRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+      </div>
     </div>
   </div>
   <div class="library-contents row results-row">

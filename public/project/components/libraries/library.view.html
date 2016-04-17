@@ -55,7 +55,7 @@
 
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments">
     <h3 class="h4-margins">Comments</h3>
-    <div class="results-row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="results-row">
       <span class="no-results" *ngIf="library.comments.length ===0">No comments</span>
       <table>
         <tr *ngFor="#comment of library.comments">
@@ -73,7 +73,7 @@
         </tr>
       </table>
     </div>
-    <div *ngIf="userService.getActiveUser()">
+    <div *ngIf="userService.getActiveUser()" class="new-comment">
       <input type="text" class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()">
       <button class="btn" (click)="addComment()">Comment!</button>
     </div>

@@ -19,9 +19,9 @@ export class User {
 	newLibraryName: string
 	fetchingUser: boolean
 
-	constructor(public params: RouteParams, public router: Router, 
+	constructor(public params: RouteParams, public router: Router,
 		public userService: UserService, public libraryService: LibraryService) {
-		
+
 		this.fetchingUser = true
 		this.userService.loggedIn()
 			.subscribe(data => {
@@ -81,5 +81,10 @@ export class User {
 				}
 			}, error => { alert(error.message) })
 
+	}
+
+	getWhoseLibraries() {
+		return this.userService.isActiveUser() && this.userService.getActiveUser()._id === this.user._id ?
+			'My' : `${this.user.username}'s`
 	}
 }

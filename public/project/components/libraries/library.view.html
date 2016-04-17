@@ -14,8 +14,8 @@
   <div class="library-contents row">
     <div *ngFor="#movie of library.movies" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
         <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeMovie(movie._id)"></button>
-        <div class="movie-poster-container" style="margin:12px">
-          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
+        <div class="movie-poster-container-library">
+          <img src={{movie.image}} class="movie-image"[routerLink]="['/Movie', { movie: movie.imdbId }]">
         </div>
         <div class="movie-title-year">
           <span>{{movie.title}} ({{movie.year}})</span>
@@ -36,11 +36,13 @@
         (mouseenter)="ratePreview(4)" (click)="rate(4)"></span>
       <span class="glyphicon clickable {{ myRating < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"
         (mouseenter)="ratePreview(5)" (click)="rate(5)"></span>
+      <button *ngIf="userService.getActiveUser()" class="btn btn-default btn-sm clear-rating" (click)="unrate()">
+        Clear
+      </button>
     </div>
-    <button *ngIf="userService.getActiveUser()" class="btn btn-default btn-sm" style="display:inline-block" (click)="unrate()">Clear</button>
 
-    <label for="ratings">Average Rating:</label>
-      <div class="ratings">
+    <label for="ratings-inline">Average Rating:</label>
+      <div class="ratings-inline">
         <span class="glyphicon {{ avgRating < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
         <span class="glyphicon {{ avgRating < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
         <span class="glyphicon {{ avgRating < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>

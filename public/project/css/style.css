@@ -15,13 +15,13 @@
 .actors-container > label {
 	vertical-align: top;
 }
-.actors {
-	display:inline-block;
-}
 .ratings-container > label {
 	vertical-align: top;
 }
 .ratings {
+	display: block;
+}
+.ratings-inline {
 	display: inline-block;
 }
 .rating-rt {
@@ -44,14 +44,6 @@
 	text-align: center;
 	height: 100%;
 }
-.movie-in-library {
-	width: 120px;
-	display: inline-block;
-}
-.user-library {
-	width: 120px;
-	display: inline-block;
-}
 .thumbnail-remove {
 	display:none;
 	position: absolute;
@@ -63,9 +55,6 @@
 }
 .profile-header {
 	display: inline-block;
-}
-.library {
-	width:150px;
 }
 
 .library-movie:hover {
@@ -111,3 +100,41 @@
 		display: none !important;
 	}
 }
+
+.movie-poster-container {
+	padding: 7px;
+}
+
+.movie-image {
+	margin-bottom: 2px;
+	height: auto;
+	width: 100%;
+	padding: 4px;
+}
+
+.more-info {
+	display:block;
+}
+
+.clear-rating {
+	display: inline-block;
+}
+
+.user-img {
+	width: 100%;
+}
+
+.movie-poster-container-library {
+ 	margin:12px;
+ }
+
+ @media (max-width: 480px) {
+ 	.xxs {
+ 		width: 100%;
+ 		float: left;
+ 		position: relative;
+ 		min-height: 1px;
+ 		padding-right: 15px;
+ 		padding-left: 15px;
+ 	}
+ }

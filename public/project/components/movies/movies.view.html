@@ -16,10 +16,10 @@
 
 	  	<div class="sample-movies row">
 		    <div *ngFor="#movie of highestRatedMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		        <div class="movie-poster-container" style="padding:7px">
 		          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
 		        </div>
-		        <div class="movie-title-year" style="height:25%">
+		        <div class="movie-title-year">
 		          	<span>{{movie.title}} ({{movie.year}})</span>
 		          	<div class="ratings" style="display:block">
 			        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
@@ -34,10 +34,10 @@
 		<h4>Movies with the most libraries</h4>
 		<div class="sample-movies row">
 		    <div *ngFor="#movie of mostLibsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		        <div class="movie-poster-container" style="padding:7px">
 		          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
 		        </div>
-		        <div class="movie-title-year" style="height:25%">
+		        <div class="movie-title-year">
 		          <span>{{movie.title}} ({{movie.year}})</span>
 		          <span style="display:block">Found in {{ movie.libraries.length }} {{ movie.libraries.length == 1 ? 'library' : 'libraries' }}</span>
 		        </div>
@@ -46,10 +46,10 @@
 		<h4>Movies with the most comments</h4>
 		<div class="sample-movies row">
 		    <div *ngFor="#movie of mostCommentsMovies.slice(0, 10)" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		        <div class="movie-poster-container" style="padding:7px">
 		          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
 		        </div>
-		        <div class="movie-title-year" style="height:25%">
+		        <div class="movie-title-year">
 		          <span>{{movie.title}} ({{movie.year}})</span>
 		          <span style="display:block">{{movie.comments.length}} {{ movie.comments.length === 1 ? 'comment' : 'comments' }}</span>
 		        </div>
@@ -59,10 +59,10 @@
 	<div class="movies-search" *ngIf="showSearchResults">
 		<div class="movies-search-results row">
 			<div *ngFor="#movie of results" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		        <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+		        <div class="movie-poster-container" style="padding:7px">
 		          <img src={{movie.image}} class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Movie', { movie: movie.imdbId }]">
 		        </div>
-		        <div class="movie-title-year" style="height:25%">
+		        <div class="movie-title-year">
 		          <span>{{movie.title}} ({{movie.year}})</span>
 		        </div>
 		    </div>

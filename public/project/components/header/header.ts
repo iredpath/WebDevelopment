@@ -32,9 +32,22 @@ export class Header {
 
 	isProfileRouteActive() {
 		return this.isActiveUser()
-			&& this.location.path().indexOf('user') > -1
+			&& this.location.path().indexOf('users') > -1
 			&& this.location.path().indexOf(this.userService.getActiveUser()._id) > -1
 			&& !this.isDetailsRouteActive()
+	}
+
+	isUsersRouteActive() {
+		return this.location.path().indexOf('users') > -1
+			&& !this.isProfileRouteActive()
+	}
+
+	isMoviesRouteActive() {
+		return this.location.path().indexOf('movies') > -1
+	}
+
+	isLibrariesRouteActive() {
+		return this.location.path().indexOf('libraries') > -1
 	}
 
 	isActiveUser() {

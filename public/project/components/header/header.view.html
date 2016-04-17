@@ -17,6 +17,16 @@
         <li *ngIf="!isActiveUser()" [class.active]="isLoginRouteActive()">
           <a [routerLink]='["/Login"]'>Sign In</a>
         </li>
+        <!-- Mobile-specific options -->
+        <li class="mobile-header" [class.active]="isUsersRouteActive()">
+          <a [routerLink]='["/Users"]'>Users</a>
+        </li>
+        <li class="mobile-header" [class.active]="isLibrariesRouteActive()">
+          <a [routerLink]='["/Libraries"]'>Libraries</a>
+        </li>
+        <li class="mobile-header" [class.active]="isMoviesRouteActive()">
+          <a [routerLink]='["/Movies"]'>Movies</a>
+        </li>
         <li *ngIf="isActiveUser()" [class.active]="isDetailsRouteActive()">
           <a [routerLink]='["/Details", { user: userService.getActiveUser()._id }]'>Edit Info</a>
         </li>

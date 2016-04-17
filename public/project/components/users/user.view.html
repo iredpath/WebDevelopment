@@ -17,8 +17,8 @@
 
     <div class="user-libraries row">
         <div *ngFor="#library of user.libraries" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
-          <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)" style="position:absolute; right:0px; top:0px"></button>
-            <div class="movie-poster-container" style="position:relative; height:75%; padding:7px">
+          <button *ngIf="hasEditRights()" class="btn btn-xs glyphicon glyphicon-remove thumbnail-remove" (click)="removeLibrary(library._id)"></button>
+            <div class="movie-poster-container" style="padding:7px">
               <img src="./assets/default_library.png" class="" style="margin-bottom:2px; height:auto; width:100%; padding:4px"[routerLink]="['/Library', { library: library._id }]">
             </div>
             <span>{{library.name}}</span>

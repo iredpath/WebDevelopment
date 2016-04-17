@@ -53,8 +53,10 @@
 	display: inline-block;
 }
 .thumbnail-remove {
-	float: right;
 	display:none;
+	position: absolute;
+	top:0px;
+	right:0px;
 }
 .library-name-container {
 	display: inline-block;
@@ -102,4 +104,10 @@
     }
 .thumbnail-remove:hover {
 	background-color: red;
+}
+
+@media (min-width: 768px) {
+	.mobile-header {
+		display: none !important;
+	}
 }

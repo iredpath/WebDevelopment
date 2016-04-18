@@ -244,8 +244,9 @@ export class Movie {
 		this.movieService.editCommentForMovie(this.movie._id, this.editCommentId, this.editCommentText)
 			.subscribe(resp => {
 				if (resp.json().comment) {
-					const comm: any = _.find(this.movie.comments, c => { return (<any>c)._id === this.editCommentId })
-					comm.comment = this.editCommentText
+					let comm: any = _.find(this.movie.comments, c => { return (<any>c)._id === this.editCommentId })
+					comm.comment = resp.json().comment.comment
+					comm.date = resp.json().comment.date
 					this.cancelEditComment()
 				}
 			})
@@ -255,7 +256,7 @@ export class Movie {
 		this.editCommentId = null
 		this.editCommentText = ""
 	}
-	
+
 	getCommentDate(datenum: number) {
 		return new Date(datenum)
 	}

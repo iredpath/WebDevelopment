@@ -190,7 +190,8 @@ export class Library {
 			.subscribe(resp => {
 				if (resp.json().comment) {
 					const comm: any = _.find(this.library.comments, c => { return (<any>c)._id === this.editCommentId })
-					comm.comment = this.editCommentText
+					comm.comment = resp.json().comment.comment
+					comm.date = resp.json().comment.date
 					this.cancelEditComment()
 				}
 			})

@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose'
 export default function() {
 
 	const UserSchema = new mongoose.Schema({
-		username: String,
+		username: { type: String, unique: true },
 		password: String,
 		firstname: String,
 		lastname: String,

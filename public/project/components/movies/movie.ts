@@ -247,6 +247,7 @@ export class Movie {
 					let comm: any = _.find(this.movie.comments, c => { return (<any>c)._id === this.editCommentId })
 					comm.comment = resp.json().comment.comment
 					comm.date = resp.json().comment.date
+					comm.edited = resp.json().comment.edited
 					this.cancelEditComment()
 				}
 			})
@@ -258,6 +259,41 @@ export class Movie {
 	}
 
 	getCommentDate(datenum: number) {
-		return new Date(datenum)
+		const date = new Date(datenum)
+		const year = date.getUTCFullYear()
+		const month = date.getUTCMonth()
+		const day = date.getUTCDay()
+		const hour = date.getUTCHours()
+		const minutes = date.getUTCMinutes()
+		const seconds = date.getUTCSeconds()
+
+		const dateNow = new Date()
+		const yearNow = dateNow.getUTCFullYear()
+		const monthNow = dateNow.getUTCMonth()
+		const dayNow = dateNow.getUTCDay()
+		const hourNow = dateNow.getUTCHours()
+		const minutesNow = dateNow.getUTCMinutes()
+		const secondsNow = dateNow.getUTCSeconds()
+
+		if (year !== yearNow) {
+			const diff = yearNow - year
+			return `${diff} year${diff === 1 ? "" : 's'} ago`
+		} else if (month !== monthNow) {
+			const diff = monthNow - month
+			return `${diff} month${diff === 1 ? "" : 's'} ago`
+		} else if (day !== dayNow) {
+			const diff = dayNow - day
+			return `${diff} day${diff === 1 ? "" : 's'} ago`
+		} else if (hour !== hourNow) {
+			const diff = hourNow - hour
+			return `${diff} hour${diff === 1 ? "" : 's'} ago`
+		} else if (minutes !== minutesNow) {
+			const diff = minutesNow - minutes
+			return `${diff} minute${diff === 1 ? "" : 's'} ago`
+		} else {
+			const diff = secondsNow - seconds
+			return `${diff} second${diff === 1 ? "" : 's'} ago`
+		}
+		//return new Date(datenum)
 	}
 }

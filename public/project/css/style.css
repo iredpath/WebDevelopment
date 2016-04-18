@@ -178,3 +178,28 @@
 .new-comment {
 	margin-top: 20px;
 }
+
+.comment-img {
+	width: 100%;
+}
+
+.timestamp {
+	display:inline-block;
+}
+
+.comments-table {
+	text-align:initial;
+}
+
+.content-cell {
+	width: 92%;
+	padding-left: 20px;
+}
+.icon-cell {
+	width: 8%;
+
+}
+.comments-row > td {
+	padding-bottom: .5em;
+	padding-top: .5em;
+}

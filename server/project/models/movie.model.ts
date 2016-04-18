@@ -219,7 +219,7 @@ export default class LibraryModel {
 	editCommentForMovie(movieId: string, commentId: string, commentText: string) {
 		let deferred = Q.defer()
 		const date = new Date().getTime()
-		this.commentModel.findByIdAndUpdate(commentId, { comment: commentText, date }, { new: true }, (err, resp) => {
+		this.commentModel.findByIdAndUpdate(commentId, { comment: commentText, date, edited: true }, { new: true }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
 			} else {

@@ -52,15 +52,19 @@
         </div>
     </div>
   </div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comments">  
     <h3 class="h4-margins">Comments</h3>
-    <div class="results-row">
+    <div class="results-row table-responsive">
       <span class="no-results" *ngIf="library.comments.length ===0">No comments</span>
-      <table>
-        <tr *ngFor="#comment of library.comments">
-          <td><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></td>
+      <table class="comments-table table-striped">
+        <tr *ngFor="#comment of library.comments" class="comments-row">
           <td>
+            <img class="comment-img" src="./assets/default_user.png" [routerLink]="['/User', { user: comment.userId }]">
+          </td>
+          <td class="content-cell">
+            <h5 class="profile-header"><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></h5>
+            <h6 class="timestamp">{{getCommentDate(comment.date)}} {{comment.edited ? '(edited)' : ''}}</h6>
+
             <div *ngIf="isEditingComment(comment._id)">
               <input type="text" [(ngModel)]="editCommentText">
               <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
@@ -69,9 +73,6 @@
             <div *ngIf="!isEditingComment(comment._id)" (click)="editComment(comment)">
               {{comment.comment}}
             </div>
-          </td>
-          <td>
-            {{ getCommentDate(comment.date) }}
           </td>
         </tr>
       </table>

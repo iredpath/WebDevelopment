@@ -207,6 +207,12 @@ export class Library {
 	}
 
 	getCommentDate(datenum: number) {
+		const date = new Date(datenum)
+		const year = date.getUTCFullYear()
+		const month = date.getUTCMonth()
+		const day = date.getUTCDay()
+		const hour = date.getUTCHours()
+		const minutes = date.getUTCMinutes()
 		return new Date(datenum)
 	}
 

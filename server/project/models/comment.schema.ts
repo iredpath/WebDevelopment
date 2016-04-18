@@ -7,7 +7,8 @@ export default function() {
 		username: String,
 		comment: String,
 		target: String, // movie _id or library _id
-		date: Number // numerical date object
+		date: Number, // numerical date object
+		edited: Boolean // has it been edited?
 	}, { collection: 'project.comment' })
 	return CommentSchema
 }

@@ -46,4 +46,19 @@ export default function(app, db) {
 			.then(movie => { res.status(200).send({ movie }) },
 			error => { res.status(400).send(error) })
 	})
+
+	app.post('/api/project/movie/:movieId/comment', (req, res) => {
+		const { comment } = req.body
+		const movieId = req.params.movieId
+		db.addCommentToMovie(movieId, comment)
+			.then(comment => { res.status(200).send({ comment }) },
+			error => { res.status(400).send(error) })
+	})
+	app.put('/api/project/movie/:movieId/comment/:commentId', (req, res) => {
+		const { commentText } = req.body
+		const { movieId, commentId } = req.params
+		db.editCommentForMovie(movieId, commentId, commentText)
+			.then(comment => { res.status(200).send({ comment }) },
+			error => { res.status(400).send(error) })
+	})
 }

@@ -205,4 +205,8 @@ export class Library {
 		return _.range(this.library.movies.length / 4)
 	}
 
+	getCommentDate(datenum: number) {
+		return new Date(datenum)
+	}
+
 }

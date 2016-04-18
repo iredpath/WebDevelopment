@@ -219,7 +219,7 @@ export class Movie {
 				username: user.username,
 				target: this.movie._id
 			}
-			this.libraryService.addCommentToLibrary(this.movie._id, comment)
+			this.movieService.addCommentToMovie(this.movie._id, comment)
 				.subscribe(resp => {
 					if (resp.json().comment) {
 						this.movie.comments.push(resp.json().comment)
@@ -241,7 +241,7 @@ export class Movie {
 	}
 
 	saveEditComment() {
-		this.libraryService.editCommentForLibrary(this.movie._id, this.editCommentId, this.editCommentText)
+		this.movieService.editCommentForMovie(this.movie._id, this.editCommentId, this.editCommentText)
 			.subscribe(resp => {
 				if (resp.json().comment) {
 					const comm: any = _.find(this.movie.comments, c => { return (<any>c)._id === this.editCommentId })
@@ -254,5 +254,9 @@ export class Movie {
 	cancelEditComment() {
 		this.editCommentId = null
 		this.editCommentText = ""
+	}
+	
+	getCommentDate(datenum: number) {
+		return new Date(datenum)
 	}
 }

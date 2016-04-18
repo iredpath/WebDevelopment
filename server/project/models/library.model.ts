@@ -162,6 +162,7 @@ export default class LibraryModel {
 
 	addCommentToLibrary(libId: string, comment: any) {
 		let deferred = Q.defer()
+		comment.date = new Date().getTime()
 		this.commentModel.create(comment, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
@@ -181,7 +182,8 @@ export default class LibraryModel {
 
 	editCommentForLibrary(libId: string, commentId: string, commentText: string) {
 		let deferred = Q.defer()
-		this.commentModel.findByIdAndUpdate(commentId, { comment: commentText }, { new: true }, (err, resp) => {
+		const date = new Date().getTime()
+		this.commentModel.findByIdAndUpdate(commentId, { comment: commentText, date }, { new: true }, (err, resp) => {
 			if (err) {
 				deferred.reject(err)
 			} else {

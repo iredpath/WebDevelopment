@@ -37,9 +37,14 @@ export class MovieService {
 	getMovieByImdbId(imdbId: string) {
 		return this.http.get(`/api/project/movie?imdbId=${imdbId}`, { headers: this.headers })
 	}
-/*
-	getOrCreate(imdbid: string, title: string) {
-		return this.http.post(`/api/project/movie?id=${imdbid}&title=${title}&`, { headers: this.headers })
+
+	addCommentToMovie(movieId: string, comment: any) {
+		return this.http.post(`/api/project/movie/${movieId}/comment`, JSON.stringify({ comment }),
+			{ headers: this.headers })
 	}
-*/
+
+	editCommentForMovie(movieId: string, commentId: string, commentText: string) {
+		return this.http.put(`/api/project/movie/${movieId}/comment/${commentId}`, JSON.stringify({ commentText }),
+			{ headers: this.headers })
+	}
 }

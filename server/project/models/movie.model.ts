@@ -196,4 +196,44 @@ export default class LibraryModel {
 		return deferred.promise
 	}
 
+	addCommentToMovie(movieId: string, comment: any) {
+		let deferred = Q.defer()
+		comment.date = new Date().getTime()
+		this.commentModel.create(comment, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				// add comment to relevant user and library
+				const update = { $push: { comments: resp._id } }
+				Q.all([
+					this.userModel.findByIdAndUpdate(comment.userId, update),
+					this.libraryModel.findByIdAndUpdate(comment.target, update)
+				]).then(success => {
+					deferred.resolve(resp)
+				}, error => { deferred.reject(error) })
+			}
+		})
+		return deferred.promise
+	}
+
+	editCommentForLibrary(movieId: string, commentId: string, commentText: string) {
+		let deferred = Q.defer()
+		const date = new Date().getTime()
+		this.commentModel.findByIdAndUpdate(commentId, { comment: commentText, date }, { new: true }, (err, resp) => {
+			if (err) {
+				deferred.reject(err)
+			} else {
+				// add comment to relevant user and library
+				const update = { $push: { comments: resp._id } }
+				Q.all([
+					this.userModel.findByIdAndUpdate(resp.userId, update),
+					this.libraryModel.findByIdAndUpdate(resp.target, update)
+				]).then(success => {
+					deferred.resolve(resp)
+				}, error => { deferred.reject(error) })
+			}
+		})
+		return deferred.promise
+	}
+
 }

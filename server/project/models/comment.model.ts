@@ -21,6 +21,7 @@ export default class CommentModel {
 
 	createComment(newComment) {
 		let deferred = Q.defer()
+		newComment.date = new Date().getTime()
 		this.commentModel.create(newComment, (err, resp) => {
 			if (err) {
 				deferred.reject(err)

@@ -1,7 +1,7 @@
 import { View, Component, Inject } from 'angular2/core'
 import { RouterLink } from 'angular2/router'
 import { MovieService } from '../../services/movieService'
-import { ResultsService } from '../../services/resultsService'
+import { OmdbService } from '../../services/omdbService'
 import { PosterService } from '../../services/posterService'
 import { OmdbMovieModel } from '../../models/omdbMovieModel'
 
@@ -30,7 +30,7 @@ export class Movies {
 	pages: Array<number>
 	query: string
 
-	constructor(public movieService: MovieService, public resultsService: ResultsService,
+	constructor(public movieService: MovieService, public omdbService: OmdbService,
 		public posterService: PosterService) {
 
 		this.fetchingMovies = true
@@ -67,7 +67,7 @@ export class Movies {
 	}
 
 	search() {
-		this.resultsService.getResults(this.query, null)
+		this.omdbService.findMovieBySearch(this.query, null)
 			.subscribe(
 			resp => {
 				const data = resp.json()
@@ -109,7 +109,7 @@ export class Movies {
 
 	getResultsPage(page: number) {
 		this.fetchingResults = true
-		this.resultsService.getResults(this.query, page)
+		this.omdbService.findMovieBySearch(this.query, page)
 			.subscribe(resp => {
 				const data = resp.json()
 				if (data.Response) {

@@ -80,7 +80,7 @@
             <h5 class="profile-header"><a [routerLink]='["/User", { user: comment.userId }]'>{{comment.username}}</a></h5>
             <h6 class="timestamp">{{getCommentDate(comment.date)}} {{comment.edited ? '(edited)' : ''}}</h6>
             <div *ngIf="isEditingComment(comment._id)">
-              <input type="text" [(ngModel)]="editCommentText">
+              <textarea [(ngModel)]="editCommentText" class="comment-input"></textarea>
               <span class="glyphicon glyphicon-check" (click)="saveEditComment()"></span>
               <button class="btn btn-default" (click)="cancelEditComment()">Cancel</button>
             </div>
@@ -92,7 +92,7 @@
       </table>
     </div>
     <div *ngIf="userService.getActiveUser()" class="new-comment">
-      <input type="text" class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()">
+      <textarea class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()"></textarea>
       <button class="btn" (click)="addComment()">Comment!</button>
     </div>
   </div>

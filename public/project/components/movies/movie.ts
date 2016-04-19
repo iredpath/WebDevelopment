@@ -82,7 +82,7 @@ export class Movie {
 									this.posterService.getPosterFor(imdbId)
 										.subscribe(posterResp => {
 											const image = `data:image/png;base64,${posterResp.text()}`
-											this.movieService.addMovie({ imdbId, title: this.omdbMovie.title, image })
+											this.movieService.addMovie({ imdbId, title: this.omdbMovie.title, image, year: this.omdbMovie.year })
 												.subscribe(response => {
 													const createResp = response.json().data
 													if (createResp.movie) {

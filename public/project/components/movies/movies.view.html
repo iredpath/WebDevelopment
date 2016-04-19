@@ -3,9 +3,9 @@
 	<div class="row searchbar-wrapper">
 		<div class="col-md-8 col-md-push-2 col-lg-6 col-lg-push-3 col-sm-8 col-sm-push-2 col-xs-8 col-xs-push-2">
 	    	<div class="input-group">
-	      		<input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="query">
+	      		<input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="query"  (keyup.enter)="search()">
 	      		<span class="input-group-btn">
-	        		<button class="btn btn-default glyphicon glyphicon-search search-icon" type="button" (click)="search()" (keyup.enter)="search()"></button>
+	        		<button class="btn btn-default glyphicon glyphicon-search search-icon" type="button" (click)="search()"></button>
 	      		</span>
 	    	</div>
 	  	</div>

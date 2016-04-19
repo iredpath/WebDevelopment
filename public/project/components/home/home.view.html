@@ -1,4 +1,43 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-  <h1 class="page-header">Welcome!</h1>
-  <p>Landing page for the virtual movie library app!  </p>
+  	<h1 class="page-header">Welcome!</h1>
+  	<h4 class="h4-margins">Check out some movies!</h4>
+  	<div class="sample-movies row results-row">
+	  	<span class="no-results" *ngIf="getRandomMovies().length ===0">No movies found</span>
+	    <div *ngFor="#movie of getRandomMovies()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+	        <div class="movie-poster-container">
+	          <img src={{movie.image}} class="movie-image"[routerLink]="['/Movie', { movie: movie.imdbId }]">
+	        </div>
+	        <div class="movie-title-year">
+	          	<span>{{movie.title}} ({{movie.year}})</span>
+	          	<div class="ratings">
+		        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(movie.ratings) < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		    	</div>
+		    	<span class="more-info">{{ movie.ratings.length }} {{ movie.ratings.length === 1 ? 'rating' : 'ratings' }}</span>
+	        </div>
+	    </div>
+	</div>
+	<h4 class="h4-margins">Or maybe some libraries!</h4>
+	<div class="sample-libraries row results-row">
+	  	<span class="no-results" *ngIf="getRandomLibraries().length ===0">No libraries found</span>
+		<div *ngFor="#library of getRandomLibraries()" class="library-movie col-xs-6 col-sm-4 col-md-3 col-lg-2">
+		    <div class="movie-poster-container">
+	        	<img src="./assets/default_library.png" class="movie-image"[routerLink]="['/Library', { library: library._id }]">
+	        </div>
+	        <div class="library-details">
+	          	<span>{{library.name}} ({{library.user.username}})</span>
+	          	<div class="ratings">
+		        	<span class="glyphicon {{ getAvgRating(library.ratings) < 1 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(library.ratings) < 2 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(library.ratings) < 3 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(library.ratings) < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		        	<span class="glyphicon {{ getAvgRating(library.ratings) < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
+		    	</div>
+		    	<span class="more-info">{{ library.ratings.length }} {{ library.ratings.length === 1 ? 'rating' : 'ratings' }}</span>
+	        </div>
+	    </div>
+	</div>	
 </div>

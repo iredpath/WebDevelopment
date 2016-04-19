@@ -27,6 +27,7 @@
 			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 4 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
 			        	<span class="glyphicon {{ getAvgRating(library.ratings) < 5 ? 'glyphicon-star-empty': 'glyphicon-star' }}"></span>
 			    	</div>
+			    	<span class="more-info">{{ library.ratings.length }} {{ library.ratings.length === 1 ? 'rating' : 'ratings' }}</span>
 		        </div>
 		    </div>
 		</div>

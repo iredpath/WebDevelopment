@@ -38,12 +38,12 @@ export class Users {
 	}
 	calculateMostLibUsers() {
 		return _.sortBy(this.users, user => {
-			return user.libraries.length
+			return -user.libraries.length
 		})// arbitrary, not sure what the best value here is
 	}
 	calculateMostRatingsUsers() {
 		return _.sortBy(this.users, user => {
-			return user.ratings.length
+			return -user.ratings.length
 		})
 	}
 

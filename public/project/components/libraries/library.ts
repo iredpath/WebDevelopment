@@ -139,7 +139,7 @@ export class Library {
 
 	saveNewLibraryName() {
 		this.isEditingLibraryName = false
-		this.libraryService.updateLibrary(this.library)
+		this.libraryService.updateLibrary({ name: this.library.name })
 			.subscribe(resp => {
 				if(resp.json().library) {
 					this.backupName = this.library.name

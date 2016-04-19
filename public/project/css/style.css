@@ -1,7 +1,12 @@
 .clickable {
 	cursor: pointer;
 }
-
+.clickable-glyph {
+	cursor: pointer;
+}
+.clickable-glyph:hover {
+	color: blue;
+}
 .movie-title {
 	margin-left: 15px;
 }
@@ -178,7 +183,7 @@
 }
 
 .new-comment {
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 .comment-img {
@@ -207,4 +212,13 @@
 }
 .comment-input {
 	width:50%;
+	vertical-align: bottom
+}
+.comment-button {
+	vertical-align: bottom
+}
+.library-edit {
+	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }

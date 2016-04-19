@@ -1,13 +1,13 @@
 <div *ngIf='!fetchingLibrary' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-  <div>
+  <div class="library-heading">
     <div *ngIf="!isEditingLibraryName" class="library-name-container">
       <h1 *ngIf="hasEditRights()" (click)="editLibraryName()" class="clickable">{{library.name}}</h1>
       <h1 *ngIf="!hasEditRights()">{{library.name}}</h1>
     </div>
-    <div *ngIf="isEditingLibraryName">
+    <div *ngIf="isEditingLibraryName" class="library-edit">
       <input type="text" [(ngModel)]="library.name" (keyup.enter)="saveNewLibraryName()">
-      <span class="glyphicon glyphicon-check" (click)="saveNewLibraryName()"></span>
-      <button class="btn btn-default" (click)="cancelEditingLibraryName()">Cancel</button>
+      <span class="glyphicon glyphicon-check clickable-glyph" (click)="saveNewLibraryName()"></span>
+      <span class="glyphicon glyphicon-remove clickable-glyph" (click)="cancelEditingLibraryName()"></span>
     </div>
     <a [routerLink]='["/User", { user: library.user._id }]'>{{library.user.username}}</a>
   </div>
@@ -79,7 +79,7 @@
     </div>
     <div *ngIf="userService.getActiveUser()" class="new-comment">
       <textarea class="comment-input" [(ngModel)]="newComment" (keyup.enter)="addComment()"></textarea>
-      <button class="btn" (click)="addComment()">Comment!</button>
+      <button class="btn comment-button" (click)="addComment()">Comment!</button>
     </div>
   </div>
 </div>
